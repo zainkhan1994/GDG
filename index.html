@@ -16,654 +16,216 @@
     --google-red: #EA4335;
     --google-yellow: #FBBC05;
     --google-green: #34A853;
-    --gmail-red: #EA4335;
-    --drive-gold: #FBBC05;
-    --calendar-blue: #4285F4;
-    --meet-green: #34A853;
     --cloud-orange: #FF6D00;
     --gemini-purple: #8E75FF;
     --youtube-red: #FF0000;
     --notebooklm-teal: #1AC8B4;
     --ai-studio-blue: #669DF6;
+    --ag-cyan: #00D4FF;
+    --ag-violet: #A855F7;
+    --notion-white: #F7F6F3;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; line-height: 1.6; overflow-x: hidden; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* Particle Canvas */
-  #particles {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.4;
-  }
-
+  #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.4; }
   .content { position: relative; z-index: 1; }
 
-  /* ─── NAV ─── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: rgba(13,17,23,0.85);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 40px;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 0.5px;
-  }
-
-  .g-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 24px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 13px;
-    transition: color 0.2s;
-  }
-
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(13,17,23,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 0 40px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 15px; letter-spacing: 0.5px; }
+  .g-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .nav-links { display: flex; gap: 20px; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 12px; transition: color 0.2s; white-space: nowrap; }
   .nav-links a:hover { color: var(--text); }
 
-  /* ─── HERO ─── */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 120px 40px 80px;
-    text-align: center;
-    position: relative;
-  }
-
+  /* HERO */
+  .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 40px 80px; text-align: center; position: relative; }
   .hero-inner { max-width: 800px; }
+  .google-g { width: 72px; height: 72px; margin: 0 auto 32px; }
+  .hero h1 { font-size: clamp(36px, 6vw, 64px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 16px; background: linear-gradient(135deg, var(--text) 0%, var(--muted) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-email { font-size: 15px; color: var(--google-blue); margin-bottom: 12px; font-family: 'SF Mono', monospace; }
+  .hero-tagline { font-size: 18px; color: var(--muted); margin-bottom: 40px; }
+  .stat-chips { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
+  .chip { padding: 8px 18px; border-radius: 100px; font-size: 13px; font-weight: 600; border: 1px solid; display: inline-flex; align-items: center; gap: 8px; }
+  .chip-blue   { color: var(--google-blue);   border-color: rgba(66,133,244,0.3);  background: rgba(66,133,244,0.08); }
+  .chip-red    { color: #EA4335;               border-color: rgba(234,67,53,0.3);   background: rgba(234,67,53,0.08); }
+  .chip-green  { color: var(--google-green);   border-color: rgba(52,168,83,0.3);   background: rgba(52,168,83,0.08); }
+  .chip-yellow { color: var(--google-yellow);  border-color: rgba(251,188,5,0.3);   background: rgba(251,188,5,0.08); }
+  .chip-orange { color: var(--cloud-orange);   border-color: rgba(255,109,0,0.3);   background: rgba(255,109,0,0.08); }
+  .chip-purple { color: var(--gemini-purple);  border-color: rgba(142,117,255,0.3); background: rgba(142,117,255,0.08); }
+  .chip-cyan   { color: var(--ag-cyan);        border-color: rgba(0,212,255,0.3);   background: rgba(0,212,255,0.08); }
+  .chip-notion { color: var(--notion-white);   border-color: rgba(247,246,243,0.2); background: rgba(247,246,243,0.05); }
 
-  .google-g {
-    width: 72px; height: 72px;
-    margin: 0 auto 32px;
-    position: relative;
-  }
+  /* SECTION */
+  section { max-width: 1200px; margin: 0 auto; padding: 80px 40px; }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .section-title { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 40px; }
+  .section-divider { border: none; border-top: 1px solid var(--border); max-width: 1200px; margin: 0 auto; }
 
-  .google-g svg { width: 100%; height: 100%; }
-
-  .hero h1 {
-    font-size: clamp(36px, 6vw, 64px);
-    font-weight: 800;
-    letter-spacing: -1.5px;
-    line-height: 1.1;
-    margin-bottom: 16px;
-    background: linear-gradient(135deg, var(--text) 0%, var(--muted) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero-email {
-    font-size: 15px;
-    color: var(--google-blue);
-    margin-bottom: 12px;
-    font-family: 'SF Mono', 'Cascadia Code', monospace;
-  }
-
-  .hero-tagline {
-    font-size: 18px;
-    color: var(--muted);
-    margin-bottom: 40px;
-  }
-
-  .stat-chips {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 48px;
-  }
-
-  .chip {
-    padding: 8px 18px;
-    border-radius: 100px;
-    font-size: 13px;
-    font-weight: 600;
-    border: 1px solid;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    backdrop-filter: blur(8px);
-  }
-
-  .chip-blue  { color: var(--google-blue);   border-color: rgba(66,133,244,0.3);  background: rgba(66,133,244,0.08); }
-  .chip-red   { color: var(--gmail-red);     border-color: rgba(234,67,53,0.3);   background: rgba(234,67,53,0.08); }
-  .chip-green { color: var(--google-green);  border-color: rgba(52,168,83,0.3);   background: rgba(52,168,83,0.08); }
-  .chip-yellow{ color: var(--drive-gold);    border-color: rgba(251,188,5,0.3);   background: rgba(251,188,5,0.08); }
-  .chip-orange{ color: var(--cloud-orange);  border-color: rgba(255,109,0,0.3);   background: rgba(255,109,0,0.08); }
-  .chip-purple{ color: var(--gemini-purple); border-color: rgba(142,117,255,0.3); background: rgba(142,117,255,0.08); }
-
-  /* ─── SECTION ─── */
-  section {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 80px 40px;
-  }
-
-  .section-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 8px;
-  }
-
-  .section-title {
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    margin-bottom: 40px;
-  }
-
-  /* ─── PRODUCT CARDS ─── */
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-  }
-
-  .product-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-    cursor: default;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.5s ease forwards;
-  }
-
-  .product-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
-  }
-
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 16px;
-  }
-
-  .product-icon {
-    width: 44px; height: 44px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    flex-shrink: 0;
-  }
-
+  /* PRODUCT CARDS */
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .product-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; cursor: default; opacity: 0; transform: translateY(20px); animation: fadeUp 0.5s ease forwards; }
+  .product-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+  .card-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  .product-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
   .card-title { font-size: 16px; font-weight: 700; }
-  .card-sub   { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .card-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .card-stat { font-size: 28px; font-weight: 800; letter-spacing: -1px; margin-bottom: 4px; }
+  .card-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .card-tag { display: inline-block; margin-top: 12px; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+  .product-card:hover { border-color: var(--accent, var(--border)); box-shadow: 0 0 0 1px var(--accent, transparent), 0 16px 48px rgba(0,0,0,0.4); }
 
-  .card-stat {
-    font-size: 28px;
-    font-weight: 800;
-    letter-spacing: -1px;
-    margin-bottom: 4px;
-  }
-
-  .card-desc {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  .card-tag {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 600;
-  }
-
-  /* Gmail */
-  .gmail-card  { --accent: var(--gmail-red);   }
-  .drive-card  { --accent: var(--drive-gold);  }
-  .cal-card    { --accent: var(--calendar-blue);}
-  .meet-card   { --accent: var(--meet-green);  }
-  .gem-card    { --accent: var(--gemini-purple);}
-  .yt-card     { --accent: var(--youtube-red);  }
-  .ai-card     { --accent: var(--ai-studio-blue);}
-  .nlm-card    { --accent: var(--notebooklm-teal);}
-  .cloud-card  { --accent: var(--cloud-orange); }
-  .ads-card    { --accent: #34A853; }
-  .docs-card   { --accent: #4285F4; }
-
-  .product-card:hover { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 16px 48px rgba(0,0,0,0.4); }
-
-  /* ─── DRIVE EXPLORER ─── */
-  .drive-layout {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 20px;
-  }
-
-  .drive-sidebar {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-  }
-
-  .drive-sidebar h4 {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 12px;
-  }
-
-  .drive-year-btn {
-    display: block;
-    width: 100%;
-    text-align: left;
-    background: none;
-    border: none;
-    color: var(--muted);
-    padding: 8px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 13px;
-    transition: all 0.2s;
-    margin-bottom: 4px;
-  }
-
-  .drive-year-btn:hover,
-  .drive-year-btn.active {
-    background: rgba(66,133,244,0.15);
-    color: var(--google-blue);
-  }
-
-  .drive-main {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px;
-    overflow: hidden;
-  }
-
-  .drive-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-
-  .drive-path {
-    font-size: 13px;
-    color: var(--muted);
-    font-family: monospace;
-  }
-
-  .file-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
-  }
-
-  .file-item {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px;
-    text-align: center;
-    transition: all 0.2s;
-    cursor: default;
-  }
-
-  .file-item:hover {
-    border-color: var(--drive-gold);
-    background: rgba(251,188,5,0.05);
-  }
-
+  /* DRIVE */
+  .drive-layout { display: grid; grid-template-columns: 200px 1fr; gap: 20px; }
+  .drive-sidebar { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+  .drive-sidebar h4 { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .drive-year-btn { display: block; width: 100%; text-align: left; background: none; border: none; color: var(--muted); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; transition: all 0.2s; margin-bottom: 4px; }
+  .drive-year-btn:hover, .drive-year-btn.active { background: rgba(66,133,244,0.15); color: var(--google-blue); }
+  .drive-main { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+  .drive-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .drive-path { font-size: 11px; color: var(--muted); font-family: monospace; }
+  .file-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+  .file-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; transition: all 0.2s; cursor: default; }
+  .file-item:hover { border-color: var(--google-yellow); background: rgba(251,188,5,0.05); }
   .file-icon { font-size: 28px; margin-bottom: 8px; }
   .file-name { font-size: 11px; color: var(--muted); word-break: break-all; }
-  .file-type { font-size: 10px; color: var(--drive-gold); font-weight: 600; margin-top: 4px; }
+  .file-type { font-size: 10px; color: var(--google-yellow); font-weight: 600; margin-top: 4px; }
 
-  /* ─── CHROME INTEL ─── */
-  .bookmark-domains {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 12px;
-  }
+  /* CALENDAR */
+  .calendar-widget { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .cal-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cal-stat-box { background: var(--surface2); border-radius: 12px; padding: 16px; text-align: center; }
+  .cal-stat-num { font-size: 32px; font-weight: 800; color: var(--google-blue); }
+  .cal-stat-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .cal-views h4 { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+  .cal-view-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(48,54,61,0.5); font-size: 13px; }
+  .cal-view-item:last-child { border-bottom: none; }
+  .cal-view-count { color: var(--google-blue); font-weight: 700; font-size: 13px; }
 
-  .domain-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 16px;
-    transition: all 0.2s;
-  }
+  /* ─── ANTIGRAVITY ─── */
+  .ag-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 36px; }
+  .ag-stat { background: var(--surface); border: 1px solid rgba(0,212,255,0.2); border-radius: 14px; padding: 20px; text-align: center; transition: all 0.3s; }
+  .ag-stat:hover { border-color: var(--ag-cyan); box-shadow: 0 0 20px rgba(0,212,255,0.1); }
+  .ag-stat-num { font-size: 40px; font-weight: 900; background: linear-gradient(135deg, var(--ag-cyan), var(--ag-violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -2px; }
+  .ag-stat-label { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
 
-  .domain-row:hover {
-    border-color: var(--google-blue);
-    background: rgba(66,133,244,0.05);
-  }
+  /* Filter pills */
+  .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+  .filter-pill { padding: 7px 16px; border-radius: 100px; border: 1px solid var(--border); background: none; color: var(--muted); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; letter-spacing: 0.3px; }
+  .filter-pill:hover { border-color: var(--ag-cyan); color: var(--ag-cyan); }
+  .filter-pill.active { background: rgba(0,212,255,0.12); border-color: var(--ag-cyan); color: var(--ag-cyan); }
 
-  .domain-name { font-size: 13px; font-weight: 500; }
-  .domain-count {
-    background: rgba(66,133,244,0.15);
-    color: var(--google-blue);
-    border-radius: 20px;
-    padding: 2px 10px;
-    font-size: 12px;
-    font-weight: 700;
-  }
+  /* Flip cards */
+  .flip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .flip-card { perspective: 1200px; height: 220px; cursor: pointer; }
+  .flip-card[data-cat].hidden { display: none; }
+  .flip-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1); }
+  .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+  .flip-front, .flip-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px; padding: 20px; border: 1px solid var(--border); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between; transition: border-color 0.3s, box-shadow 0.3s; }
+  .flip-card:hover .flip-front, .flip-card:hover .flip-back { border-color: var(--ag-cyan); box-shadow: 0 0 24px rgba(0,212,255,0.12); }
+  .flip-back { transform: rotateY(180deg); background: var(--surface2); }
+  .flip-emoji { font-size: 36px; }
+  .flip-title { font-size: 16px; font-weight: 700; margin-top: 8px; }
+  .flip-cat-badge { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; display: inline-block; }
+  .flip-hint { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+  .flip-back-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; color: var(--ag-cyan); }
+  .flip-back-desc { font-size: 12px; color: var(--muted); line-height: 1.5; flex: 1; }
+  .flip-stack { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .stack-tag { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: rgba(0,212,255,0.08); color: var(--ag-cyan); border: 1px solid rgba(0,212,255,0.2); }
+  .flip-link { font-size: 11px; color: var(--ag-violet); font-weight: 600; text-decoration: none; margin-top: 8px; display: block; }
+  .flip-link:hover { text-decoration: underline; }
 
-  .domain-bar-wrap {
-    width: 100%;
-    height: 3px;
-    background: var(--border);
-    border-radius: 2px;
-    margin-top: 8px;
-    overflow: hidden;
-  }
+  /* Brain constellation */
+  .brain-constellation { display: flex; gap: 24px; align-items: flex-start; margin-top: 40px; padding: 24px; background: var(--surface); border: 1px solid rgba(168,85,247,0.2); border-radius: 16px; }
+  .brain-canvas-wrap { flex-shrink: 0; }
+  #brainCanvas { border-radius: 12px; background: transparent; }
+  .brain-info { flex: 1; }
+  .brain-info h4 { font-size: 16px; font-weight: 700; color: var(--ag-violet); margin-bottom: 12px; }
+  .brain-sessions { display: flex; flex-direction: column; gap: 6px; }
+  .session-row { display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--surface2); border-radius: 8px; font-size: 12px; }
+  .session-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ag-cyan); flex-shrink: 0; box-shadow: 0 0 6px var(--ag-cyan); }
+  .session-date { color: var(--muted); font-family: monospace; }
+  .session-label { color: var(--text); font-weight: 500; }
 
-  .domain-bar {
-    height: 100%;
-    background: linear-gradient(90deg, var(--google-blue), var(--gemini-purple));
-    border-radius: 2px;
-    transition: width 1s ease;
-  }
+  /* ─── NOTION OS ─── */
+  .notion-intro { display: flex; align-items: center; gap: 16px; margin-bottom: 36px; padding: 20px 24px; background: var(--surface); border: 1px solid rgba(247,246,243,0.12); border-radius: 14px; }
+  .notion-logo { font-size: 40px; }
+  .notion-intro-text h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .notion-intro-text p { font-size: 13px; color: var(--muted); }
+  .notion-pulse-dot { width: 10px; height: 10px; border-radius: 50%; background: #00C851; box-shadow: 0 0 8px #00C851; animation: pulse-dot 2s ease infinite; margin-left: auto; }
+  @keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.3); } }
 
-  /* ─── AI STUDIO ─── */
-  .ai-prompts {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-  }
+  .notion-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-bottom: 40px; }
+  .notion-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; transition: all 0.25s; position: relative; overflow: hidden; cursor: default; }
+  .notion-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #F7F6F3, rgba(247,246,243,0.2)); opacity: 0.3; }
+  .notion-card:hover { border-color: rgba(247,246,243,0.3); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(247,246,243,0.05); }
+  .notion-card-icon { font-size: 28px; margin-bottom: 12px; }
+  .notion-card-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .notion-card-rows { font-size: 24px; font-weight: 800; color: rgba(247,246,243,0.9); letter-spacing: -0.5px; }
+  .notion-card-label { font-size: 11px; color: var(--muted); }
+  .notion-card-status { display: flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 11px; color: #00C851; font-weight: 600; }
+  .notion-status-dot { width: 6px; height: 6px; border-radius: 50%; background: #00C851; animation: pulse-dot 2s ease infinite; }
 
-  .prompt-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px;
-    transition: all 0.25s;
-    position: relative;
-    overflow: hidden;
-  }
+  .notion-automations { margin-top: 8px; }
+  .notion-automations h4 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+  .automation-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+  .automation-item { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; transition: all 0.2s; font-size: 13px; cursor: default; }
+  .automation-item:hover { border-color: rgba(247,246,243,0.25); background: rgba(247,246,243,0.03); }
+  .automation-icon { font-size: 18px; flex-shrink: 0; }
+  .automation-name { font-family: monospace; font-size: 12px; color: var(--ag-cyan); font-weight: 600; }
+  .automation-desc { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .mcp-strip { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
+  .mcp-chip { display: flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 10px; background: rgba(247,246,243,0.04); border: 1px solid rgba(247,246,243,0.12); font-size: 12px; font-weight: 600; }
+  .mcp-chip-dot { width: 7px; height: 7px; border-radius: 50%; background: #00C851; animation: pulse-dot 2s ease infinite; }
 
-  .prompt-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--ai-studio-blue), var(--gemini-purple));
-  }
-
-  .prompt-card:hover {
-    border-color: var(--ai-studio-blue);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(102,157,246,0.15);
-  }
-
+  /* AI Studio */
+  .ai-prompts { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .prompt-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; transition: all 0.25s; position: relative; overflow: hidden; }
+  .prompt-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--ai-studio-blue), var(--gemini-purple)); }
+  .prompt-card:hover { border-color: var(--ai-studio-blue); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(102,157,246,0.15); }
   .prompt-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
-  .prompt-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 11px;
-    color: var(--ai-studio-blue);
-    font-weight: 600;
-  }
+  .prompt-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--ai-studio-blue); font-weight: 600; }
 
-  /* ─── DATA INVENTORY TABLE ─── */
-  .table-wrap {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-  }
-
-  .inventory-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-  }
-
-  .inventory-table th {
-    padding: 14px 20px;
-    text-align: left;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: var(--surface2);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .inventory-table td {
-    padding: 12px 20px;
-    border-bottom: 1px solid rgba(48,54,61,0.5);
-    vertical-align: middle;
-  }
-
-  .inventory-table tr:last-child td { border-bottom: none; }
-
-  .inventory-table tr:hover td { background: rgba(255,255,255,0.02); }
-
-  .type-badge {
-    display: inline-block;
-    padding: 3px 8px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 600;
-  }
-
-  .path-cell {
-    font-family: monospace;
-    font-size: 11px;
-    color: var(--muted);
-    max-width: 400px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  /* ─── VISIT HEATMAP ─── */
-  .visit-bars {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .visit-row {
-    display: grid;
-    grid-template-columns: 200px 1fr 60px;
-    align-items: center;
-    gap: 12px;
-  }
-
+  /* Chrome Intel */
+  .bookmark-domains { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .domain-row { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; transition: all 0.2s; }
+  .domain-row:hover { border-color: var(--google-blue); background: rgba(66,133,244,0.05); }
+  .domain-name { font-size: 13px; font-weight: 500; }
+  .domain-count { background: rgba(66,133,244,0.15); color: var(--google-blue); border-radius: 20px; padding: 2px 10px; font-size: 12px; font-weight: 700; }
+  .domain-bar-wrap { width: 100%; height: 3px; background: var(--border); border-radius: 2px; margin-top: 8px; overflow: hidden; }
+  .domain-bar { height: 100%; background: linear-gradient(90deg, var(--google-blue), var(--gemini-purple)); border-radius: 2px; transition: width 1s ease; }
+  .visit-bars { display: flex; flex-direction: column; gap: 10px; }
+  .visit-row { display: grid; grid-template-columns: 200px 1fr 60px; align-items: center; gap: 12px; }
   .visit-label { font-size: 13px; font-weight: 500; }
-
-  .visit-track {
-    height: 8px;
-    background: var(--surface2);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-
-  .visit-fill {
-    height: 100%;
-    border-radius: 4px;
-    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
+  .visit-track { height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+  .visit-fill { height: 100%; border-radius: 4px; transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
   .visit-num { font-size: 13px; font-weight: 700; color: var(--muted); text-align: right; }
 
-  /* ─── FOOTER ─── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 40px;
-    text-align: center;
-    color: var(--muted);
-    font-size: 13px;
-  }
+  /* Inventory */
+  .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .inventory-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .inventory-table th { padding: 14px 20px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); background: var(--surface2); border-bottom: 1px solid var(--border); }
+  .inventory-table td { padding: 12px 20px; border-bottom: 1px solid rgba(48,54,61,0.5); vertical-align: middle; }
+  .inventory-table tr:last-child td { border-bottom: none; }
+  .inventory-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .type-badge { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+  .path-cell { font-family: monospace; font-size: 11px; color: var(--muted); max-width: 400px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-  .footer-dots {
-    display: flex;
-    gap: 6px;
-    justify-content: center;
-    margin-bottom: 16px;
-  }
+  /* Footer */
+  footer { border-top: 1px solid var(--border); padding: 40px; text-align: center; color: var(--muted); font-size: 13px; }
+  .footer-dots { display: flex; gap: 6px; justify-content: center; margin-bottom: 16px; }
 
-  /* ─── ANIMATIONS ─── */
-  @keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
-  }
-
-  .fade-in {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ─── SCROLL INDICATOR ─── */
-  .scroll-indicator {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    color: var(--muted);
-    font-size: 12px;
-  }
-
-  .scroll-mouse {
-    width: 20px;
-    height: 32px;
-    border: 2px solid var(--border);
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    padding-top: 6px;
-  }
-
-  .scroll-mouse::after {
-    content: '';
-    width: 3px;
-    height: 6px;
-    background: var(--muted);
-    border-radius: 2px;
-    animation: scrollAnim 2s ease infinite;
-  }
-
-  @keyframes scrollAnim {
-    0% { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(8px); }
-  }
-
-  /* ─── DIVIDERS ─── */
-  .section-divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  /* ─── CALENDAR USAGE ─── */
-  .calendar-widget {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-
-  .cal-stat-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  .cal-stat-box {
-    background: var(--surface2);
-    border-radius: 12px;
-    padding: 16px;
-    text-align: center;
-  }
-
-  .cal-stat-num { font-size: 32px; font-weight: 800; color: var(--calendar-blue); }
-  .cal-stat-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
-
-  .cal-views h4 { font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--text); }
-
-  .cal-view-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(48,54,61,0.5);
-    font-size: 13px;
-  }
-
-  .cal-view-item:last-child { border-bottom: none; }
-
-  .cal-view-count {
-    color: var(--calendar-blue);
-    font-weight: 700;
-    font-size: 13px;
-  }
+  /* Animations */
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  .scroll-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
+  .scroll-mouse { width: 20px; height: 32px; border: 2px solid var(--border); border-radius: 10px; display: flex; justify-content: center; padding-top: 6px; }
+  .scroll-mouse::after { content: ''; width: 3px; height: 6px; background: var(--muted); border-radius: 2px; animation: scrollAnim 2s ease infinite; }
+  @keyframes scrollAnim { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(8px); } }
 
   @media (max-width: 768px) {
     nav { padding: 0 20px; }
@@ -671,8 +233,9 @@
     section { padding: 60px 20px; }
     .drive-layout { grid-template-columns: 1fr; }
     .calendar-widget { grid-template-columns: 1fr; }
+    .ag-stats { grid-template-columns: 1fr 1fr; }
     .visit-row { grid-template-columns: 120px 1fr 50px; }
-    .visit-label { font-size: 11px; }
+    .brain-constellation { flex-direction: column; }
   }
 </style>
 </head>
@@ -692,6 +255,8 @@
     <li><a href="#products">Products</a></li>
     <li><a href="#drive">Drive</a></li>
     <li><a href="#calendar">Calendar</a></li>
+    <li><a href="#antigravity">⚡ Antigravity</a></li>
+    <li><a href="#notion">◻ Notion OS</a></li>
     <li><a href="#ai-studio">AI Studio</a></li>
     <li><a href="#chrome">Chrome</a></li>
     <li><a href="#inventory">Inventory</a></li>
@@ -700,286 +265,157 @@
 
 <div class="content">
 
-<!-- ─── HERO ─── -->
+<!-- HERO -->
 <div class="hero">
   <div class="hero-inner">
     <div class="google-g">
-      <svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" width="72" height="72">
         <circle cx="36" cy="36" r="36" fill="#0d1117"/>
-        <path d="M36 18.5C43.3 18.5 49.4 21.4 53.7 26.2L47.6 32.2C44.9 29.3 41 27.5 36 27.5C27.6 27.5 21 34.1 21 42C21 49.9 27.6 56.5 36 56.5C43.3 56.5 48.3 52.6 49.8 47H36V38.5H58.4C58.7 40 59 41.5 59 43C59 54.3 50.6 63 36 63C24 63 14 53.2 14 42C14 30.8 24 21 36 21L36 18.5Z" fill="none"/>
         <path d="M36 20C43.8 20 50.5 23.2 54.8 28.4L50.2 33.1C47 29.6 42 27 36 27C27.2 27 20 34.2 20 43C20 51.8 27.2 59 36 59C44.1 59 49.4 54.2 50.8 48H36V41H58C58.3 42.3 58.5 43.6 58.5 45C58.5 55.2 50.2 65 36 65C23.3 65 13 54.7 13 42C13 29.3 23.3 20 36 20Z" fill="url(#gg)"/>
-        <defs>
-          <linearGradient id="gg" x1="13" y1="20" x2="59" y2="65" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#4285F4"/>
-            <stop offset="33%" stop-color="#EA4335"/>
-            <stop offset="66%" stop-color="#FBBC05"/>
-            <stop offset="100%" stop-color="#34A853"/>
-          </linearGradient>
-        </defs>
+        <defs><linearGradient id="gg" x1="13" y1="20" x2="59" y2="65" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#4285F4"/><stop offset="33%" stop-color="#EA4335"/><stop offset="66%" stop-color="#FBBC05"/><stop offset="100%" stop-color="#34A853"/></linearGradient></defs>
       </svg>
     </div>
-
     <h1>ZAIN KHAN</h1>
     <div class="hero-email">zainkhan1994.zk@gmail.com · zain@thekhanstruct.com</div>
-    <p class="hero-tagline">Google Universe — Full Ecosystem Portrait</p>
-
+    <p class="hero-tagline">Google Universe + Antigravity Lab + Notion OS</p>
     <div class="stat-chips">
       <span class="chip chip-red">📧 8,094 emails</span>
       <span class="chip chip-yellow">💾 7,127 Drive files</span>
       <span class="chip chip-blue">🔖 674 bookmarks</span>
-      <span class="chip chip-green">📅 500+ calendar visits</span>
-      <span class="chip chip-purple">🤖 4 AI Studio projects</span>
-      <span class="chip chip-orange">☁️ 11 products active</span>
+      <span class="chip chip-cyan">⚡ 49 Antigravity brains</span>
+      <span class="chip chip-notion">◻ Notion OS active</span>
+      <span class="chip chip-orange">☁️ 11 Google products</span>
     </div>
   </div>
-
-  <div class="scroll-indicator">
-    <div class="scroll-mouse"></div>
-    <span>scroll</span>
-  </div>
+  <div class="scroll-indicator"><div class="scroll-mouse"></div><span>scroll</span></div>
 </div>
 
 <hr class="section-divider">
 
-<!-- ─── GOOGLE ACCOUNT HUB ─── -->
+<!-- GOOGLE PRODUCTS -->
 <section id="products" class="fade-in">
   <div class="section-label">Account Hub</div>
   <div class="section-title">Google Products</div>
-
   <div class="product-grid">
 
-    <!-- Gmail -->
-    <div class="product-card gmail-card" style="animation-delay:0.05s">
+    <div class="product-card" style="--accent:#EA4335;animation-delay:0.05s">
       <div class="card-header">
         <div class="product-icon" style="background:rgba(234,67,53,0.12)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-            <path d="M20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4Z" fill="#EA4335"/>
-            <path d="M12 13L2 6.5V18H22V6.5L12 13Z" fill="#C62828"/>
-            <path d="M22 6L12 12L2 6" stroke="white" stroke-width="1.5"/>
-          </svg>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4Z" fill="#EA4335"/><path d="M22 6L12 12L2 6" stroke="white" stroke-width="1.5"/></svg>
         </div>
-        <div>
-          <div class="card-title">Gmail</div>
-          <div class="card-sub">zainkhan1994.zk@gmail.com</div>
-        </div>
+        <div><div class="card-title">Gmail</div><div class="card-sub">zainkhan1994.zk@gmail.com</div></div>
       </div>
-      <div class="card-stat" style="color:var(--gmail-red)">8,094</div>
-      <div class="card-desc">Inbox messages — 5 custom labels including Bill Confirmations, Git, and Zain folders. Connected via Apple Mail.</div>
-      <span class="card-tag" style="background:rgba(234,67,53,0.1);color:var(--gmail-red)">Active · Synced</span>
+      <div class="card-stat" style="color:#EA4335">8,094</div>
+      <div class="card-desc">Inbox messages — 5 custom labels including Bill Confirmations, Git, and Zain. Connected via Apple Mail.</div>
+      <span class="card-tag" style="background:rgba(234,67,53,0.1);color:#EA4335">Active · Synced</span>
     </div>
 
-    <!-- Drive -->
-    <div class="product-card drive-card" style="animation-delay:0.1s">
+    <div class="product-card" style="--accent:#FBBC05;animation-delay:0.10s">
       <div class="card-header">
         <div class="product-icon" style="background:rgba(251,188,5,0.12)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-            <path d="M7.5 5L1 16H7.5L14 5H7.5Z" fill="#FBBC05"/>
-            <path d="M14 5L20.5 16H14L7.5 5H14Z" fill="#4285F4"/>
-            <path d="M7.5 16L4.25 21.5H20.25L23.5 16H7.5Z" fill="#34A853"/>
-          </svg>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M7.5 5L1 16H7.5L14 5H7.5Z" fill="#FBBC05"/><path d="M14 5L20.5 16H14L7.5 5H14Z" fill="#4285F4"/><path d="M7.5 16L4.25 21.5H20.25L23.5 16H7.5Z" fill="#34A853"/></svg>
         </div>
-        <div>
-          <div class="card-title">Google Drive</div>
-          <div class="card-sub">zain@thekhanstruct.com</div>
-        </div>
+        <div><div class="card-title">Google Drive</div><div class="card-sub">zain@thekhanstruct.com</div></div>
       </div>
-      <div class="card-stat" style="color:var(--drive-gold)">7,127</div>
-      <div class="card-desc">Files synced locally — 4,877 PNGs, 552 JPGs. Organized 2024–2026 by month. Shared Drive: "AG". Google AI Studio folder active.</div>
-      <span class="card-tag" style="background:rgba(251,188,5,0.1);color:var(--drive-gold)">Synced · macOS</span>
+      <div class="card-stat" style="color:#FBBC05">7,127</div>
+      <div class="card-desc">Files synced locally — 4,877 PNGs, 552 JPGs. Organized 2024–2026. Shared Drive: "AG". AI Studio folder active.</div>
+      <span class="card-tag" style="background:rgba(251,188,5,0.1);color:#FBBC05">Synced · macOS</span>
     </div>
 
-    <!-- Calendar -->
-    <div class="product-card cal-card" style="animation-delay:0.15s">
+    <div class="product-card" style="--accent:#4285F4;animation-delay:0.15s">
       <div class="card-header">
         <div class="product-icon" style="background:rgba(66,133,244,0.12)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-            <rect x="2" y="4" width="20" height="18" rx="2" fill="#4285F4"/>
-            <rect x="2" y="4" width="20" height="6" rx="2" fill="#1A73E8"/>
-            <rect x="7" y="2" width="2" height="4" rx="1" fill="#EA4335"/>
-            <rect x="15" y="2" width="2" height="4" rx="1" fill="#EA4335"/>
-            <rect x="6" y="13" width="3" height="3" rx="0.5" fill="white"/>
-            <rect x="10.5" y="13" width="3" height="3" rx="0.5" fill="white"/>
-            <rect x="15" y="13" width="3" height="3" rx="0.5" fill="white"/>
-          </svg>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="18" rx="2" fill="#4285F4"/><rect x="2" y="4" width="20" height="6" rx="2" fill="#1A73E8"/><rect x="7" y="2" width="2" height="4" rx="1" fill="#EA4335"/><rect x="15" y="2" width="2" height="4" rx="1" fill="#EA4335"/><rect x="6" y="13" width="3" height="3" rx="0.5" fill="white"/><rect x="10.5" y="13" width="3" height="3" rx="0.5" fill="white"/><rect x="15" y="13" width="3" height="3" rx="0.5" fill="white"/></svg>
         </div>
-        <div>
-          <div class="card-title">Google Calendar</div>
-          <div class="card-sub">#1 most-visited app</div>
-        </div>
+        <div><div class="card-title">Google Calendar</div><div class="card-sub">#1 most-visited app</div></div>
       </div>
-      <div class="card-stat" style="color:var(--calendar-blue)">583</div>
-      <div class="card-desc">Browser visits to Calendar (top URL). Actively uses week, day, 4-day, 7-day and month views. Deeply integrated workflow.</div>
-      <span class="card-tag" style="background:rgba(66,133,244,0.1);color:var(--calendar-blue)">Power User</span>
+      <div class="card-stat" style="color:#4285F4">583</div>
+      <div class="card-desc">Browser visits (top URL). 6 view modes used actively. Deeply integrated daily workflow.</div>
+      <span class="card-tag" style="background:rgba(66,133,244,0.1);color:#4285F4">Power User</span>
     </div>
 
-    <!-- Gemini -->
-    <div class="product-card gem-card" style="animation-delay:0.2s">
+    <div class="product-card" style="--accent:#8E75FF;animation-delay:0.20s">
       <div class="card-header">
         <div class="product-icon" style="background:rgba(142,117,255,0.12)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-            <path d="M12 2C12 2 8 8 8 12C8 16 12 22 12 22C12 22 16 16 16 12C16 8 12 2 12 2Z" fill="url(#gm1)"/>
-            <path d="M2 12C2 12 8 8 12 8C16 8 22 12 22 12C22 12 16 16 12 16C8 16 2 12 2 12Z" fill="url(#gm2)"/>
-            <defs>
-              <linearGradient id="gm1" x1="8" y1="2" x2="16" y2="22" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#8E75FF"/>
-                <stop offset="100%" stop-color="#4285F4"/>
-              </linearGradient>
-              <linearGradient id="gm2" x1="2" y1="12" x2="22" y2="12" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#4285F4"/>
-                <stop offset="100%" stop-color="#34A853"/>
-              </linearGradient>
-            </defs>
-          </svg>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 2C12 2 8 8 8 12C8 16 12 22 12 22C12 22 16 16 16 12C16 8 12 2 12 2Z" fill="url(#gm1)"/><path d="M2 12C2 12 8 8 12 8C16 8 22 12 22 12C22 12 16 16 12 16C8 16 2 12 2 12Z" fill="url(#gm2)"/><defs><linearGradient id="gm1" x1="8" y1="2" x2="16" y2="22" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#8E75FF"/><stop offset="100%" stop-color="#4285F4"/></linearGradient><linearGradient id="gm2" x1="2" y1="12" x2="22" y2="12" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#4285F4"/><stop offset="100%" stop-color="#34A853"/></linearGradient></defs></svg>
         </div>
-        <div>
-          <div class="card-title">Gemini</div>
-          <div class="card-sub">gemini.google.com</div>
-        </div>
+        <div><div class="card-title">Gemini</div><div class="card-sub">gemini.google.com</div></div>
       </div>
-      <div class="card-stat" style="color:var(--gemini-purple)">163</div>
-      <div class="card-desc">Browser visits — 3rd most visited Google property. Heavily used alongside AI Studio and NotebookLM for AI workflows.</div>
-      <span class="card-tag" style="background:rgba(142,117,255,0.1);color:var(--gemini-purple)">Active · Daily</span>
+      <div class="card-stat" style="color:#8E75FF">163</div>
+      <div class="card-desc">Browser visits. 3rd most visited Google property. Part of active AI stack with AI Studio + NotebookLM.</div>
+      <span class="card-tag" style="background:rgba(142,117,255,0.1);color:#8E75FF">Active · Daily</span>
     </div>
 
-    <!-- AI Studio -->
-    <div class="product-card ai-card" style="animation-delay:0.25s">
+    <div class="product-card" style="--accent:#669DF6;animation-delay:0.25s">
       <div class="card-header">
         <div class="product-icon" style="background:rgba(102,157,246,0.12)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-            <rect x="3" y="3" width="18" height="18" rx="3" fill="#669DF6"/>
-            <circle cx="9" cy="9" r="2.5" fill="white"/>
-            <circle cx="15" cy="9" r="2.5" fill="white"/>
-            <path d="M7 15C8 17 16 17 17 15" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" fill="#669DF6"/><circle cx="9" cy="9" r="2.5" fill="white"/><circle cx="15" cy="9" r="2.5" fill="white"/><path d="M7 15C8 17 16 17 17 15" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
-        <div>
-          <div class="card-title">Google AI Studio</div>
-          <div class="card-sub">Drive folder active</div>
-        </div>
+        <div><div class="card-title">Google AI Studio</div><div class="card-sub">Drive folder active</div></div>
       </div>
-      <div class="card-stat" style="color:var(--ai-studio-blue)">4</div>
-      <div class="card-desc">Projects saved to Drive: "Surrender for Zero Lives", "The Brief", "make this app multimodal" (×2). API history logged.</div>
-      <span class="card-tag" style="background:rgba(102,157,246,0.1);color:var(--ai-studio-blue)">4 Projects</span>
+      <div class="card-stat" style="color:#669DF6">4</div>
+      <div class="card-desc">Projects: "Surrender for Zero Lives", "The Brief", "make this app multimodal" (×2). API history logged.</div>
+      <span class="card-tag" style="background:rgba(102,157,246,0.1);color:#669DF6">4 Projects</span>
     </div>
 
-    <!-- NotebookLM -->
-    <div class="product-card nlm-card" style="animation-delay:0.3s">
+    <div class="product-card" style="--accent:#1AC8B4;animation-delay:0.30s">
       <div class="card-header">
-        <div class="product-icon" style="background:rgba(26,200,180,0.12)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-            <rect x="4" y="3" width="16" height="18" rx="2" fill="#1AC8B4"/>
-            <rect x="7" y="7" width="10" height="1.5" rx="0.75" fill="white"/>
-            <rect x="7" y="10.5" width="8" height="1.5" rx="0.75" fill="white"/>
-            <rect x="7" y="14" width="9" height="1.5" rx="0.75" fill="white"/>
-            <circle cx="18" cy="18" r="5" fill="#0d1117"/>
-            <circle cx="18" cy="18" r="4" fill="#1AC8B4"/>
-            <path d="M16 18L17.5 19.5L20.5 16.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div>
-          <div class="card-title">NotebookLM</div>
-          <div class="card-sub">notebooklm.google.com</div>
-        </div>
+        <div class="product-icon" style="background:rgba(26,200,180,0.12)"><span style="font-size:22px">📓</span></div>
+        <div><div class="card-title">NotebookLM</div><div class="card-sub">notebooklm.google.com</div></div>
       </div>
-      <div class="card-stat" style="color:var(--notebooklm-teal)">81</div>
-      <div class="card-desc">Browser visits — part of the active AI research stack alongside Gemini and AI Studio. Used for document intelligence.</div>
-      <span class="card-tag" style="background:rgba(26,200,180,0.1);color:var(--notebooklm-teal)">Research Tool</span>
+      <div class="card-stat" style="color:#1AC8B4">81</div>
+      <div class="card-desc">Browser visits — active AI research stack. Used for document intelligence alongside Gemini and AI Studio.</div>
+      <span class="card-tag" style="background:rgba(26,200,180,0.1);color:#1AC8B4">Research Tool</span>
     </div>
 
-    <!-- YouTube -->
-    <div class="product-card yt-card" style="animation-delay:0.35s">
+    <div class="product-card" style="--accent:#FF0000;animation-delay:0.35s">
       <div class="card-header">
-        <div class="product-icon" style="background:rgba(255,0,0,0.12)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-            <rect x="1" y="5" width="22" height="14" rx="4" fill="#FF0000"/>
-            <path d="M10 9.5L16 12L10 14.5V9.5Z" fill="white"/>
-          </svg>
-        </div>
-        <div>
-          <div class="card-title">YouTube</div>
-          <div class="card-sub">9 bookmarks</div>
-        </div>
+        <div class="product-icon" style="background:rgba(255,0,0,0.12)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="1" y="5" width="22" height="14" rx="4" fill="#FF0000"/><path d="M10 9.5L16 12L10 14.5V9.5Z" fill="white"/></svg></div>
+        <div><div class="card-title">YouTube</div><div class="card-sub">9 bookmarks</div></div>
       </div>
-      <div class="card-stat" style="color:var(--youtube-red)">83</div>
-      <div class="card-desc">Browser visits · 9 YouTube bookmarks saved. In Chrome top-20 most visited sites.</div>
-      <span class="card-tag" style="background:rgba(255,0,0,0.1);color:var(--youtube-red)">9 Bookmarks</span>
+      <div class="card-stat" style="color:#FF0000">83</div>
+      <div class="card-desc">Browser visits · 9 YouTube bookmarks saved. Top-20 most visited sites in Chrome.</div>
+      <span class="card-tag" style="background:rgba(255,0,0,0.1);color:#FF0000">9 Bookmarks</span>
     </div>
 
-    <!-- Google Cloud -->
-    <div class="product-card cloud-card" style="animation-delay:0.4s">
+    <div class="product-card" style="--accent:#FF6D00;animation-delay:0.40s">
       <div class="card-header">
-        <div class="product-icon" style="background:rgba(255,109,0,0.12)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-            <path d="M18.5 10.2C18.2 7.3 15.8 5 13 5C11.1 5 9.4 6 8.4 7.5C6.5 7.8 5 9.5 5 11.5C5 13.7 6.8 15.5 9 15.5H18C19.7 15.5 21 14.2 21 12.5C21 10.9 19.9 9.6 18.5 10.2Z" fill="#FF6D00"/>
-          </svg>
-        </div>
-        <div>
-          <div class="card-title">Google Cloud</div>
-          <div class="card-sub">cloud.google.com</div>
-        </div>
+        <div class="product-icon" style="background:rgba(255,109,0,0.12)"><span style="font-size:22px">☁️</span></div>
+        <div><div class="card-title">Google Cloud</div><div class="card-sub">cloud.google.com</div></div>
       </div>
-      <div class="card-stat" style="color:var(--cloud-orange)">23</div>
-      <div class="card-desc">15 cloud.google.com + 8 console.cloud.google.com bookmarks. Active Cloud Console usage. No local gcloud CLI installed.</div>
-      <span class="card-tag" style="background:rgba(255,109,0,0.1);color:var(--cloud-orange)">Console Active</span>
+      <div class="card-stat" style="color:#FF6D00">23</div>
+      <div class="card-desc">15 cloud.google.com + 8 console bookmarks. Active Cloud Console. No local gcloud CLI installed.</div>
+      <span class="card-tag" style="background:rgba(255,109,0,0.1);color:#FF6D00">Console Active</span>
     </div>
 
-    <!-- Google Ads -->
-    <div class="product-card ads-card" style="animation-delay:0.45s">
+    <div class="product-card" style="--accent:#34A853;animation-delay:0.45s">
       <div class="card-header">
-        <div class="product-icon" style="background:rgba(52,168,83,0.12)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="#34A853"/>
-          </svg>
-        </div>
-        <div>
-          <div class="card-title">Google Ads</div>
-          <div class="card-sub">ads.google.com</div>
-        </div>
+        <div class="product-icon" style="background:rgba(52,168,83,0.12)"><span style="font-size:22px">📢</span></div>
+        <div><div class="card-title">Google Ads + Business</div><div class="card-sub">ads.google.com</div></div>
       </div>
-      <div class="card-stat" style="color:var(--meet-green)">8</div>
-      <div class="card-desc">8 Google Ads bookmarks + 7 Google Business Profile bookmarks. Active campaign management in Chrome.</div>
-      <span class="card-tag" style="background:rgba(52,168,83,0.1);color:var(--meet-green)">Business Use</span>
+      <div class="card-stat" style="color:#34A853">15</div>
+      <div class="card-desc">8 Google Ads + 7 Google Business Profile bookmarks. Active campaign management.</div>
+      <span class="card-tag" style="background:rgba(52,168,83,0.1);color:#34A853">Business Use</span>
     </div>
 
-    <!-- Developers -->
-    <div class="product-card docs-card" style="animation-delay:0.5s">
+    <div class="product-card" style="--accent:#4285F4;animation-delay:0.50s">
       <div class="card-header">
-        <div class="product-icon" style="background:rgba(66,133,244,0.12)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-            <rect x="3" y="3" width="18" height="18" rx="3" stroke="#4285F4" stroke-width="2"/>
-            <path d="M8 12L11 15L16 9" stroke="#4285F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div>
-          <div class="card-title">Google Developers</div>
-          <div class="card-sub">developers.google.com</div>
-        </div>
+        <div class="product-icon" style="background:rgba(66,133,244,0.12)"><span style="font-size:22px">👨‍💻</span></div>
+        <div><div class="card-title">Google Developers</div><div class="card-sub">developers.google.com</div></div>
       </div>
-      <div class="card-stat" style="color:var(--google-blue)">29</div>
-      <div class="card-desc">23 developers.google.com + 6 cloudskillsboost.google bookmarks. Active learning + certification usage.</div>
-      <span class="card-tag" style="background:rgba(66,133,244,0.1);color:var(--google-blue)">Dev + Learning</span>
+      <div class="card-stat" style="color:#4285F4">29</div>
+      <div class="card-desc">23 developers.google.com + 6 cloudskillsboost.google bookmarks. Active learning + certifications.</div>
+      <span class="card-tag" style="background:rgba(66,133,244,0.1);color:#4285F4">Dev + Learning</span>
     </div>
 
-    <!-- Docs/Sheets -->
-    <div class="product-card" style="--accent:var(--google-blue);animation-delay:0.55s">
+    <div class="product-card" style="--accent:#4285F4;animation-delay:0.55s">
       <div class="card-header">
-        <div class="product-icon" style="background:rgba(66,133,244,0.12)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-            <rect x="5" y="3" width="14" height="18" rx="2" fill="#4285F4"/>
-            <rect x="8" y="7" width="8" height="1.5" rx="0.75" fill="white"/>
-            <rect x="8" y="10" width="6" height="1.5" rx="0.75" fill="white"/>
-            <rect x="8" y="13" width="7" height="1.5" rx="0.75" fill="white"/>
-            <rect x="8" y="16" width="5" height="1.5" rx="0.75" fill="white"/>
-          </svg>
-        </div>
-        <div>
-          <div class="card-title">Docs / Sheets</div>
-          <div class="card-sub">docs.google.com</div>
-        </div>
+        <div class="product-icon" style="background:rgba(66,133,244,0.12)"><span style="font-size:22px">📄</span></div>
+        <div><div class="card-title">Docs / Sheets</div><div class="card-sub">docs.google.com</div></div>
       </div>
-      <div class="card-stat" style="color:var(--google-blue)">41</div>
-      <div class="card-desc">41 docs.google.com bookmarks — most bookmarked Google domain. 1 .gsheet synced to Drive. Script file (.gscript) for Gmail Labels.</div>
-      <span class="card-tag" style="background:rgba(66,133,244,0.1);color:var(--google-blue)">Most Bookmarked</span>
+      <div class="card-stat" style="color:#4285F4">41</div>
+      <div class="card-desc">41 docs.google.com bookmarks — most bookmarked Google domain. 1 .gsheet + 1 .gscript in Drive.</div>
+      <span class="card-tag" style="background:rgba(66,133,244,0.1);color:#4285F4">Most Bookmarked</span>
     </div>
 
   </div>
@@ -987,195 +423,173 @@
 
 <hr class="section-divider">
 
-<!-- ─── GOOGLE DRIVE EXPLORER ─── -->
+<!-- DRIVE -->
 <section id="drive" class="fade-in">
   <div class="section-label">Storage</div>
   <div class="section-title">Google Drive Explorer</div>
-
   <div class="drive-layout">
     <div class="drive-sidebar">
       <h4>Year</h4>
-      <button class="drive-year-btn active" onclick="showYear('all')">All</button>
-      <button class="drive-year-btn" onclick="showYear('2026')">2026</button>
-      <button class="drive-year-btn" onclick="showYear('2025')">2025</button>
-      <button class="drive-year-btn" onclick="showYear('2024')">2024</button>
-      <button class="drive-year-btn" onclick="showYear('studio')">AI Studio</button>
-      <button class="drive-year-btn" onclick="showYear('shared')">Shared</button>
-
+      <button class="drive-year-btn active" onclick="showYear('all',this)">All</button>
+      <button class="drive-year-btn" onclick="showYear('2026',this)">2026</button>
+      <button class="drive-year-btn" onclick="showYear('2025',this)">2025</button>
+      <button class="drive-year-btn" onclick="showYear('2024',this)">2024</button>
+      <button class="drive-year-btn" onclick="showYear('studio',this)">AI Studio</button>
+      <button class="drive-year-btn" onclick="showYear('shared',this)">Shared</button>
       <h4 style="margin-top:20px">File Types</h4>
-      <div style="font-size:12px;color:var(--muted);margin-bottom:8px">
-        <div style="display:flex;justify-content:space-between;padding:4px 0">
-          <span>🖼️ PNG</span><span style="color:var(--drive-gold);font-weight:700">4,877</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:4px 0">
-          <span>📷 JPG</span><span style="color:var(--drive-gold);font-weight:700">552</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:4px 0">
-          <span>📊 Sheets</span><span style="color:var(--drive-gold);font-weight:700">1</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:4px 0">
-          <span>⚙️ Script</span><span style="color:var(--drive-gold);font-weight:700">1</span>
-        </div>
+      <div style="font-size:12px;color:var(--muted)">
+        <div style="display:flex;justify-content:space-between;padding:4px 0"><span>🖼️ PNG</span><span style="color:#FBBC05;font-weight:700">4,877</span></div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0"><span>📷 JPG</span><span style="color:#FBBC05;font-weight:700">552</span></div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0"><span>📊 Sheets</span><span style="color:#FBBC05;font-weight:700">1</span></div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0"><span>⚙️ Script</span><span style="color:#FBBC05;font-weight:700">1</span></div>
       </div>
     </div>
-
     <div class="drive-main">
       <div class="drive-header">
-        <div>
-          <div style="font-size:14px;font-weight:700">My Drive</div>
-          <div class="drive-path">~/Library/CloudStorage/GoogleDrive-zain@thekhanstruct.com</div>
-        </div>
-        <div style="font-size:28px;font-weight:800;color:var(--drive-gold)" id="drive-count">7,127</div>
+        <div><div style="font-size:14px;font-weight:700">My Drive</div><div class="drive-path">~/Library/CloudStorage/GoogleDrive-zain@thekhanstruct.com</div></div>
+        <div style="font-size:28px;font-weight:800;color:#FBBC05" id="drive-count">7,127</div>
       </div>
-
-      <div class="file-grid" id="drive-grid">
-        <!-- rendered by JS -->
-      </div>
+      <div class="file-grid" id="drive-grid"></div>
     </div>
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- ─── CALENDAR ─── -->
+<!-- CALENDAR -->
 <section id="calendar" class="fade-in">
   <div class="section-label">Scheduling</div>
   <div class="section-title">Google Calendar — Usage Intelligence</div>
-
   <div class="calendar-widget">
     <div>
       <div class="cal-stat-grid">
-        <div class="cal-stat-box">
-          <div class="cal-stat-num">583</div>
-          <div class="cal-stat-label">Inbox visits this year</div>
-        </div>
-        <div class="cal-stat-box">
-          <div class="cal-stat-num" style="color:var(--google-green)">#1</div>
-          <div class="cal-stat-label">Most visited app</div>
-        </div>
-        <div class="cal-stat-box">
-          <div class="cal-stat-num" style="color:var(--google-yellow)">6</div>
-          <div class="cal-stat-label">View modes used</div>
-        </div>
-        <div class="cal-stat-box">
-          <div class="cal-stat-num" style="color:var(--google-red)">2</div>
-          <div class="cal-stat-label">Calendar accounts</div>
-        </div>
+        <div class="cal-stat-box"><div class="cal-stat-num">583</div><div class="cal-stat-label">Inbox visits / year</div></div>
+        <div class="cal-stat-box"><div class="cal-stat-num" style="color:#34A853">#1</div><div class="cal-stat-label">Most visited app</div></div>
+        <div class="cal-stat-box"><div class="cal-stat-num" style="color:#FBBC05">6</div><div class="cal-stat-label">View modes used</div></div>
+        <div class="cal-stat-box"><div class="cal-stat-num" style="color:#EA4335">2</div><div class="cal-stat-label">Calendar accounts</div></div>
       </div>
     </div>
     <div class="cal-views">
-      <h4>View Mode Breakdown (from browser history)</h4>
-      <div class="cal-view-item">
-        <span>Week view</span>
-        <span class="cal-view-count">313</span>
-      </div>
-      <div class="cal-view-item">
-        <span>Default / R tab</span>
-        <span class="cal-view-count">583</span>
-      </div>
-      <div class="cal-view-item">
-        <span>7-day custom</span>
-        <span class="cal-view-count">120</span>
-      </div>
-      <div class="cal-view-item">
-        <span>4-day custom</span>
-        <span class="cal-view-count">143</span>
-      </div>
-      <div class="cal-view-item">
-        <span>Month view</span>
-        <span class="cal-view-count">89</span>
-      </div>
-      <div class="cal-view-item">
-        <span>Day view</span>
-        <span class="cal-view-count">164</span>
-      </div>
+      <h4>View Mode Breakdown</h4>
+      <div class="cal-view-item"><span>Default / R tab</span><span class="cal-view-count">583</span></div>
+      <div class="cal-view-item"><span>Week view</span><span class="cal-view-count">313</span></div>
+      <div class="cal-view-item"><span>4-day custom</span><span class="cal-view-count">143</span></div>
+      <div class="cal-view-item"><span>7-day custom</span><span class="cal-view-count">120</span></div>
+      <div class="cal-view-item"><span>Day view</span><span class="cal-view-count">164</span></div>
+      <div class="cal-view-item"><span>Month view</span><span class="cal-view-count">89</span></div>
     </div>
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- ─── AI STUDIO ─── -->
+<!-- ═══════════════════════════ ANTIGRAVITY ═══════════════════════════ -->
+<section id="antigravity" class="fade-in">
+  <div class="section-label">Google's AI IDE</div>
+  <div class="section-title" style="background:linear-gradient(90deg,var(--ag-cyan),var(--ag-violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">⚡ Antigravity Lab</div>
+
+  <div class="ag-stats">
+    <div class="ag-stat"><div class="ag-stat-num" id="count-brains">0</div><div class="ag-stat-label">Brain Threads</div></div>
+    <div class="ag-stat"><div class="ag-stat-num" id="count-tasks">0</div><div class="ag-stat-label">Tasks Built</div></div>
+    <div class="ag-stat"><div class="ag-stat-num" id="count-sessions">0</div><div class="ag-stat-label">Sessions Logged</div></div>
+    <div class="ag-stat"><div class="ag-stat-num" id="count-walkthroughs">0</div><div class="ag-stat-label">Walkthroughs</div></div>
+  </div>
+
+  <div style="margin-bottom:16px;font-size:13px;color:var(--muted)">Click any card to flip it and see full details. Filter by category below.</div>
+
+  <div class="filter-bar">
+    <button class="filter-pill active" onclick="filterCards('all',this)">All</button>
+    <button class="filter-pill" onclick="filterCards('app',this)">Apps</button>
+    <button class="filter-pill" onclick="filterCards('agent',this)">AI Agents</button>
+    <button class="filter-pill" onclick="filterCards('automation',this)">Automation</button>
+    <button class="filter-pill" onclick="filterCards('notion',this)">Notion</button>
+    <button class="filter-pill" onclick="filterCards('design',this)">Design</button>
+  </div>
+
+  <div class="flip-grid" id="flip-grid"></div>
+
+  <!-- Brain constellation -->
+  <div class="brain-constellation">
+    <div class="brain-canvas-wrap">
+      <canvas id="brainCanvas" width="280" height="280"></canvas>
+    </div>
+    <div class="brain-info">
+      <h4>49 Active Brain Threads</h4>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Each node is a persistent memory thread in the Antigravity brain store — tasks, plans, walkthroughs, and project history that survive across sessions.</p>
+      <div class="brain-sessions" id="session-list"></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ═══════════════════════════ NOTION OS ═══════════════════════════ -->
+<section id="notion" class="fade-in">
+  <div class="section-label">Second Brain</div>
+  <div class="section-title">◻ Notion OS</div>
+
+  <div class="notion-intro">
+    <div class="notion-logo">◻</div>
+    <div class="notion-intro-text">
+      <h3>Life OS — P·H·W·G Framework</h3>
+      <p>Personal · Health · Work · Goals — the four pillars of the Second Brain, powered by Notion MCP + autonomous Python automation pipelines.</p>
+    </div>
+    <div class="notion-pulse-dot" title="Notion MCP Connected"></div>
+  </div>
+
+  <div class="section-label" style="margin-bottom:16px">Databases</div>
+  <div class="notion-grid" id="notion-grid"></div>
+
+  <div class="notion-automations">
+    <h4>Automation Scripts</h4>
+    <div class="automation-list" id="automation-list"></div>
+  </div>
+
+  <div style="margin-top:24px">
+    <div class="section-label" style="margin-bottom:12px">MCP Integrations</div>
+    <div class="mcp-strip" id="mcp-strip"></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- AI STUDIO -->
 <section id="ai-studio" class="fade-in">
   <div class="section-label">AI Development</div>
   <div class="section-title">Google AI Studio Projects</div>
-
   <div class="ai-prompts">
-    <div class="prompt-card">
-      <div style="font-size:32px;margin-bottom:12px">🕊️</div>
-      <div class="prompt-title">Surrender for Zero Lives</div>
-      <div class="card-desc" style="margin-bottom:12px">Saved AI Studio session — Drive synced. Likely an AI-assisted narrative or policy project given the title.</div>
-      <span class="prompt-badge">⚡ AI Studio · Saved Prompt</span>
-    </div>
-
-    <div class="prompt-card">
-      <div style="font-size:32px;margin-bottom:12px">📋</div>
-      <div class="prompt-title">The Brief</div>
-      <div class="card-desc" style="margin-bottom:12px">Saved AI Studio session in Drive. A briefing or document-generation workflow saved to the AI Studio project folder.</div>
-      <span class="prompt-badge">⚡ AI Studio · Saved Prompt</span>
-    </div>
-
-    <div class="prompt-card">
-      <div style="font-size:32px;margin-bottom:12px">🎙️</div>
-      <div class="prompt-title">Make This App Multimodal</div>
-      <div class="card-desc" style="margin-bottom:12px">Two iterations saved (v1 + v2). Engineering prompt for adding multimodal capabilities to an application using Gemini's API.</div>
-      <span class="prompt-badge">⚡ AI Studio · 2 Iterations</span>
-    </div>
-
-    <div class="prompt-card">
-      <div style="font-size:32px;margin-bottom:12px">📈</div>
-      <div class="prompt-title">applet_access_history.json</div>
-      <div class="card-desc" style="margin-bottom:12px">AI Studio access log — JSON history of all applet interactions and API calls made through Google AI Studio.</div>
-      <span class="prompt-badge">📊 Usage Log · JSON</span>
-    </div>
+    <div class="prompt-card"><div style="font-size:32px;margin-bottom:12px">🕊️</div><div class="prompt-title">Surrender for Zero Lives</div><div class="card-desc" style="margin-bottom:12px">Saved AI Studio session — Drive synced. AI-assisted narrative or policy project.</div><span class="prompt-badge">⚡ AI Studio · Saved Prompt</span></div>
+    <div class="prompt-card"><div style="font-size:32px;margin-bottom:12px">📋</div><div class="prompt-title">The Brief</div><div class="card-desc" style="margin-bottom:12px">Saved AI Studio session. A briefing or document-generation workflow saved to the project folder.</div><span class="prompt-badge">⚡ AI Studio · Saved Prompt</span></div>
+    <div class="prompt-card"><div style="font-size:32px;margin-bottom:12px">🎙️</div><div class="prompt-title">Make This App Multimodal</div><div class="card-desc" style="margin-bottom:12px">Two iterations saved (v1 + v2). Engineering prompt for adding Gemini multimodal capabilities.</div><span class="prompt-badge">⚡ AI Studio · 2 Iterations</span></div>
+    <div class="prompt-card"><div style="font-size:32px;margin-bottom:12px">📈</div><div class="prompt-title">applet_access_history.json</div><div class="card-desc" style="margin-bottom:12px">AI Studio access log — JSON history of all applet interactions and API calls.</div><span class="prompt-badge">📊 Usage Log · JSON</span></div>
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- ─── CHROME INTEL ─── -->
+<!-- CHROME -->
 <section id="chrome" class="fade-in">
   <div class="section-label">Browser Intelligence</div>
   <div class="section-title">Chrome — 674 Bookmarks · Top Domains</div>
-
-  <div style="margin-bottom:32px">
-    <div class="visit-bars" id="visit-bars">
-      <!-- rendered by JS -->
-    </div>
-  </div>
-
+  <div style="margin-bottom:32px"><div class="visit-bars" id="visit-bars"></div></div>
   <div class="section-title" style="font-size:20px;margin-top:40px">Top Bookmarked Domains</div>
-  <div class="bookmark-domains" id="bookmark-domains">
-    <!-- rendered by JS -->
-  </div>
+  <div class="bookmark-domains" id="bookmark-domains"></div>
 </section>
 
 <hr class="section-divider">
 
-<!-- ─── DATA INVENTORY ─── -->
+<!-- INVENTORY -->
 <section id="inventory" class="fade-in">
   <div class="section-label">Full Audit</div>
-  <div class="section-title">Google Data Inventory</div>
-
+  <div class="section-title">Complete Data Inventory</div>
   <div class="table-wrap">
-    <table class="inventory-table" id="inventory-table">
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Data Found</th>
-          <th>Type</th>
-          <th>Location</th>
-          <th>Size / Count</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- rendered by JS -->
-      </tbody>
+    <table class="inventory-table">
+      <thead><tr><th>Source</th><th>Data Found</th><th>Type</th><th>Location</th><th>Size / Count</th></tr></thead>
+      <tbody id="inventory-body"></tbody>
     </table>
   </div>
 </section>
 
-<!-- ─── FOOTER ─── -->
 <footer class="content">
   <div class="footer-dots">
     <div class="g-dot" style="background:var(--google-blue);width:10px;height:10px"></div>
@@ -1184,305 +598,537 @@
     <div class="g-dot" style="background:var(--google-green);width:10px;height:10px"></div>
   </div>
   <div>Zain Khan — Google Ecosystem Portal</div>
-  <div style="margin-top:6px;color:var(--border)">Generated 2026-06-25 · GDG Repo</div>
+  <div style="margin-top:6px;color:var(--border)">Generated 2026-06-25 · GDG Repo · Antigravity + Notion + Google</div>
 </footer>
 
-</div><!-- end .content -->
+</div>
 
 <script>
-// ─── DATA ───────────────────────────────────────────────────
-const DATA = {
-  driveFiles: {
-    all: [
-      { name: "Gmail Labels.gscript", icon: "⚙️", type: "gscript", year: "root" },
-      { name: "Untitled spreadsheet.gsheet", icon: "📊", type: "gsheet", year: "root" },
-      { name: "applet_access_history.json", icon: "📋", type: "json", year: "studio" },
-      { name: "Surrender for Zero Lives", icon: "🕊️", type: "prompt", year: "studio" },
-      { name: "The Brief", icon: "📝", type: "prompt", year: "studio" },
-      { name: "make this app multimodal", icon: "🎙️", type: "prompt", year: "studio" },
-      { name: "make this app multimodal (1)", icon: "🎙️", type: "prompt", year: "studio" },
-      { name: "2026 / 06_June", icon: "📁", type: "folder", year: "2026" },
-      { name: "2026 / 04_April", icon: "📁", type: "folder", year: "2026" },
-      { name: "2026 / 03_March", icon: "📁", type: "folder", year: "2026" },
-      { name: "2026 / 02_February", icon: "📁", type: "folder", year: "2026" },
-      { name: "2026 / 01_January", icon: "📁", type: "folder", year: "2026" },
-      { name: "2025 / 12_December", icon: "📁", type: "folder", year: "2025" },
-      { name: "2025 / 11_November", icon: "📁", type: "folder", year: "2025" },
-      { name: "2025 / 10_October", icon: "📁", type: "folder", year: "2025" },
-      { name: "2025 / 09_September", icon: "📁", type: "folder", year: "2025" },
-      { name: "2025 / 08_August", icon: "📁", type: "folder", year: "2025" },
-      { name: "2025 / 07_July", icon: "📁", type: "folder", year: "2025" },
-      { name: "2025 / 06_June", icon: "📁", type: "folder", year: "2025" },
-      { name: "2025 / 05_May", icon: "📁", type: "folder", year: "2025" },
-      { name: "2025 / 04_April", icon: "📁", type: "folder", year: "2025" },
-      { name: "2025 / 03_March", icon: "📁", type: "folder", year: "2025" },
-      { name: "2025 / 02_February", icon: "📁", type: "folder", year: "2025" },
-      { name: "2025 / 01-January", icon: "📁", type: "folder", year: "2025" },
-      { name: "2024 / 09_September", icon: "📁", type: "folder", year: "2024" },
-      { name: "AG (Shared Drive)", icon: "🏢", type: "shared", year: "shared" },
-      { name: "4,877 PNG images", icon: "🖼️", type: "image", year: "all" },
-      { name: "552 JPG images", icon: "📷", type: "image", year: "all" },
-    ]
-  },
+// ──────────────────────── DATA ────────────────────────
 
-  bookmarkDomains: [
-    { domain: "docs.google.com", count: 41, color: "#4285F4" },
-    { domain: "developers.google.com", count: 23, color: "#4285F4" },
-    { domain: "spaceappschallenge.org", count: 21, color: "#FF6D00" },
-    { domain: "business.facebook.com", count: 19, color: "#1877F2" },
-    { domain: "support.google.com", count: 18, color: "#34A853" },
-    { domain: "facebook.com", count: 17, color: "#1877F2" },
-    { domain: "events.mlh.io", count: 16, color: "#FBBC05" },
-    { domain: "cloud.google.com", count: 15, color: "#FF6D00" },
-    { domain: "nasa.gov", count: 13, color: "#4285F4" },
-    { domain: "github.com", count: 12, color: "#8b949e" },
-    { domain: "google.com", count: 11, color: "#EA4335" },
-    { domain: "canva.com", count: 10, color: "#8E75FF" },
-    { domain: "youtube.com", count: 9, color: "#FF0000" },
-    { domain: "console.cloud.google.com", count: 8, color: "#FF6D00" },
-    { domain: "ads.google.com", count: 8, color: "#34A853" },
-    { domain: "business.google.com", count: 7, color: "#4285F4" },
-    { domain: "cloudskillsboost.google", count: 6, color: "#FBBC05" },
-    { domain: "mlh.com", count: 6, color: "#EA4335" },
-    { domain: "linkedin.com", count: 6, color: "#0A66C2" },
-    { domain: "mail.google.com", count: 5, color: "#EA4335" },
-  ],
-
-  visitHistory: [
-    { label: "Gmail", visits: 583, color: "#EA4335" },
-    { label: "Google Calendar", visits: 399, color: "#4285F4" },
-    { label: "GitHub (profile)", visits: 201, color: "#8b949e" },
-    { label: "Gemini", visits: 163, color: "#8E75FF" },
-    { label: "Calendar (week)", visits: 143, color: "#4285F4" },
-    { label: "Calendar (custom 7d)", visits: 120, color: "#4285F4" },
-    { label: "GitHub (Mind-Map)", visits: 122, color: "#8b949e" },
-    { label: "Calendar (month)", visits: 89, color: "#4285F4" },
-    { label: "GitHub (Blueprint)", visits: 88, color: "#8b949e" },
-    { label: "YouTube", visits: 83, color: "#FF0000" },
-    { label: "NotebookLM", visits: 81, color: "#1AC8B4" },
-    { label: "Calendar (day)", visits: 84, color: "#4285F4" },
-  ],
-
-  inventory: [
-    { product: "Gmail", data: "Inbox (8,094 emails)", type: "email", location: "Library/Mail/V10/…[Gmail].mbox", size: "8,094 msgs" },
-    { product: "Gmail Labels", data: "INBOX, Bill Confirmations, Git, P-, Zain, Sent, Starred", type: "labels", location: "Library/Mail/V10/1A3C…", size: "7 labels" },
-    { product: "Google Drive", data: "My Drive — year folders 2024–2026", type: "cloud storage", location: "Library/CloudStorage/GoogleDrive-zain@thekhanstruct.com", size: "7,127 files" },
-    { product: "Drive — Images", data: "4,877 PNG + 552 JPG (synced)", type: "image", location: "GoogleDrive-zain@thekhanstruct.com/My Drive/**", size: "5,429 files" },
-    { product: "Drive — Sheets", data: "Untitled spreadsheet.gsheet", type: "spreadsheet", location: "GoogleDrive/My Drive/", size: "1 file" },
-    { product: "Drive — Script", data: "Gmail Labels.gscript", type: "apps script", location: "GoogleDrive/My Drive/", size: "1 file" },
-    { product: "Shared Drive", data: "AG workspace drive", type: "shared drive", location: "GoogleDrive/Shared drives/AG/", size: "1 drive" },
-    { product: "AI Studio", data: "4 project folders + applet history", type: "ai projects", location: "GoogleDrive/My Drive/Google AI Studio/", size: "4 projects" },
-    { product: "Google Chrome", data: "Bookmarks DB (595 KB)", type: "browser", location: "Library/Application Support/Google/Chrome/Default/", size: "674 bookmarks" },
-    { product: "Google Chrome", data: "Visit history — top: Gmail (583), Calendar (399+)", type: "browser history", location: "Library/Application Support/Google/Chrome/Default/History", size: "top 30 sites" },
-    { product: "Google Calendar", data: "Active — 2 accounts, 6 view modes", type: "calendar", location: "Browser (cloud only — no .ics exports)", size: "~1,400 visits" },
-    { product: "Google Gemini", data: "163 browser visits", type: "ai assistant", location: "gemini.google.com (cloud)", size: "163 visits" },
-    { product: "NotebookLM", data: "81 browser visits", type: "ai tool", location: "notebooklm.google.com (cloud)", size: "81 visits" },
-    { product: "Google Cloud Console", data: "8 bookmarks + active visits", type: "cloud", location: "console.cloud.google.com (cloud)", size: "8 bookmarks" },
-    { product: "Google Ads", data: "8 ads.google.com bookmarks", type: "advertising", location: "Chrome Bookmarks", size: "8 bookmarks" },
-    { product: "Google Developers", data: "23 developer docs + 6 Cloud Skills Boost", type: "documentation", location: "Chrome Bookmarks", size: "29 bookmarks" },
-    { product: "YouTube", data: "83 visits + 9 bookmarks", type: "video", location: "youtube.com (cloud) + Chrome Bookmarks", size: "83 visits" },
-    { product: "Space Apps (NASA/Google)", data: "21 bookmarks — hackathon work", type: "hackathon", location: "Chrome Bookmarks", size: "21 bookmarks" },
+const DRIVE_FILES = {
+  all: [
+    {name:"Gmail Labels.gscript",icon:"⚙️",type:"gscript",year:"root"},
+    {name:"Untitled spreadsheet.gsheet",icon:"📊",type:"gsheet",year:"root"},
+    {name:"applet_access_history.json",icon:"📋",type:"json",year:"studio"},
+    {name:"Surrender for Zero Lives",icon:"🕊️",type:"prompt",year:"studio"},
+    {name:"The Brief",icon:"📝",type:"prompt",year:"studio"},
+    {name:"make this app multimodal",icon:"🎙️",type:"prompt",year:"studio"},
+    {name:"make this app multimodal (1)",icon:"🎙️",type:"prompt",year:"studio"},
+    {name:"2026 / 06_June",icon:"📁",type:"folder",year:"2026"},
+    {name:"2026 / 04_April",icon:"📁",type:"folder",year:"2026"},
+    {name:"2026 / 03_March",icon:"📁",type:"folder",year:"2026"},
+    {name:"2026 / 02_February",icon:"📁",type:"folder",year:"2026"},
+    {name:"2026 / 01_January",icon:"📁",type:"folder",year:"2026"},
+    {name:"2025 / 12_December",icon:"📁",type:"folder",year:"2025"},
+    {name:"2025 / 11_November",icon:"📁",type:"folder",year:"2025"},
+    {name:"2025 / 10_October",icon:"📁",type:"folder",year:"2025"},
+    {name:"2025 / 09_September",icon:"📁",type:"folder",year:"2025"},
+    {name:"2025 / 07_July",icon:"📁",type:"folder",year:"2025"},
+    {name:"2025 / 06_June",icon:"📁",type:"folder",year:"2025"},
+    {name:"2025 / 05_May",icon:"📁",type:"folder",year:"2025"},
+    {name:"2025 / 04_April",icon:"📁",type:"folder",year:"2025"},
+    {name:"2025 / 03_March",icon:"📁",type:"folder",year:"2025"},
+    {name:"2025 / 01-January",icon:"📁",type:"folder",year:"2025"},
+    {name:"2024 / 09_September",icon:"📁",type:"folder",year:"2024"},
+    {name:"AG (Shared Drive)",icon:"🏢",type:"shared",year:"shared"},
+    {name:"4,877 PNG images",icon:"🖼️",type:"image",year:"all"},
+    {name:"552 JPG images",icon:"📷",type:"image",year:"all"},
   ]
 };
 
-// ─── TYPE COLORS ────────────────────────────────────────────
-const typeColors = {
-  email: { bg: "rgba(234,67,53,0.12)", color: "#EA4335" },
-  labels: { bg: "rgba(234,67,53,0.08)", color: "#EA4335" },
-  "cloud storage": { bg: "rgba(251,188,5,0.12)", color: "#FBBC05" },
-  image: { bg: "rgba(251,188,5,0.08)", color: "#FBBC05" },
-  spreadsheet: { bg: "rgba(52,168,83,0.12)", color: "#34A853" },
-  "apps script": { bg: "rgba(52,168,83,0.08)", color: "#34A853" },
-  "shared drive": { bg: "rgba(251,188,5,0.1)", color: "#FBBC05" },
-  "ai projects": { bg: "rgba(102,157,246,0.12)", color: "#669DF6" },
-  browser: { bg: "rgba(66,133,244,0.1)", color: "#4285F4" },
-  "browser history": { bg: "rgba(66,133,244,0.08)", color: "#4285F4" },
-  calendar: { bg: "rgba(66,133,244,0.12)", color: "#4285F4" },
-  "ai assistant": { bg: "rgba(142,117,255,0.12)", color: "#8E75FF" },
-  "ai tool": { bg: "rgba(26,200,180,0.12)", color: "#1AC8B4" },
-  cloud: { bg: "rgba(255,109,0,0.12)", color: "#FF6D00" },
-  advertising: { bg: "rgba(52,168,83,0.12)", color: "#34A853" },
-  documentation: { bg: "rgba(66,133,244,0.1)", color: "#4285F4" },
-  video: { bg: "rgba(255,0,0,0.1)", color: "#FF0000" },
-  hackathon: { bg: "rgba(255,109,0,0.1)", color: "#FF6D00" },
-};
+const ANTIGRAVITY_PROJECTS = [
+  {
+    emoji:"🧠", title:"NeuroType",
+    cat:"app", catLabel:"App", catColor:"rgba(0,212,255,0.15)", catText:"#00D4FF",
+    desc:"Cognitive training app with verbatim recall and interference tasks. Logs performance scores directly to a Notion database via server API.",
+    stack:["React","TypeScript","Vite","Notion API","Node.js"],
+    github:"zainkhan1994/Neurogames", status:"Active"
+  },
+  {
+    emoji:"🏛️", title:"Notion Judge's Glassboard",
+    cat:"notion", catLabel:"Notion", catColor:"rgba(247,246,243,0.1)", catText:"#F7F6F3",
+    desc:"Submission for the Notion MCP Challenge. Glassmorphism React SPA for judging 180+ submissions. Ingests DEV.to API + Notion MCP, two-way score sync.",
+    stack:["React","Vite","Notion MCP","DEV.to API","Python"],
+    github:"zainkhan1994/notion-judge-glassboard", status:"Shipped"
+  },
+  {
+    emoji:"🗺️", title:"Blueprint Visualizer",
+    cat:"app", catLabel:"App", catColor:"rgba(0,212,255,0.15)", catText:"#00D4FF",
+    desc:"Interactive life management system — Personal, Applications & Health tree. D3.js mind map, glass morphism design, 100+ apps catalogued, JSON export.",
+    stack:["D3.js","JavaScript","Glassmorphism","JSON"],
+    github:"zainkhan1994/Blueprint", status:"Active"
+  },
+  {
+    emoji:"🤖", title:"C.O.R.T.A.N.A.",
+    cat:"agent", catLabel:"AI Agent", catColor:"rgba(168,85,247,0.15)", catText:"#A855F7",
+    desc:"Cloud-Optimized Real-Time Agent. ADHD Cognitive-OS built on P-H-W-G framework. RPA orchestration, Visual Cortex (osxphotos + YOLO), proactive Second Brain auditing.",
+    stack:["Python","osxphotos","YOLO","RPA","Multimodal"],
+    github:"zainkhan1994/Cortona-Os", status:"In Progress"
+  },
+  {
+    emoji:"🔖", title:"Bookmark Tree UI",
+    cat:"app", catLabel:"App", catColor:"rgba(0,212,255,0.15)", catText:"#00D4FF",
+    desc:"Visual browser bookmark explorer. React + Tailwind + Lucide. Converts Chrome bookmark JSON into a searchable, collapsible visual directory with Vite.",
+    stack:["React","Tailwind","Lucide","Vite","Chrome API"],
+    github:"zainkhan1994", status:"Built"
+  },
+  {
+    emoji:"🫀", title:"Human Anatomy Explorer",
+    cat:"design", catLabel:"Design", catColor:"rgba(251,188,5,0.12)", catText:"#FBBC05",
+    desc:"3D viewer for human anatomy with Open3D mesh loading. Procedural nervous system splines, vitals dashboard and blood-work integration in progress.",
+    stack:["Three.js","Open3D","JavaScript","WebGL"],
+    github:"zainkhan1994", status:"In Progress"
+  },
+  {
+    emoji:"🎙️", title:"Expanse Storyteller",
+    cat:"app", catLabel:"App", catColor:"rgba(0,212,255,0.15)", catText:"#00D4FF",
+    desc:"Premium HUD-based Text-to-Voice application. Cinematic 'Expanse' aesthetic. Live audio integration via Gemini multimodal API.",
+    stack:["Gemini API","Live Audio","TypeScript","React"],
+    github:"zainkhan1994", status:"Built"
+  },
+  {
+    emoji:"📊", title:"AI Marketing Strategy",
+    cat:"design", catLabel:"Design", catColor:"rgba(251,188,5,0.12)", catText:"#FBBC05",
+    desc:"Interactive UI conversion of a 2026 Strategy PDF. Deep space + steel blue + gold accent palette. Ultra-thin all-caps typography.",
+    stack:["HTML","CSS","JavaScript","PDF-to-UI"],
+    github:"zainkhan1994", status:"Built"
+  },
+  {
+    emoji:"🔧", title:"Notion DB Automations",
+    cat:"automation", catLabel:"Automation", catColor:"rgba(52,168,83,0.12)", catText:"#34A853",
+    desc:"Suite of Python scripts: auto_fix_icons.py (CRM 242 entries), ingest.py, populate_logos.py (Google Favicons), export_media_to_notion.py (67 subpages created).",
+    stack:["Python","Notion API","MCP","Playwright","requests"],
+    github:"zainkhan1994", status:"Shipped"
+  },
+  {
+    emoji:"📡", title:"Google AI Forum Recreator",
+    cat:"design", catLabel:"Design", catColor:"rgba(251,188,5,0.12)", catText:"#FBBC05",
+    desc:"Re-creation of the Google AI Developers Forum feedback thread as a premium styled technical report. Used as GDE portfolio draft material.",
+    stack:["HTML","CSS","Design System"],
+    github:"zainkhan1994", status:"Built"
+  },
+  {
+    emoji:"🌐", title:"GDG Resources Viewer",
+    cat:"design", catLabel:"Design", catColor:"rgba(251,188,5,0.12)", catText:"#FBBC05",
+    desc:"aesthetic_viewer.html — the origin project that led to this portal. GDG Tulsa community section integrated into a premium dark aesthetic viewer.",
+    stack:["HTML","CSS","JavaScript","SVG"],
+    github:"zainkhan1994/GDG", status:"Active"
+  },
+  {
+    emoji:"🌿", title:"iCloud Brain Organizer",
+    cat:"automation", catLabel:"Automation", catColor:"rgba(52,168,83,0.12)", catText:"#34A853",
+    desc:"Keyword + date-based routing logic for iCloud structure reorganization. Loose files sweep, Snapshot_Copies cleanup, CSV export for Notion import.",
+    stack:["Python","iCloud","CSV","Shell"],
+    github:"zainkhan1994", status:"Shipped"
+  },
+];
 
-// ─── RENDER DRIVE GRID ───────────────────────────────────────
-function showYear(year) {
+const ANTIGRAVITY_SESSIONS = [
+  {date:"2026-06-04", label:"Interactive Editor Session"},
+  {date:"2026-05-10", label:"Blueprint + Notion sync"},
+  {date:"2026-05-07", label:"C.O.R.T.A.N.A. RPA build"},
+  {date:"2026-05-07", label:"Multimodal live agent"},
+  {date:"2026-04-20", label:"Anatomy explorer init"},
+  {date:"2026-04-18", label:"Bookmark Tree UI launch"},
+  {date:"2026-04-18", label:"Icon auto-fix pipeline"},
+  {date:"2026-04-14", label:"AI Marketing Strategy"},
+  {date:"2026-04-12", label:"NeuroType Notion sync"},
+  {date:"2026-04-12", label:"Blueprint V2 dashboard"},
+];
+
+const NOTION_DATABASES = [
+  {icon:"📮", name:"Gmail Archive", rows:"9,400+", desc:"Full email archive with subdomain extraction", status:"Live"},
+  {icon:"👥", name:"CRM", rows:"242", desc:"Contact management with logo auto-population", status:"Live"},
+  {icon:"🛠️", name:"Tools & Apps Registry", rows:"100+", desc:"App catalog with icon pipeline", status:"Live"},
+  {icon:"🖼️", name:"Asset Library", rows:"~200", desc:"Logo and brand asset database", status:"Live"},
+  {icon:"🗺️", name:"Blueprint DB", rows:"~500", desc:"Life OS structured data — Personal, Health, Work", status:"Live"},
+  {icon:"📋", name:"Notion AI Challenge", rows:"180+", desc:"DEV.to submissions scraped and scored", status:"Archived"},
+  {icon:"📅", name:"Meeting Notes", rows:"active", desc:"MCP-queryable notes database", status:"Live"},
+  {icon:"🔗", name:"Data Sources", rows:"active", desc:"Multi-source connector registry", status:"Live"},
+];
+
+const NOTION_AUTOMATIONS = [
+  {icon:"🤖", name:"auto_fix_icons.py", desc:"Batch icon fixer — 242 CRM entries + Apps registry via Google Favicons"},
+  {icon:"📥", name:"ingest.py", desc:"Knowledge base ingestion system supporting PDF, notes, and more"},
+  {icon:"📊", name:"convert_table_to_db.py", desc:"Converts iCloud file tree to Notion-compatible CSV"},
+  {icon:"🖼️", name:"populate_logos.py", desc:"Fetches and populates brand logos across Notion databases"},
+  {icon:"📤", name:"export_media_to_notion.py", desc:"Uploaded 67 media subpages to Notion with R2 CDN URLs"},
+  {icon:"📁", name:"download_csvs.py", desc:"Pulls all Notion database exports to local CSV files"},
+  {icon:"🧹", name:"update_notion_organized.py", desc:"Reorganizes Notion page structure post-migration"},
+  {icon:"🔗", name:"patch_urls.py", desc:"Batch URL patcher for broken references in database entries"},
+];
+
+const MCP_INTEGRATIONS = [
+  "notion-search","notion-fetch","notion-create-pages","notion-update-page",
+  "notion-query-database-view","notion-create-database","notion-move-pages",
+  "notion-get-teams","notion-get-users","notion-duplicate-page","notion-create-comment",
+];
+
+const BOOKMARK_DOMAINS = [
+  {domain:"docs.google.com",count:41,color:"#4285F4"},
+  {domain:"developers.google.com",count:23,color:"#4285F4"},
+  {domain:"spaceappschallenge.org",count:21,color:"#FF6D00"},
+  {domain:"business.facebook.com",count:19,color:"#1877F2"},
+  {domain:"support.google.com",count:18,color:"#34A853"},
+  {domain:"facebook.com",count:17,color:"#1877F2"},
+  {domain:"events.mlh.io",count:16,color:"#FBBC05"},
+  {domain:"cloud.google.com",count:15,color:"#FF6D00"},
+  {domain:"nasa.gov",count:13,color:"#4285F4"},
+  {domain:"github.com",count:12,color:"#8b949e"},
+  {domain:"google.com",count:11,color:"#EA4335"},
+  {domain:"canva.com",count:10,color:"#8E75FF"},
+  {domain:"youtube.com",count:9,color:"#FF0000"},
+  {domain:"console.cloud.google.com",count:8,color:"#FF6D00"},
+  {domain:"ads.google.com",count:8,color:"#34A853"},
+  {domain:"business.google.com",count:7,color:"#4285F4"},
+  {domain:"cloudskillsboost.google",count:6,color:"#FBBC05"},
+  {domain:"mlh.com",count:6,color:"#EA4335"},
+  {domain:"linkedin.com",count:6,color:"#0A66C2"},
+  {domain:"mail.google.com",count:5,color:"#EA4335"},
+];
+
+const VISIT_HISTORY = [
+  {label:"Gmail",visits:583,color:"#EA4335"},
+  {label:"Google Calendar",visits:399,color:"#4285F4"},
+  {label:"GitHub (profile)",visits:201,color:"#8b949e"},
+  {label:"Gemini",visits:163,color:"#8E75FF"},
+  {label:"Calendar (4-day)",visits:143,color:"#4285F4"},
+  {label:"GitHub (Mind-Map)",visits:122,color:"#8b949e"},
+  {label:"Calendar (7-day)",visits:120,color:"#4285F4"},
+  {label:"Day view",visits:84,color:"#4285F4"},
+  {label:"YouTube",visits:83,color:"#FF0000"},
+  {label:"NotebookLM",visits:81,color:"#1AC8B4"},
+  {label:"GitHub (Blueprint)",visits:88,color:"#8b949e"},
+  {label:"Month view",visits:89,color:"#4285F4"},
+];
+
+const INVENTORY_ROWS = [
+  {src:"Gmail",data:"Inbox (8,094 messages)",type:"email",loc:"Library/Mail/V10/…[Gmail].mbox",size:"8,094 msgs",tc:{bg:"rgba(234,67,53,0.12)",c:"#EA4335"}},
+  {src:"Gmail Labels",data:"INBOX, Bill Confirmations, Git, P-, Zain, Sent, Starred",type:"labels",loc:"Library/Mail/V10/1A3C…",size:"7 labels",tc:{bg:"rgba(234,67,53,0.08)",c:"#EA4335"}},
+  {src:"Google Drive",data:"My Drive — year folders 2024–2026",type:"cloud storage",loc:"Library/CloudStorage/GoogleDrive-zain@thekhanstruct.com",size:"7,127 files",tc:{bg:"rgba(251,188,5,0.12)",c:"#FBBC05"}},
+  {src:"Drive — Images",data:"4,877 PNG + 552 JPG synced",type:"image",loc:"GoogleDrive-zain@thekhanstruct.com/My Drive/**",size:"5,429 files",tc:{bg:"rgba(251,188,5,0.08)",c:"#FBBC05"}},
+  {src:"Drive — Script/Sheet",data:"Gmail Labels.gscript + Untitled spreadsheet.gsheet",type:"workspace",loc:"GoogleDrive/My Drive/",size:"2 files",tc:{bg:"rgba(52,168,83,0.1)",c:"#34A853"}},
+  {src:"Shared Drive",data:"AG workspace drive",type:"shared drive",loc:"GoogleDrive/Shared drives/AG/",size:"1 drive",tc:{bg:"rgba(251,188,5,0.1)",c:"#FBBC05"}},
+  {src:"AI Studio",data:"4 project folders + applet history JSON",type:"ai projects",loc:"GoogleDrive/My Drive/Google AI Studio/",size:"4 projects",tc:{bg:"rgba(102,157,246,0.12)",c:"#669DF6"}},
+  {src:"Google Chrome",data:"Bookmarks DB (595 KB)",type:"browser",loc:"Library/Application Support/Google/Chrome/Default/",size:"674 bookmarks",tc:{bg:"rgba(66,133,244,0.1)",c:"#4285F4"}},
+  {src:"Google Chrome",data:"Visit history — top: Gmail (583), Calendar (399+)",type:"history",loc:"Chrome/Default/History",size:"top 30 sites",tc:{bg:"rgba(66,133,244,0.08)",c:"#4285F4"}},
+  {src:"Google Calendar",data:"Active — 2 accounts, 6 view modes",type:"calendar",loc:"Browser (cloud only)",size:"~1,400 visits",tc:{bg:"rgba(66,133,244,0.12)",c:"#4285F4"}},
+  {src:"Google Gemini",data:"163 browser visits",type:"ai assistant",loc:"gemini.google.com (cloud)",size:"163 visits",tc:{bg:"rgba(142,117,255,0.12)",c:"#8E75FF"}},
+  {src:"NotebookLM",data:"81 browser visits",type:"ai tool",loc:"notebooklm.google.com (cloud)",size:"81 visits",tc:{bg:"rgba(26,200,180,0.12)",c:"#1AC8B4"}},
+  // Antigravity
+  {src:"Antigravity",data:"49 brain directories, 32 tasks, 19 walkthroughs, 27 plans",type:"ag brain",loc:"~/.gemini/antigravity/brain/",size:"49 threads",tc:{bg:"rgba(0,212,255,0.12)",c:"#00D4FF"}},
+  {src:"Antigravity",data:"10 interactive editor sessions (Apr–Jun 2026)",type:"ag sessions",loc:"~/Library/Application Support/Antigravity/logs/",size:"10 sessions",tc:{bg:"rgba(0,212,255,0.08)",c:"#00D4FF"}},
+  {src:"Antigravity",data:"12 projects built: NeuroType, Blueprint, C.O.R.T.A.N.A., Glassboard…",type:"ag projects",loc:"~/.gemini/antigravity/scratch/",size:"12 projects",tc:{bg:"rgba(168,85,247,0.12)",c:"#A855F7"}},
+  {src:"Antigravity",data:"Artifacts index (Antigravity_Artifacts_Index.md)",type:"ag index",loc:"~/Documents/Antigravity_Artifacts_Index.md",size:"1 index file",tc:{bg:"rgba(168,85,247,0.08)",c:"#A855F7"}},
+  // Notion
+  {src:"Notion OS",data:"Life OS — P·H·W·G Second Brain",type:"notion db",loc:"notion.so (cloud) + MCP",size:"8 databases",tc:{bg:"rgba(247,246,243,0.08)",c:"#F7F6F3"}},
+  {src:"Notion Automation",data:"8 Python scripts (ingest, icons, export, patch, organize)",type:"automation",loc:"~/.gemini/antigravity/brain/*/  + scratch/",size:"8 scripts",tc:{bg:"rgba(52,168,83,0.1)",c:"#34A853"}},
+  {src:"Notion MCP",data:"11 MCP tool definitions configured in Antigravity",type:"mcp",loc:"~/.gemini/antigravity/mcp/notion/",size:"11 tools",tc:{bg:"rgba(247,246,243,0.1)",c:"#F7F6F3"}},
+  {src:"Notion Challenge",data:"180+ DEV.to submissions scraped & judged via Judge's Glassboard",type:"notion db",loc:"notion-judge-glassboard repo",size:"180+ entries",tc:{bg:"rgba(247,246,243,0.08)",c:"#F7F6F3"}},
+];
+
+// ──────────────────────── RENDERERS ────────────────────────
+
+function showYear(year, btn) {
   document.querySelectorAll('.drive-year-btn').forEach(b => b.classList.remove('active'));
-  event.currentTarget.classList.add('active');
+  if (btn) btn.classList.add('active');
+  const counts = {all:7127,'2026':5,'2025':13,'2024':1,studio:4,shared:1};
+  const files = year === 'all' ? DRIVE_FILES.all : DRIVE_FILES.all.filter(f => f.year === year);
+  document.getElementById('drive-count').textContent = (counts[year] || files.length).toLocaleString();
+  document.getElementById('drive-grid').innerHTML = files.map(f =>
+    `<div class="file-item"><div class="file-icon">${f.icon}</div><div class="file-name">${f.name}</div><div class="file-type">${f.type}</div></div>`
+  ).join('');
+}
 
-  const files = year === 'all'
-    ? DATA.driveFiles.all
-    : DATA.driveFiles.all.filter(f => f.year === year || (year === 'all' && true));
+function filterCards(cat, btn) {
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.querySelectorAll('.flip-card').forEach(card => {
+    const match = cat === 'all' || card.dataset.cat === cat;
+    card.classList.toggle('hidden', !match);
+    card.style.display = match ? '' : 'none';
+    if (match) {
+      card.style.animation = 'fadeUp 0.4s ease forwards';
+      card.style.opacity = '1';
+    }
+  });
+}
 
-  const filtered = year === 'all' ? DATA.driveFiles.all : DATA.driveFiles.all.filter(f => f.year === year);
-
-  const counts = { all: 7127, '2026': 5, '2025': 13, '2024': 1, studio: 4, shared: 1 };
-  document.getElementById('drive-count').textContent = (counts[year] || filtered.length).toLocaleString();
-
-  const grid = document.getElementById('drive-grid');
-  grid.innerHTML = filtered.map(f => `
-    <div class="file-item">
-      <div class="file-icon">${f.icon}</div>
-      <div class="file-name">${f.name}</div>
-      <div class="file-type">${f.type}</div>
+function renderFlipCards() {
+  const grid = document.getElementById('flip-grid');
+  grid.innerHTML = ANTIGRAVITY_PROJECTS.map((p, i) => `
+    <div class="flip-card" data-cat="${p.cat}" style="animation-delay:${i*0.04}s" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div>
+            <div class="flip-emoji">${p.emoji}</div>
+            <div class="flip-title">${p.title}</div>
+          </div>
+          <div>
+            <span class="flip-cat-badge" style="background:${p.catColor};color:${p.catText}">${p.catLabel}</span>
+            <div class="flip-hint" style="margin-top:10px">👆 tap to flip</div>
+          </div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-back-title">${p.emoji} ${p.title}</div>
+          <div class="flip-back-desc">${p.desc}</div>
+          <div>
+            <div class="flip-stack">${p.stack.map(s => `<span class="stack-tag">${s}</span>`).join('')}</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+              <span style="font-size:11px;color:var(--muted)">Status: <span style="color:${p.status==='Shipped'?'#34A853':p.status==='Active'?'#00D4FF':'#FBBC05'};font-weight:700">${p.status}</span></span>
+              ${p.github ? `<a class="flip-link" href="https://github.com/${p.github}" target="_blank">↗ GitHub</a>` : ''}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   `).join('');
 }
 
-// ─── RENDER VISIT BARS ───────────────────────────────────────
+function renderBrainConstellation() {
+  const canvas = document.getElementById('brainCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const nodes = Array.from({length:49}, (_, i) => {
+    const angle = (i / 49) * Math.PI * 2 * 3.5 + i * 0.3;
+    const r = 30 + (i % 7) * 15;
+    return {
+      x: W/2 + Math.cos(angle) * r,
+      y: H/2 + Math.sin(angle) * r,
+      r: Math.random() * 2.5 + 1,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.015 + Math.random() * 0.02,
+      color: i % 3 === 0 ? '#00D4FF' : i % 3 === 1 ? '#A855F7' : '#4285F4',
+    };
+  });
+
+  let t = 0;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    // Draw connections
+    ctx.strokeStyle = 'rgba(0,212,255,0.05)';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i+1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 55) {
+          ctx.globalAlpha = (1 - dist/55) * 0.3;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    ctx.globalAlpha = 1;
+    // Draw nodes
+    nodes.forEach(n => {
+      const pulse = 0.5 + 0.5 * Math.sin(t * n.speed * 60 + n.phase);
+      const radius = n.r * (0.8 + 0.4 * pulse);
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, radius + 3, 0, Math.PI*2);
+      ctx.fillStyle = n.color.replace(')', `, ${0.1 * pulse})`).replace('rgb', 'rgba').replace('#00D4FF','rgba(0,212,255,').replace('#A855F7','rgba(168,85,247,').replace('#4285F4','rgba(66,133,244,') + (0.1 * pulse) + ')';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, radius, 0, Math.PI*2);
+      ctx.fillStyle = n.color;
+      ctx.globalAlpha = 0.5 + 0.5 * pulse;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    });
+    t++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  // Session list
+  const list = document.getElementById('session-list');
+  list.innerHTML = ANTIGRAVITY_SESSIONS.map(s => `
+    <div class="session-row">
+      <div class="session-dot"></div>
+      <span class="session-date">${s.date}</span>
+      <span class="session-label">${s.label}</span>
+    </div>
+  `).join('');
+}
+
+function renderNotionDatabases() {
+  document.getElementById('notion-grid').innerHTML = NOTION_DATABASES.map(db => `
+    <div class="notion-card">
+      <div class="notion-card-icon">${db.icon}</div>
+      <div class="notion-card-name">${db.name}</div>
+      <div class="notion-card-rows">${db.rows}</div>
+      <div class="notion-card-label">rows / entries</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px">${db.desc}</div>
+      <div class="notion-card-status">
+        <div class="notion-status-dot"></div>
+        ${db.status}
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('automation-list').innerHTML = NOTION_AUTOMATIONS.map(a => `
+    <div class="automation-item">
+      <span class="automation-icon">${a.icon}</span>
+      <div>
+        <div class="automation-name">${a.name}</div>
+        <div class="automation-desc">${a.desc}</div>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('mcp-strip').innerHTML = MCP_INTEGRATIONS.map(m => `
+    <div class="mcp-chip">
+      <div class="mcp-chip-dot"></div>
+      ${m}
+    </div>
+  `).join('');
+}
+
 function renderVisitBars() {
-  const max = Math.max(...DATA.visitHistory.map(v => v.visits));
-  const el = document.getElementById('visit-bars');
-  el.innerHTML = DATA.visitHistory.map(v => `
+  const max = Math.max(...VISIT_HISTORY.map(v => v.visits));
+  document.getElementById('visit-bars').innerHTML = VISIT_HISTORY.map(v => `
     <div class="visit-row">
       <div class="visit-label">${v.label}</div>
-      <div class="visit-track">
-        <div class="visit-fill" data-width="${(v.visits/max*100).toFixed(1)}" style="width:0%;background:${v.color}"></div>
-      </div>
+      <div class="visit-track"><div class="visit-fill" data-width="${(v.visits/max*100).toFixed(1)}" style="width:0%;background:${v.color}"></div></div>
       <div class="visit-num">${v.visits}</div>
     </div>
   `).join('');
 }
 
-// ─── RENDER BOOKMARK DOMAINS ─────────────────────────────────
 function renderBookmarkDomains() {
-  const el = document.getElementById('bookmark-domains');
-  const max = DATA.bookmarkDomains[0].count;
-  el.innerHTML = DATA.bookmarkDomains.map(d => `
+  const max = BOOKMARK_DOMAINS[0].count;
+  document.getElementById('bookmark-domains').innerHTML = BOOKMARK_DOMAINS.map(d => `
     <div class="domain-row">
       <div>
         <div class="domain-name">${d.domain}</div>
-        <div class="domain-bar-wrap">
-          <div class="domain-bar" data-width="${(d.count/max*100).toFixed(1)}" style="width:0%;background:${d.color}"></div>
-        </div>
+        <div class="domain-bar-wrap"><div class="domain-bar" data-width="${(d.count/max*100).toFixed(1)}" style="width:0%;background:${d.color}"></div></div>
       </div>
       <div class="domain-count">${d.count}</div>
     </div>
   `).join('');
 }
 
-// ─── RENDER INVENTORY TABLE ──────────────────────────────────
 function renderInventory() {
-  const tbody = document.querySelector('#inventory-table tbody');
-  tbody.innerHTML = DATA.inventory.map(row => {
-    const tc = typeColors[row.type] || { bg: "rgba(139,148,158,0.1)", color: "#8b949e" };
-    return `
-      <tr>
-        <td style="font-weight:600">${row.product}</td>
-        <td>${row.data}</td>
-        <td><span class="type-badge" style="background:${tc.bg};color:${tc.color}">${row.type}</span></td>
-        <td class="path-cell" title="${row.location}">${row.location}</td>
-        <td style="font-weight:700;color:var(--muted)">${row.size}</td>
-      </tr>
-    `;
-  }).join('');
+  document.getElementById('inventory-body').innerHTML = INVENTORY_ROWS.map(r => `
+    <tr>
+      <td style="font-weight:600">${r.src}</td>
+      <td>${r.data}</td>
+      <td><span class="type-badge" style="background:${r.tc.bg};color:${r.tc.c}">${r.type}</span></td>
+      <td class="path-cell" title="${r.loc}">${r.loc}</td>
+      <td style="font-weight:700;color:var(--muted)">${r.size}</td>
+    </tr>
+  `).join('');
 }
 
-// ─── PARTICLES ──────────────────────────────────────────────
+// ──────────────────────── ANIMATIONS ────────────────────────
+
+function animateCount(id, target, duration=1400) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  let start = null;
+  function step(ts) {
+    if (!start) start = ts;
+    const progress = Math.min((ts - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(ease * target);
+    if (progress < 1) requestAnimationFrame(step);
+    else el.textContent = target;
+  }
+  requestAnimationFrame(step);
+}
+
 function initParticles() {
   const canvas = document.getElementById('particles');
   const ctx = canvas.getContext('2d');
-  const colors = ['#4285F4','#EA4335','#FBBC05','#34A853','#8E75FF'];
+  const colors = ['#4285F4','#EA4335','#FBBC05','#34A853','#8E75FF','#00D4FF'];
   let W, H, particles;
-
-  function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
   function init() {
-    particles = Array.from({ length: 60 }, () => ({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      r: Math.random() * 2 + 0.5,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      alpha: Math.random() * 0.5 + 0.1,
+    particles = Array.from({length:70}, () => ({
+      x: Math.random()*W, y: Math.random()*H,
+      r: Math.random()*2+0.5,
+      vx: (Math.random()-0.5)*0.3, vy: (Math.random()-0.5)*0.3,
+      color: colors[Math.floor(Math.random()*colors.length)],
+      alpha: Math.random()*0.4+0.1,
     }));
   }
-
   function tick() {
-    ctx.clearRect(0, 0, W, H);
+    ctx.clearRect(0,0,W,H);
     for (const p of particles) {
-      p.x += p.vx;
-      p.y += p.vy;
-      if (p.x < 0 || p.x > W) p.vx *= -1;
-      if (p.y < 0 || p.y > H) p.vy *= -1;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = p.color;
-      ctx.globalAlpha = p.alpha;
-      ctx.fill();
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>W) p.vx*=-1;
+      if(p.y<0||p.y>H) p.vy*=-1;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.color; ctx.globalAlpha=p.alpha; ctx.fill();
     }
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha=1;
     requestAnimationFrame(tick);
   }
-
-  resize();
-  init();
-  tick();
-  window.addEventListener('resize', () => { resize(); init(); });
+  resize(); init(); tick();
+  window.addEventListener('resize',()=>{resize();init();});
 }
 
-// ─── SCROLL ANIMATIONS ───────────────────────────────────────
 function initScrollObserver() {
-  const observer = new IntersectionObserver((entries) => {
+  let brainDone = false, countersDone = false;
+  const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        // animate bars when section comes into view
-        entry.target.querySelectorAll('[data-width]').forEach(bar => {
-          setTimeout(() => {
-            bar.style.width = bar.dataset.width + '%';
-          }, 100);
-        });
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      entry.target.querySelectorAll('[data-width]').forEach(bar => {
+        setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 150);
+      });
+      if (entry.target.id === 'antigravity' || entry.target.closest('#antigravity')) {
+        if (!brainDone) { brainDone = true; renderBrainConstellation(); }
+        if (!countersDone) {
+          countersDone = true;
+          animateCount('count-brains', 49);
+          animateCount('count-tasks', 32, 1200);
+          animateCount('count-sessions', 10, 900);
+          animateCount('count-walkthroughs', 19, 1100);
+        }
       }
     });
-  }, { threshold: 0.1 });
-
+  }, {threshold:0.08});
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 }
 
-// ─── STAGGERED CARD ANIMATIONS ───────────────────────────────
 function initCardAnimations() {
-  const cards = document.querySelectorAll('.product-card');
-  const cardObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.animationPlayState = 'running';
-      }
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.style.animationPlayState='running'; }
     });
-  }, { threshold: 0.1 });
-  cards.forEach(c => {
-    c.style.animationPlayState = 'paused';
-    cardObs.observe(c);
+  }, {threshold:0.1});
+  document.querySelectorAll('.product-card').forEach(c => {
+    c.style.animationPlayState='paused'; obs.observe(c);
   });
 }
 
-// ─── INIT ────────────────────────────────────────────────────
+// ──────────────────────── INIT ────────────────────────
+
 document.addEventListener('DOMContentLoaded', () => {
   initParticles();
-  showYear('all');
+  showYear('all', null);
+  renderFlipCards();
+  renderNotionDatabases();
   renderVisitBars();
   renderBookmarkDomains();
   renderInventory();
   initScrollObserver();
   initCardAnimations();
 
-  // Animate bars on first load if already visible
+  // Animate bars already in viewport
   setTimeout(() => {
     document.querySelectorAll('[data-width]').forEach(bar => {
-      const rect = bar.getBoundingClientRect();
-      if (rect.top < window.innerHeight) {
-        bar.style.width = bar.dataset.width + '%';
-      }
+      const r = bar.getBoundingClientRect();
+      if (r.top < window.innerHeight) bar.style.width = bar.dataset.width + '%';
     });
-  }, 500);
+  }, 600);
 });
 </script>
-
 </body>
 </html>
