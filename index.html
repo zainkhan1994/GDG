@@ -3,979 +3,777 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zain Khan — Google Universe</title>
+<title>Zain Khan — My Google Universe</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Display:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --blue:   #4285F4;
-  --red:    #EA4335;
-  --yellow: #FBBC04;
-  --green:  #34A853;
-  --bg:     #060608;
-  --surface: rgba(255,255,255,0.04);
-  --border:  rgba(255,255,255,0.07);
-  --text:   #E8E8EE;
-  --muted:  rgba(255,255,255,0.38);
-}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
+:root{
+  --blue:#4285F4;--red:#EA4335;--yellow:#FBBC04;--green:#34A853;
+  --teal:#00ACC1;--purple:#7C4DFF;--orange:#FF6D00;
+  --bg:#F8F9FA;--bg2:#FFFFFF;--border:#E8EAED;
+  --text:#202124;--muted:#5F6368;--card:#fff;
+  --shadow:0 2px 10px rgba(0,0,0,.08),0 0 1px rgba(0,0,0,.12);
+  --shadow-hover:0 8px 30px rgba(0,0,0,.14),0 0 1px rgba(0,0,0,.12);
+}
 body{
-  background:var(--bg);
-  color:var(--text);
+  background:var(--bg);color:var(--text);
   font-family:'Google Sans',ui-sans-serif,-apple-system,sans-serif;
-  overflow-x:hidden;
-  cursor:none;
-}
-a{color:inherit;text-decoration:none}
-
-/* ── CURSOR ─────────────────────────────────────── */
-#cursor{
-  position:fixed;width:12px;height:12px;
-  background:#fff;border-radius:50%;
-  pointer-events:none;z-index:9999;
-  transition:transform .15s ease,background .2s;
-  mix-blend-mode:difference;
-}
-#cursor-ring{
-  position:fixed;width:36px;height:36px;
-  border:1.5px solid rgba(255,255,255,.35);
-  border-radius:50%;pointer-events:none;z-index:9998;
-  transition:transform .08s linear;
-}
-body:has(a:hover) #cursor,
-body:has(.card:hover) #cursor{transform:scale(3.5)}
-
-/* ── PARTICLES ──────────────────────────────────── */
-#canvas{
-  position:fixed;top:0;left:0;
-  width:100%;height:100%;
-  pointer-events:none;z-index:0;
-  opacity:.55;
+  min-height:100vh;overflow-x:hidden;
 }
 
-/* ── NAV ────────────────────────────────────────── */
+/* ── NAV ─────────────────────────────────────────── */
 nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  padding:20px 48px;
-  display:flex;align-items:center;justify-content:space-between;
-  backdrop-filter:blur(20px);
-  background:rgba(6,6,8,.72);
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(255,255,255,.92);
   border-bottom:1px solid var(--border);
-  transition:padding .3s;
+  backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;height:64px;
 }
-.nav-logo{
-  display:flex;align-items:center;gap:10px;
-  font-size:15px;font-weight:600;letter-spacing:-.01em;
+.nav-brand{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:500;color:var(--text)}
+.nav-brand svg{width:22px;height:22px}
+.nav-tabs{display:flex;gap:4px}
+.nav-tab{
+  padding:6px 14px;border-radius:20px;font-size:13px;
+  color:var(--muted);cursor:pointer;transition:.2s;border:none;background:none;
 }
-.g-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
-.nav-links{display:flex;gap:32px;font-size:13px;color:var(--muted)}
-.nav-links a:hover{color:#fff;transition:color .2s}
+.nav-tab:hover{background:var(--bg);color:var(--text)}
+.nav-tab.active{background:var(--blue);color:#fff}
+.nav-stat{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.nav-stat strong{color:var(--text);font-weight:600}
 
-/* ── HERO ───────────────────────────────────────── */
-#hero{
-  min-height:100vh;
-  display:flex;flex-direction:column;
-  justify-content:center;align-items:center;
-  text-align:center;
-  position:relative;z-index:1;
-  padding:120px 24px 80px;
-  overflow:hidden;
+/* ── HERO ─────────────────────────────────────────── */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding-top:64px;
+  background:radial-gradient(ellipse at 50% 0%, rgba(66,133,244,.06) 0%, transparent 60%);
 }
-.hero-eyebrow{
-  font-size:11px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:24px;
-  display:flex;align-items:center;gap:12px;
-}
-.hero-eyebrow::before,.hero-eyebrow::after{
-  content:'';display:block;width:40px;height:1px;
-  background:var(--border);
+.hero-label{
+  font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:12px;text-align:center;
 }
 .hero-title{
-  font-size:clamp(52px,8vw,120px);
-  font-weight:700;line-height:.95;
-  letter-spacing:-.04em;
-  margin-bottom:16px;
+  font-family:'Google Sans Display',sans-serif;
+  font-size:clamp(28px,4vw,44px);font-weight:700;
+  text-align:center;margin-bottom:8px;
+  background:linear-gradient(135deg,#4285F4,#34A853,#FBBC04,#EA4335);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  background-size:200%;animation:grad 6s linear infinite;
 }
-.hero-title .line1{display:block}
-.hero-title .gradient{
-  background:linear-gradient(135deg,var(--blue),var(--green),var(--yellow),var(--red));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-  animation:gradShift 6s ease infinite;
-  background-size:300% 300%;
-}
-@keyframes gradShift{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-.hero-sub{
-  font-size:clamp(16px,2.2vw,22px);
-  color:var(--muted);
-  max-width:560px;
-  line-height:1.6;
-  margin-bottom:56px;
-}
-.hero-stats{
-  display:flex;gap:40px;flex-wrap:wrap;justify-content:center;
-  margin-bottom:72px;
-}
-.hero-stat{text-align:center}
-.hero-stat .num{
-  font-size:clamp(32px,4vw,52px);font-weight:700;
-  letter-spacing:-.03em;display:block;
-}
-.hero-stat .lbl{
-  font-size:11px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--muted);
-}
-.scroll-hint{
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-  font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);
-  animation:bounce 2.4s ease-in-out infinite;
-}
-.scroll-hint svg{opacity:.5}
-@keyframes bounce{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(8px)}
-}
+@keyframes grad{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.hero-sub{font-size:15px;color:var(--muted);text-align:center;margin-bottom:40px}
 
-/* ── SECTION BASE ───────────────────────────────── */
-.wing{
-  position:relative;z-index:1;
-  padding:120px 48px;
-  border-top:1px solid var(--border);
-  overflow:hidden;
+/* ── DIAGRAM CONTAINER ────────────────────────────── */
+.diagram-wrap{
+  position:relative;width:min(90vw,640px);height:min(90vw,640px);
+  margin:0 auto;
 }
-.wing-header{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:40px;align-items:end;
-  margin-bottom:72px;
-}
-.wing-number{
-  font-size:clamp(100px,15vw,200px);
-  font-weight:800;letter-spacing:-.06em;
-  line-height:1;color:rgba(255,255,255,.04);
-  user-select:none;
-  position:absolute;top:40px;left:40px;
-}
-.wing-label{
-  font-size:11px;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--muted);
-  margin-bottom:12px;
-}
-.wing-title{
-  font-size:clamp(36px,5vw,72px);
-  font-weight:700;letter-spacing:-.03em;
-  line-height:1.05;
-}
-.wing-meta{
-  text-align:right;
-  display:flex;flex-direction:column;align-items:flex-end;gap:8px;
-}
-.wing-count{
-  font-size:clamp(28px,3.5vw,48px);
-  font-weight:700;letter-spacing:-.02em;
-}
-.wing-desc{
-  font-size:14px;color:var(--muted);line-height:1.6;
-  max-width:280px;text-align:right;
-}
-.wing-bar{
-  height:3px;width:100%;
-  border-radius:2px;
-  margin-top:4px;
-}
+#eco-svg{width:100%;height:100%;cursor:default}
 
-/* ── CARDS GRID ─────────────────────────────────── */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-  gap:16px;
-}
-.card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:28px;
-  transition:border-color .3s,box-shadow .3s;
-  transform-style:preserve-3d;
-  will-change:transform;
-  position:relative;
-  overflow:hidden;
-}
-.card::before{
-  content:'';
-  position:absolute;inset:0;
-  border-radius:16px;
-  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.07) 0%,transparent 60%);
-  opacity:0;transition:opacity .3s;
-  pointer-events:none;
-}
-.card:hover::before{opacity:1}
-.card:hover{border-color:rgba(255,255,255,.15);box-shadow:0 20px 60px rgba(0,0,0,.5)}
-.card-icon{
-  width:40px;height:40px;
-  border-radius:10px;
-  margin-bottom:16px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:22px;
-}
-.card-name{
-  font-size:17px;font-weight:600;
-  margin-bottom:4px;letter-spacing:-.01em;
-}
-.card-host{
-  font-size:12px;color:var(--muted);
-  margin-bottom:16px;
-}
-.card-links{
-  display:flex;align-items:center;justify-content:space-between;
-}
-.card-count{
-  font-size:28px;font-weight:700;letter-spacing:-.02em;
-}
-.card-unit{
-  font-size:10px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--muted);
-  margin-top:2px;
-}
-.card-bar{
-  height:2px;width:100%;
-  background:rgba(255,255,255,.07);
-  border-radius:2px;
-  margin-top:16px;
-  overflow:hidden;
-}
-.card-bar-fill{
-  height:100%;
-  border-radius:2px;
-  transition:width 1.2s cubic-bezier(.22,1,.36,1);
-  width:0;
-}
-.card.revealed .card-bar-fill{width:var(--pct,0%)}
+/* Logo circles */
+.logo-node{cursor:pointer;transition:filter .2s,transform .2s}
+.logo-node:hover{filter:drop-shadow(0 4px 12px rgba(0,0,0,.25))}
+.logo-node.active .node-ring{stroke-width:3}
 
-/* ── WING ACCENT COLORS ─────────────────────────── */
-.wing-workspace .wing-title span{color:var(--blue)}
-.wing-workspace .wing-bar,.wing-workspace .card-bar-fill{background:var(--blue)}
-.wing-search .wing-title span{color:var(--red)}
-.wing-search .wing-bar,.wing-search .card-bar-fill{background:var(--red)}
-.wing-ai .wing-title span{color:var(--yellow)}
-.wing-ai .wing-bar,.wing-ai .card-bar-fill{background:var(--yellow)}
-.wing-dev .wing-title span{color:var(--green)}
-.wing-dev .wing-bar,.wing-dev .card-bar-fill{background:var(--green)}
-.wing-media .wing-title span{color:var(--red)}
-.wing-media .wing-bar,.wing-media .card-bar-fill{background:var(--red)}
-.wing-other .wing-title span{color:var(--muted)}
-.wing-other .wing-bar,.wing-other .card-bar-fill{background:rgba(255,255,255,.3)}
+/* ── BOTTOM STATS BAR ─────────────────────────────── */
+.stats-bar{
+  display:flex;gap:32px;justify-content:center;flex-wrap:wrap;
+  padding:20px 0 0;
+}
+.stat-item{text-align:center}
+.stat-n{font-size:28px;font-weight:700;background:linear-gradient(135deg,#4285F4,#34A853);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
 
-/* ── REVEAL ANIMATIONS ──────────────────────────── */
-.reveal{
-  opacity:0;transform:translateY(36px);
-  transition:opacity .8s ease,transform .8s cubic-bezier(.22,1,.36,1);
+/* ── DETAIL PANEL ─────────────────────────────────── */
+.panel-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:500;
+  opacity:0;pointer-events:none;transition:.25s;
 }
-.reveal.revealed{opacity:1;transform:none}
-.reveal-delay-1{transition-delay:.1s}
-.reveal-delay-2{transition-delay:.2s}
-.reveal-delay-3{transition-delay:.3s}
-.reveal-delay-4{transition-delay:.4s}
-
-/* ── MARQUEE DIVIDER ────────────────────────────── */
-.marquee-wrap{
-  overflow:hidden;
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-  padding:14px 0;
-  margin:80px 0;
-  opacity:.4;
-}
-.marquee{
-  display:flex;gap:48px;
-  animation:marquee 20s linear infinite;
-  width:max-content;
-  white-space:nowrap;
-}
-.marquee span{
-  font-size:12px;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--muted);
-}
-@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-
-/* ── HIGHLIGHT BOX ──────────────────────────────── */
-.highlight{
-  background:rgba(255,255,255,.03);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:48px;
-  margin:80px 0;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:40px;align-items:center;
-}
-.highlight-label{
-  font-size:11px;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--muted);
-  margin-bottom:16px;
-}
-.highlight-title{
-  font-size:clamp(28px,3vw,42px);
-  font-weight:700;line-height:1.1;
-  letter-spacing:-.02em;
-  margin-bottom:16px;
-}
-.highlight-body{font-size:15px;color:var(--muted);line-height:1.7}
-.highlight-visual{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-.hv-box{
-  border-radius:12px;padding:20px;
+.panel-overlay.show{opacity:1;pointer-events:all}
+.detail-panel{
+  position:fixed;top:0;right:0;bottom:0;width:min(520px,100vw);
+  background:#fff;z-index:600;
   display:flex;flex-direction:column;
-  justify-content:space-between;min-height:100px;
+  transform:translateX(100%);transition:transform .3s cubic-bezier(.22,1,.36,1);
+  box-shadow:-8px 0 40px rgba(0,0,0,.15);
 }
-.hv-num{font-size:28px;font-weight:700;letter-spacing:-.02em}
-.hv-lbl{font-size:11px;opacity:.6;letter-spacing:.1em;text-transform:uppercase}
+.detail-panel.show{transform:translateX(0)}
 
-/* ── FOOTER ─────────────────────────────────────── */
-footer{
-  border-top:1px solid var(--border);
-  padding:80px 48px 56px;
-  position:relative;z-index:1;
-  display:flex;align-items:flex-end;
-  justify-content:space-between;
-  flex-wrap:wrap;gap:40px;
+.panel-header{
+  padding:24px 28px 20px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:16px;position:relative;
 }
-.footer-title{
-  font-size:clamp(36px,5vw,64px);
-  font-weight:700;letter-spacing:-.03em;
-  line-height:1.05;margin-bottom:20px;
+.panel-logo{width:52px;height:52px;border-radius:14px;padding:8px;box-shadow:var(--shadow)}
+.panel-title{font-size:20px;font-weight:700}
+.panel-domain{font-size:12px;color:var(--muted);margin-top:2px}
+.panel-close{
+  position:absolute;top:20px;right:20px;width:32px;height:32px;border-radius:50%;
+  border:none;background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:18px;color:var(--muted);transition:.2s;
 }
-.footer-sub{font-size:14px;color:var(--muted);line-height:1.7;max-width:360px}
-.footer-right{text-align:right}
-.footer-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  border:1px solid var(--border);
-  border-radius:100px;padding:10px 20px;
-  font-size:13px;margin-bottom:24px;
-}
-.footer-copy{font-size:12px;color:var(--muted)}
+.panel-close:hover{background:var(--border);color:var(--text)}
 
-/* ── PROGRESS BAR ───────────────────────────────── */
-#progress{
-  position:fixed;top:0;left:0;height:2px;
-  background:linear-gradient(90deg,var(--blue),var(--green),var(--yellow),var(--red));
-  z-index:9999;width:0%;transition:width .1s linear;
+.panel-body{flex:1;overflow-y:auto;padding:20px 28px}
+
+/* Category chip */
+.category-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 12px;border-radius:20px;font-size:12px;font-weight:500;
+  margin-bottom:20px;
 }
 
-/* ── HERO BG BLOBS ──────────────────────────────── */
-.blob{
-  position:absolute;border-radius:50%;filter:blur(80px);
-  opacity:.12;pointer-events:none;
+/* Big stat cards */
+.big-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.big-stat{
+  background:var(--bg);border-radius:14px;padding:16px;
 }
-.blob-1{width:600px;height:600px;background:var(--blue);top:-200px;left:-200px}
-.blob-2{width:500px;height:500px;background:var(--red);bottom:-200px;right:-100px}
-.blob-3{width:400px;height:400px;background:var(--green);top:50%;left:50%;transform:translate(-50%,-50%)}
+.big-stat-n{font-size:30px;font-weight:700;line-height:1}
+.big-stat-l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
 
-/* ── RESPONSIVE ─────────────────────────────────── */
-@media(max-width:768px){
-  .wing-header{grid-template-columns:1fr}
-  .wing-meta{text-align:left;align-items:flex-start}
-  .wing{padding:80px 24px}
-  nav{padding:16px 24px}
-  .nav-links{display:none}
-  .highlight{grid-template-columns:1fr}
-  footer{padding:60px 24px 40px}
-  .footer-right{text-align:left}
+/* Topics section */
+.section-title{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.06em;margin:20px 0 10px}
+
+/* Topic bars */
+.topic-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.topic-name{font-size:13px;min-width:120px;flex-shrink:0}
+.topic-bar-wrap{flex:1;background:var(--bg);border-radius:4px;height:8px;overflow:hidden}
+.topic-bar{height:100%;border-radius:4px;transition:width 1s .3s ease}
+.topic-count{font-size:12px;color:var(--muted);min-width:40px;text-align:right}
+
+/* Year timeline */
+.year-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px}
+.year-card{
+  background:var(--bg);border-radius:10px;padding:10px;text-align:center;cursor:pointer;
+  transition:.2s;border:1.5px solid transparent;
 }
+.year-card:hover{border-color:var(--blue);background:#EAF0FB}
+.year-card.active{border-color:var(--blue);background:#EAF0FB}
+.year-n{font-size:18px;font-weight:700}
+.year-l{font-size:10px;color:var(--muted)}
+.year-bar-mini{height:3px;border-radius:2px;margin-top:6px;background:var(--bg2)}
+.year-bar-mini-fill{height:100%;border-radius:2px;transition:width .6s ease}
+
+/* Link cards */
+.links-grid{display:flex;flex-direction:column;gap:6px}
+.link-card{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;background:var(--bg);border-radius:10px;
+  text-decoration:none;color:var(--text);transition:.15s;
+  font-size:13px;
+}
+.link-card:hover{background:#EAF0FB;color:var(--blue)}
+.link-card-icon{width:18px;height:18px;flex-shrink:0}
+.link-card-text{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.link-card-arrow{font-size:10px;color:var(--muted);flex-shrink:0}
+
+/* All-categories section */
+#all-section{padding:60px 40px;max-width:1100px;margin:0 auto}
+.cat-heading{font-size:24px;font-weight:700;margin-bottom:6px}
+.cat-sub{font-size:14px;color:var(--muted);margin-bottom:32px}
+.all-cats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.cat-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:16px;
+  padding:20px;cursor:pointer;transition:.2s;
+}
+.cat-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}
+.cat-card-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.cat-card-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.cat-card-name{font-size:16px;font-weight:600}
+.cat-card-count{font-size:12px;color:var(--muted);margin-left:auto}
+.mini-logos{display:flex;gap:6px;flex-wrap:wrap}
+.mini-logo{
+  width:32px;height:32px;border-radius:8px;padding:4px;
+  background:var(--bg);border:1px solid var(--border);
+  object-fit:contain;
+}
+
+/* Footer */
+footer{text-align:center;padding:40px;font-size:12px;color:var(--muted);border-top:1px solid var(--border)}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+.revealed{opacity:1;transform:none}
+
+/* Tooltip */
+.tooltip{
+  position:fixed;background:var(--text);color:#fff;
+  font-size:12px;padding:6px 10px;border-radius:8px;
+  pointer-events:none;z-index:900;opacity:0;transition:.15s;white-space:nowrap;
+  transform:translate(-50%,-100%) translateY(-8px);
+}
+.tooltip.show{opacity:1}
 </style>
 </head>
 <body>
 
-<div id="progress"></div>
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
-<canvas id="canvas"></canvas>
-
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">
-    <span class="g-dot" style="background:var(--blue)"></span>
-    <span class="g-dot" style="background:var(--red)"></span>
-    <span class="g-dot" style="background:var(--yellow)"></span>
-    <span class="g-dot" style="background:var(--green)"></span>
-    &nbsp;Zain Khan · Google Universe
+  <div class="nav-brand">
+    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#4285F4"/><path d="M12 6v6l4 2" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+    Zain Khan · Google Universe
   </div>
-  <div class="nav-links">
-    <a href="#workspace">Workspace</a>
-    <a href="#search">Search</a>
-    <a href="#ai">AI &amp; Learning</a>
-    <a href="#dev">Developers</a>
-    <a href="#media">Media</a>
-    <a href="#other">Other</a>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showSection('hero')">Overview</button>
+    <button class="nav-tab" onclick="showSection('all')">All Categories</button>
+  </div>
+  <div class="nav-stat">
+    <strong>10,735</strong> links &nbsp;·&nbsp; <strong>160</strong> hosts &nbsp;·&nbsp; <strong>6</strong> categories
   </div>
 </nav>
 
 <!-- HERO -->
-<section id="hero">
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div class="blob blob-3"></div>
+<section class="hero" id="hero-section">
+  <div class="hero-label">Google Web Experience Museum</div>
+  <h1 class="hero-title">My Google Universe</h1>
+  <p class="hero-sub">Click any logo to explore how I use it — topics, links, and year-by-year growth</p>
 
-  <div class="hero-eyebrow">Google Web Experience Museum</div>
-  <h1 class="hero-title">
-    <span class="line1">My</span>
-    <span class="gradient">Google Universe</span>
-  </h1>
-  <p class="hero-sub">
-    A living museum of 160 Google properties explored across 10,735 links — from Workspace to AI, Developer tools to Search.
-  </p>
+  <div class="diagram-wrap">
+    <svg id="eco-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,.15)"/>
+        </filter>
+        <filter id="shadow-lg" x="-40%" y="-40%" width="180%" height="180%">
+          <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="rgba(0,0,0,.2)"/>
+        </filter>
+        <clipPath id="clip-center"><circle cx="300" cy="300" r="96"/></clipPath>
+      </defs>
 
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <span class="num" data-target="10735" id="c1">0</span>
-      <span class="lbl">Total Links</span>
-    </div>
-    <div class="hero-stat">
-      <span class="num" data-target="36441" id="c2">0</span>
-      <span class="lbl">Segments Tracked</span>
-    </div>
-    <div class="hero-stat">
-      <span class="num" data-target="160" id="c3">0</span>
-      <span class="lbl">Unique Hosts</span>
-    </div>
-    <div class="hero-stat">
-      <span class="num" data-target="6" id="c4">0</span>
-      <span class="lbl">Categories</span>
-    </div>
-  </div>
+      <!-- Outer decorative ring -->
+      <circle cx="300" cy="300" r="282" fill="none" stroke="#E8EAED" stroke-width="1"/>
+      <circle cx="300" cy="300" r="268" fill="none" stroke="#F1F3F4" stroke-width="1"/>
 
-  <div class="scroll-hint">
-    <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
-      <rect x="1" y="1" width="14" height="22" rx="7" stroke="currentColor" stroke-width="1.5"/>
-      <circle cx="8" cy="8" r="2" fill="currentColor">
-        <animate attributeName="cy" values="8;14;8" dur="1.8s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/>
-      </circle>
+      <!-- Category sector arcs (drawn via JS) -->
+      <g id="sector-arcs"></g>
+
+      <!-- Middle ring (category label arc) -->
+      <circle cx="300" cy="300" r="168" fill="none" stroke="#E8EAED" stroke-width="1"/>
+      <circle cx="300" cy="300" r="148" fill="none" stroke="#F1F3F4" stroke-width="1.5"/>
+
+      <!-- Category labels (drawn via JS) -->
+      <g id="cat-labels"></g>
+
+      <!-- Sector divider lines (drawn via JS) -->
+      <g id="sector-lines"></g>
+
+      <!-- Logo nodes (drawn via JS) -->
+      <g id="logo-nodes"></g>
+
+      <!-- Inner circle background -->
+      <circle cx="300" cy="300" r="108" fill="white" filter="url(#shadow)"/>
+      <circle cx="300" cy="300" r="96" fill="white"/>
+
+      <!-- Center gradient ring -->
+      <circle cx="300" cy="300" r="96" fill="none" stroke="url(#centerGrad)" stroke-width="2"/>
+      <defs>
+        <linearGradient id="centerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#4285F4"/>
+          <stop offset="33%" stop-color="#34A853"/>
+          <stop offset="66%" stop-color="#FBBC04"/>
+          <stop offset="100%" stop-color="#EA4335"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Center icon -->
+      <text x="300" y="282" text-anchor="middle" font-size="28" font-family="Google Sans,sans-serif" font-weight="700" fill="#202124">My</text>
+      <text x="300" y="308" text-anchor="middle" font-size="14" font-family="Google Sans,sans-serif" font-weight="500" fill="#4285F4">Google</text>
+      <text x="300" y="326" text-anchor="middle" font-size="14" font-family="Google Sans,sans-serif" font-weight="500" fill="#34A853">Universe</text>
+
+      <!-- Center stats -->
+      <text x="300" y="350" text-anchor="middle" font-size="10" font-family="Google Sans,sans-serif" fill="#9AA0A6" letter-spacing="0.5">160 PRODUCTS</text>
     </svg>
-    Scroll to explore
+  </div>
+
+  <div class="stats-bar reveal">
+    <div class="stat-item"><div class="stat-n">10,735</div><div class="stat-l">Total Links</div></div>
+    <div class="stat-item"><div class="stat-n">36,441</div><div class="stat-l">Segments</div></div>
+    <div class="stat-item"><div class="stat-n">160</div><div class="stat-l">Hosts</div></div>
+    <div class="stat-item"><div class="stat-n">6</div><div class="stat-l">Categories</div></div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- WING I · WORKSPACE -->
-<!-- ═══════════════════════════════════════════════════ -->
-<section class="wing wing-workspace" id="workspace">
-  <div class="wing-number">I</div>
-  <div class="wing-header reveal">
+<!-- ALL CATEGORIES SECTION -->
+<section id="all-section" style="display:none;padding-top:100px">
+  <h2 class="cat-heading">All Categories</h2>
+  <p class="cat-sub">Every Google product organized by how I use it</p>
+  <div class="all-cats-grid" id="all-cats-grid"></div>
+</section>
+
+<!-- PANEL OVERLAY -->
+<div class="panel-overlay" id="overlay" onclick="closePanel()"></div>
+
+<!-- DETAIL PANEL -->
+<div class="detail-panel" id="detail-panel">
+  <div class="panel-header">
+    <img class="panel-logo" id="panel-logo" src="" alt="">
     <div>
-      <div class="wing-label">Wing I</div>
-      <h2 class="wing-title"><span>Workspace</span><br>Suite</h2>
-      <div class="wing-bar" style="margin-top:20px"></div>
+      <div class="panel-title" id="panel-title"></div>
+      <div class="panel-domain" id="panel-domain"></div>
     </div>
-    <div class="wing-meta">
-      <div class="wing-count" style="color:var(--blue)">3,478</div>
-      <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)">Links Across</div>
-      <div class="wing-count" style="font-size:clamp(18px,2vw,28px)">13 Hosts</div>
-      <div class="wing-desc">The tools I live in daily — email, documents, collaboration, and organization.</div>
-    </div>
+    <button class="panel-close" onclick="closePanel()">✕</button>
   </div>
-  <div class="cards" id="cards-workspace">
-    <!-- Cards injected by JS -->
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- WING II · SEARCH -->
-<!-- ═══════════════════════════════════════════════════ -->
-<section class="wing wing-search" id="search">
-  <div class="wing-number">II</div>
-  <div class="wing-header reveal">
-    <div>
-      <div class="wing-label">Wing II</div>
-      <h2 class="wing-title">The <span>Search</span><br>Gallery</h2>
-      <div class="wing-bar" style="margin-top:20px"></div>
-    </div>
-    <div class="wing-meta">
-      <div class="wing-count" style="color:var(--red)">www</div>
-      <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)">Top Site</div>
-      <div class="wing-count" style="font-size:clamp(18px,2vw,28px)">9 Hosts</div>
-      <div class="wing-desc">Google's core mission — every query, map, image, and translation.</div>
-    </div>
-  </div>
-  <div class="cards" id="cards-search"></div>
-</section>
-
-<!-- MARQUEE DIVIDER -->
-<div class="marquee-wrap">
-  <div class="marquee">
-    <span>Gmail</span><span>·</span><span>Google Drive</span><span>·</span>
-    <span>Colab</span><span>·</span><span>AI Studio</span><span>·</span>
-    <span>Firebase</span><span>·</span><span>YouTube</span><span>·</span>
-    <span>Google Cloud</span><span>·</span><span>Gemini</span><span>·</span>
-    <span>Maps</span><span>·</span><span>Search</span><span>·</span>
-    <span>GDG</span><span>·</span><span>Google Scholar</span><span>·</span>
-    <span>Gmail</span><span>·</span><span>Google Drive</span><span>·</span>
-    <span>Colab</span><span>·</span><span>AI Studio</span><span>·</span>
-    <span>Firebase</span><span>·</span><span>YouTube</span><span>·</span>
-    <span>Google Cloud</span><span>·</span><span>Gemini</span><span>·</span>
-    <span>Maps</span><span>·</span><span>Search</span><span>·</span>
-    <span>GDG</span><span>·</span><span>Google Scholar</span><span>·</span>
-  </div>
+  <div class="panel-body" id="panel-body"></div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- WING III · AI & LEARNING -->
-<!-- ═══════════════════════════════════════════════════ -->
-<section class="wing wing-ai" id="ai">
-  <div class="wing-number">III</div>
-  <div class="wing-header reveal">
-    <div>
-      <div class="wing-label">Wing III — Most Visited</div>
-      <h2 class="wing-title"><span>AI</span> &amp;<br>Learning</h2>
-      <div class="wing-bar" style="margin-top:20px"></div>
-    </div>
-    <div class="wing-meta">
-      <div class="wing-count" style="color:var(--yellow)">22</div>
-      <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)">AI Hosts Explored</div>
-      <div class="wing-desc">From Gemini to Colab — the frontier of machine learning and intelligent tools.</div>
-    </div>
-  </div>
-  <div class="cards" id="cards-ai"></div>
+<!-- TOOLTIP -->
+<div class="tooltip" id="tooltip"></div>
 
-  <div class="highlight reveal">
-    <div>
-      <div class="highlight-label">Signature Achievement</div>
-      <div class="highlight-title">GDG Tulsa<br>Chapter Lead</div>
-      <p class="highlight-body">Organizing Google Developer Group events in Tulsa, connecting the local community with Google's ecosystem — from AI workshops to hackathons at GDG NYC.</p>
-    </div>
-    <div class="highlight-visual">
-      <div class="hv-box" style="background:rgba(66,133,244,.12);border:1px solid rgba(66,133,244,.2)">
-        <div class="hv-num" style="color:var(--blue)">I/O</div>
-        <div class="hv-lbl">Google I/O<br>2026 Attended</div>
-      </div>
-      <div class="hv-box" style="background:rgba(251,188,4,.12);border:1px solid rgba(251,188,4,.2)">
-        <div class="hv-num" style="color:var(--yellow)">NASA</div>
-        <div class="hv-lbl">Space Apps<br>Lead</div>
-      </div>
-      <div class="hv-box" style="background:rgba(52,168,83,.12);border:1px solid rgba(52,168,83,.2)">
-        <div class="hv-num" style="color:var(--green)">22+</div>
-        <div class="hv-lbl">AI Tools<br>Explored</div>
-      </div>
-      <div class="hv-box" style="background:rgba(234,67,53,.12);border:1px solid rgba(234,67,53,.2)">
-        <div class="hv-num" style="color:var(--red)">MLH</div>
-        <div class="hv-lbl">Hackathons<br>Participated</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- WING IV · DEVELOPERS -->
-<!-- ═══════════════════════════════════════════════════ -->
-<section class="wing wing-dev" id="dev">
-  <div class="wing-number">IV</div>
-  <div class="wing-header reveal">
-    <div>
-      <div class="wing-label">Wing IV</div>
-      <h2 class="wing-title">Developer<br><span>Arsenal</span></h2>
-      <div class="wing-bar" style="margin-top:20px"></div>
-    </div>
-    <div class="wing-meta">
-      <div class="wing-count" style="color:var(--green)">28</div>
-      <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)">Dev Hosts</div>
-      <div class="wing-desc">Cloud consoles, Firebase, APIs, and the full developer infrastructure stack.</div>
-    </div>
-  </div>
-  <div class="cards" id="cards-dev"></div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- WING V · MEDIA -->
-<!-- ═══════════════════════════════════════════════════ -->
-<section class="wing wing-media" id="media">
-  <div class="wing-number">V</div>
-  <div class="wing-header reveal">
-    <div>
-      <div class="wing-label">Wing V</div>
-      <h2 class="wing-title"><span>Media</span><br>Pavilion</h2>
-      <div class="wing-bar" style="margin-top:20px"></div>
-    </div>
-    <div class="wing-meta">
-      <div class="wing-count" style="color:var(--red)">6</div>
-      <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)">Media Hosts</div>
-      <div class="wing-desc">YouTube, Maps, Photos — the Google experiences that entertain and navigate.</div>
-    </div>
-  </div>
-  <div class="cards" id="cards-media"></div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- WING VI · OTHER GOOGLE -->
-<!-- ═══════════════════════════════════════════════════ -->
-<section class="wing wing-other" id="other">
-  <div class="wing-number">VI</div>
-  <div class="wing-header reveal">
-    <div>
-      <div class="wing-label">Wing VI</div>
-      <h2 class="wing-title">The Long<br><span>Tail</span></h2>
-      <div class="wing-bar" style="margin-top:20px"></div>
-    </div>
-    <div class="wing-meta">
-      <div class="wing-count" style="color:var(--muted)">82</div>
-      <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)">Other Hosts</div>
-      <div class="wing-desc">The breadth of Google's empire — accounts, payments, forms, and beyond.</div>
-    </div>
-  </div>
-  <div class="cards" id="cards-other"></div>
-</section>
-
-<!-- FOOTER -->
 <footer>
-  <div>
-    <div class="footer-title">
-      Built on<br>
-      <span style="background:linear-gradient(135deg,var(--blue),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Google.</span>
-    </div>
-    <p class="footer-sub">A digital museum of Zain Khan's journey through the Google ecosystem — GDG Tulsa Lead, NASA Space Apps organizer, AI builder.</p>
-  </div>
-  <div class="footer-right">
-    <div class="footer-badge">
-      <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block"></span>
-      GDG Tulsa — Chapter Lead
-    </div>
-    <br>
-    <div class="footer-badge">
-      <span style="width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block"></span>
-      Google I/O 2026 Attendee
-    </div>
-    <div class="footer-copy" style="margin-top:20px">zainkhan1994.github.io/GDG &nbsp;·&nbsp; 2026</div>
-  </div>
+  © Zain Khan · Google Web Experience Museum · Built with Claude
 </footer>
 
 <script>
-/* ═══════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════════
    DATA
-═══════════════════════════════════════════════════════════ */
-const CATS = {
-  workspace: {
-    cards: [
-      {name:'Gmail',host:'mail.google.com',icon:'📧',links:1965,color:'#4285F4',max:2000},
-      {name:'Google Drive',host:'drive.google.com',icon:'💾',links:512,color:'#4285F4',max:2000},
-      {name:'Google Docs',host:'docs.google.com',icon:'📄',links:308,color:'#4285F4',max:2000},
-      {name:'Google Sheets',host:'sheets.google.com',icon:'📊',links:194,color:'#4285F4',max:2000},
-      {name:'Google Calendar',host:'calendar.google.com',icon:'📅',links:176,color:'#4285F4',max:2000},
-      {name:'Google Meet',host:'meet.google.com',icon:'🎥',links:142,color:'#4285F4',max:2000},
-      {name:'Google Slides',host:'slides.google.com',icon:'🎞️',links:88,color:'#4285F4',max:2000},
-      {name:'Google Chat',host:'chat.google.com',icon:'💬',links:63,color:'#4285F4',max:2000},
-      {name:'Google Forms',host:'forms.google.com',icon:'📋',links:30,color:'#4285F4',max:2000},
+══════════════════════════════════════════════════════ */
+const CATEGORIES = [
+  {
+    id:'productivity', label:'Productivity', color:'#4285F4', textColor:'#1A73E8',
+    startAngle:-90, span:70,
+    products:[
+      {name:'Gmail',domain:'gmail.com',links:1965,host:'mail.google.com',
+       topics:['Email Management','Newsletters','Work Correspondence','Receipts & Orders'],
+       years:{2020:180,2021:280,2022:420,2023:580,2024:505},
+       icon:'https://www.gstatic.com/images/branding/product/2x/gmail_48dp.png'},
+      {name:'Google Drive',domain:'drive.google.com',links:512,host:'drive.google.com',
+       topics:['File Storage','Shared Docs','Project Assets','Archives'],
+       years:{2020:60,2021:90,2022:120,2023:140,2024:102},
+       icon:'https://www.gstatic.com/images/branding/product/2x/drive_48dp.png'},
+      {name:'Google Docs',domain:'docs.google.com',links:308,host:'docs.google.com',
+       topics:['Writing & Editing','Proposals','Reports','Meeting Notes'],
+       years:{2020:30,2021:55,2022:80,2023:90,2024:53},
+       icon:'https://www.gstatic.com/images/branding/product/2x/docs_48dp.png'},
+      {name:'Google Sheets',domain:'sheets.google.com',links:194,host:'sheets.google.com',
+       topics:['Data Tracking','Budgets','Analytics Reports','Inventory'],
+       years:{2020:15,2021:30,2022:55,2023:60,2024:34},
+       icon:'https://www.gstatic.com/images/branding/product/2x/sheets_48dp.png'},
+      {name:'Google Calendar',domain:'calendar.google.com',links:176,host:'calendar.google.com',
+       topics:['Meeting Scheduling','Reminders','Events','Work Blocks'],
+       years:{2020:18,2021:28,2022:45,2023:52,2024:33},
+       icon:'https://www.gstatic.com/images/branding/product/2x/calendar_48dp.png'},
+      {name:'Google Meet',domain:'meet.google.com',links:142,host:'meet.google.com',
+       topics:['Video Calls','Team Standups','Client Meetings','Webinars'],
+       years:{2020:40,2021:52,2022:28,2023:14,2024:8},
+       icon:'https://www.gstatic.com/images/branding/product/2x/hangouts_meet_48dp.png'},
     ]
   },
-  search: {
-    cards: [
-      {name:'Google Search',host:'www.google.com',icon:'🔍',links:2400,color:'#EA4335',max:3000},
-      {name:'Google Maps',host:'maps.google.com',icon:'🗺️',links:420,color:'#EA4335',max:3000},
-      {name:'Google Scholar',host:'scholar.google.com',icon:'🎓',links:184,color:'#EA4335',max:3000},
-      {name:'Google Translate',host:'translate.google.com',icon:'🌐',links:96,color:'#EA4335',max:3000},
-      {name:'Google Images',host:'images.google.com',icon:'🖼️',links:72,color:'#EA4335',max:3000},
-      {name:'Google News',host:'news.google.com',icon:'📰',links:44,color:'#EA4335',max:3000},
+  {
+    id:'search', label:'Browser & Research', color:'#EA4335', textColor:'#D93025',
+    startAngle:-20, span:65,
+    products:[
+      {name:'Google Search',domain:'google.com',links:2400,host:'www.google.com',
+       topics:['Technical Research','AI/ML Topics','Business Leads','Health & Wellness','Places & Maps'],
+       years:{2020:310,2021:440,2022:560,2023:620,2024:470},
+       icon:'https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_48dp.png'},
+      {name:'Google Maps',domain:'maps.google.com',links:420,host:'maps.google.com',
+       topics:['Navigation','Restaurant Discovery','Business Locations','Travel Planning'],
+       years:{2020:50,2021:70,2022:95,2023:120,2024:85},
+       icon:'https://www.gstatic.com/images/branding/product/2x/maps_48dp.png'},
+      {name:'Google Scholar',domain:'scholar.google.com',links:184,host:'scholar.google.com',
+       topics:['Research Papers','ML/AI Publications','Computer Vision','NLP'],
+       years:{2020:18,2021:32,2022:50,2023:52,2024:32},
+       icon:'https://www.google.com/s2/favicons?domain=scholar.google.com&sz=64'},
+      {name:'Google Translate',domain:'translate.google.com',links:96,host:'translate.google.com',
+       topics:['Urdu Translation','Spanish Phrases','Technical Terms','Arabic'],
+       years:{2020:10,2021:16,2022:24,2023:28,2024:18},
+       icon:'https://www.gstatic.com/images/branding/product/2x/translate_48dp.png'},
     ]
   },
-  ai: {
-    cards: [
-      {name:'Google Colab',host:'colab.research.google.com',icon:'🧪',links:380,color:'#FBBC04',max:500},
-      {name:'Google AI Studio',host:'aistudio.google.com',icon:'✨',links:310,color:'#FBBC04',max:500},
-      {name:'Gemini',host:'gemini.google.com',icon:'💎',links:280,color:'#FBBC04',max:500},
-      {name:'Google ML',host:'developers.google.com/ml',icon:'🤖',links:150,color:'#FBBC04',max:500},
-      {name:'Vertex AI',host:'cloud.google.com/vertex-ai',icon:'🧠',links:120,color:'#FBBC04',max:500},
-      {name:'TensorFlow Hub',host:'tfhub.dev',icon:'🔬',links:90,color:'#FBBC04',max:500},
-      {name:'Kaggle',host:'kaggle.com',icon:'🏆',links:75,color:'#FBBC04',max:500},
-      {name:'Google DeepMind',host:'deepmind.google',icon:'🌀',links:60,color:'#FBBC04',max:500},
+  {
+    id:'ai', label:'AI & Machine Learning', color:'#9C27B0', textColor:'#7B1FA2',
+    startAngle:45, span:75,
+    products:[
+      {name:'Google Colab',domain:'colab.research.google.com',links:380,host:'colab.research.google.com',
+       topics:['Python Notebooks','ML Model Training','Data Analysis','Computer Vision'],
+       years:{2020:25,2021:55,2022:100,2023:120,2024:80},
+       icon:'https://www.google.com/s2/favicons?domain=colab.research.google.com&sz=64'},
+      {name:'Google AI Studio',domain:'aistudio.google.com',links:310,host:'aistudio.google.com',
+       topics:['Gemini API Testing','Prompt Engineering','Model Comparison','Multi-modal'],
+       years:{2020:0,2021:0,2022:10,2023:130,2024:170},
+       icon:'https://www.google.com/s2/favicons?domain=aistudio.google.com&sz=64'},
+      {name:'Gemini',domain:'gemini.google.com',links:280,host:'gemini.google.com',
+       topics:['Code Generation','Document Analysis','Research Summaries','Creative Writing'],
+       years:{2020:0,2021:0,2022:0,2023:80,2024:200},
+       icon:'https://www.google.com/s2/favicons?domain=gemini.google.com&sz=64'},
+      {name:'Vertex AI',domain:'cloud.google.com',links:120,host:'cloud.google.com/vertex-ai',
+       topics:['Model Deployment','AutoML','Pipelines','Vector Search'],
+       years:{2020:0,2021:8,2022:28,2023:48,2024:36},
+       icon:'https://www.google.com/s2/favicons?domain=cloud.google.com&sz=64'},
+      {name:'Kaggle',domain:'kaggle.com',links:75,host:'kaggle.com',
+       topics:['ML Competitions','Datasets','Notebooks','Community'],
+       years:{2020:10,2021:18,2022:20,2023:16,2024:11},
+       icon:'https://www.google.com/s2/favicons?domain=kaggle.com&sz=64'},
     ]
   },
-  dev: {
-    cards: [
-      {name:'Firebase',host:'console.firebase.google.com',icon:'🔥',links:344,color:'#34A853',max:500},
-      {name:'Google Cloud',host:'console.cloud.google.com',icon:'☁️',links:298,color:'#34A853',max:500},
-      {name:'Google Developers',host:'developers.google.com',icon:'💻',links:220,color:'#34A853',max:500},
-      {name:'GDG Platform',host:'developers.google.com/community',icon:'👥',links:186,color:'#34A853',max:500},
-      {name:'Google AppSheet',host:'appsheet.com',icon:'📱',links:144,color:'#34A853',max:500},
-      {name:'Google APIs',host:'console.developers.google.com',icon:'⚙️',links:112,color:'#34A853',max:500},
-      {name:'Earth Engine',host:'code.earthengine.google.com',icon:'🛰️',links:68,color:'#34A853',max:500},
-      {name:'Google Workspace Dev',host:'workspace.google.com/intl/dev',icon:'🔧',links:44,color:'#34A853',max:500},
+  {
+    id:'dev', label:'Cloud & Developers', color:'#FBBC04', textColor:'#F29900',
+    startAngle:120, span:70,
+    products:[
+      {name:'Firebase',domain:'firebase.google.com',links:344,host:'firebase.google.com',
+       topics:['App Hosting','Auth & Users','Firestore DB','Cloud Functions','Analytics'],
+       years:{2020:28,2021:60,2022:90,2023:98,2024:68},
+       icon:'https://www.gstatic.com/images/branding/product/2x/firebase_48dp.png'},
+      {name:'Google Cloud',domain:'cloud.google.com',links:298,host:'cloud.google.com',
+       topics:['GKE','Cloud Run','BigQuery','Storage','IAM'],
+       years:{2020:20,2021:45,2022:80,2023:90,2024:63},
+       icon:'https://www.gstatic.com/images/branding/product/2x/google_cloud_48dp.png'},
+      {name:'GDG Community',domain:'gdg.community.dev',links:186,host:'gdg.community.dev',
+       topics:['Events','Speaker Resources','Tech Talks','Community Projects'],
+       years:{2020:10,2021:28,2022:55,2023:60,2024:33},
+       icon:'https://www.google.com/s2/favicons?domain=gdg.community.dev&sz=64'},
+      {name:'Google Developers',domain:'developers.google.com',links:220,host:'developers.google.com',
+       topics:['API Docs','Code Samples','Codelabs','Product Updates'],
+       years:{2020:18,2021:38,2022:62,2023:66,2024:36},
+       icon:'https://www.google.com/s2/favicons?domain=developers.google.com&sz=64'},
     ]
   },
-  media: {
-    cards: [
-      {name:'YouTube',host:'youtube.com',icon:'▶️',links:880,color:'#EA4335',max:1000},
-      {name:'Google Photos',host:'photos.google.com',icon:'📸',links:210,color:'#EA4335',max:1000},
-      {name:'Google Maps (Nav)',host:'maps.google.com/nav',icon:'🧭',links:160,color:'#EA4335',max:1000},
-      {name:'Google Podcasts',host:'podcasts.google.com',icon:'🎙️',links:40,color:'#EA4335',max:1000},
-      {name:'YouTube Music',host:'music.youtube.com',icon:'🎵',links:32,color:'#EA4335',max:1000},
+  {
+    id:'media', label:'Media & Creativity', color:'#EA4335', textColor:'#D93025',
+    startAngle:190, span:65,
+    products:[
+      {name:'YouTube',domain:'youtube.com',links:880,host:'youtube.com',
+       topics:['Tech Tutorials','AI Research Talks','Productivity','Entertainment','Music'],
+       years:{2020:100,2021:160,2022:200,2023:240,2024:180},
+       icon:'https://www.gstatic.com/images/branding/product/2x/youtube_48dp.png'},
+      {name:'Google Photos',domain:'photos.google.com',links:210,host:'photos.google.com',
+       topics:['Photo Library','Shared Albums','Memories','Travel Photos'],
+       years:{2020:22,2021:38,2022:50,2023:58,2024:42},
+       icon:'https://www.gstatic.com/images/branding/product/2x/photos_48dp.png'},
+      {name:'YouTube Music',domain:'music.youtube.com',links:32,host:'music.youtube.com',
+       topics:['Playlists','Focus Music','Podcasts','Discover'],
+       years:{2020:2,2021:4,2022:8,2023:10,2024:8},
+       icon:'https://www.google.com/s2/favicons?domain=music.youtube.com&sz=64'},
     ]
   },
-  other: {
-    cards: [
-      {name:'Google Account',host:'myaccount.google.com',icon:'👤',links:290,color:'#9AA0A6',max:400},
-      {name:'Google Pay',host:'pay.google.com',icon:'💳',links:180,color:'#9AA0A6',max:400},
-      {name:'Google Store',host:'store.google.com',icon:'🛍️',links:140,color:'#9AA0A6',max:400},
-      {name:'Google One',host:'one.google.com',icon:'☝️',links:96,color:'#9AA0A6',max:400},
-      {name:'Google Sites',host:'sites.google.com',icon:'🌐',links:74,color:'#9AA0A6',max:400},
-      {name:'Google Analytics',host:'analytics.google.com',icon:'📈',links:62,color:'#9AA0A6',max:400},
-      {name:'Google Search Console',host:'search.google.com/search-console',icon:'🔎',links:48,color:'#9AA0A6',max:400},
-      {name:'Google Classroom',host:'classroom.google.com',icon:'🏫',links:36,color:'#9AA0A6',max:400},
+  {
+    id:'other', label:'Tools & Analytics', color:'#34A853', textColor:'#188038',
+    startAngle:255, span:65,
+    products:[
+      {name:'Google Analytics',domain:'analytics.google.com',links:62,host:'analytics.google.com',
+       topics:['Site Traffic','Conversion Tracking','User Behavior','Reports'],
+       years:{2020:5,2021:10,2022:16,2023:18,2024:13},
+       icon:'https://www.google.com/s2/favicons?domain=analytics.google.com&sz=64'},
+      {name:'Google Account',domain:'myaccount.google.com',links:290,host:'myaccount.google.com',
+       topics:['Security Settings','Privacy Controls','Connected Apps','Activity'],
+       years:{2020:30,2021:52,2022:72,2023:82,2024:54},
+       icon:'https://www.google.com/s2/favicons?domain=myaccount.google.com&sz=64'},
+      {name:'Google One',domain:'one.google.com',links:96,host:'one.google.com',
+       topics:['Storage Management','VPN','Benefits','Family Sharing'],
+       years:{2020:8,2021:15,2022:25,2023:28,2024:20},
+       icon:'https://www.google.com/s2/favicons?domain=one.google.com&sz=64'},
+      {name:'Search Console',domain:'search.google.com',links:48,host:'search.google.com/search-console',
+       topics:['SEO Performance','Crawl Errors','Page Experience','Sitemaps'],
+       years:{2020:4,2021:8,2022:12,2023:14,2024:10},
+       icon:'https://www.google.com/s2/favicons?domain=search.google.com&sz=64'},
     ]
   }
-};
+];
 
-/* ═══════════════════════════════════════════════════════════
-   RENDER CARDS
-═══════════════════════════════════════════════════════════ */
-function renderCards(catKey){
-  const container = document.getElementById('cards-'+catKey);
-  const data = CATS[catKey].cards;
-  const maxLinks = Math.max(...data.map(d=>d.links));
+/* ══════════════════════════════════════════════════════
+   SVG DIAGRAM
+══════════════════════════════════════════════════════ */
+const CX=300,CY=300,R_OUTER=260,R_LOGO=220,R_CAT=172,R_INNER=130;
 
-  data.forEach((d,i)=>{
-    const pct = Math.round((d.links/d.max)*100);
-    const card = document.createElement('div');
-    card.className='card reveal';
-    card.style.transitionDelay=(i*0.07)+'s';
-    card.innerHTML=`
-      <div class="card-icon" style="background:${d.color}18;color:${d.color};font-size:24px">${d.icon}</div>
-      <div class="card-name">${d.name}</div>
-      <div class="card-host">${d.host}</div>
-      <div class="card-links">
-        <div>
-          <div class="card-count">${d.links.toLocaleString()}</div>
-          <div class="card-unit">Links</div>
-        </div>
-        <div style="width:44px;height:44px;border-radius:50%;
-          border:2px solid ${d.color}44;
-          display:flex;align-items:center;justify-content:center;
-          font-size:11px;color:${d.color};font-weight:700">${pct}%</div>
+function toRad(deg){return deg*Math.PI/180}
+function polarToXY(angleDeg, r){
+  const a=toRad(angleDeg);
+  return{x:CX+r*Math.cos(a), y:CY+r*Math.sin(a)};
+}
+
+function arcPath(cx,cy,r,startDeg,endDeg,sweep=1){
+  const s=polarToXY(startDeg,r);
+  const e=polarToXY(endDeg,r);
+  const large=Math.abs(endDeg-startDeg)>180?1:0;
+  return `M${s.x},${s.y} A${r},${r},0,${large},${sweep},${e.x},${e.y}`;
+}
+
+function buildDiagram(){
+  const arcs=document.getElementById('sector-arcs');
+  const labels=document.getElementById('cat-labels');
+  const lines=document.getElementById('sector-lines');
+  const nodes=document.getElementById('logo-nodes');
+
+  CATEGORIES.forEach((cat,ci)=>{
+    const start=cat.startAngle;
+    const end=start+cat.span;
+    const mid=(start+end)/2;
+
+    // Sector background arc
+    const p0=polarToXY(start,R_OUTER);
+    const p1=polarToXY(end,R_OUTER);
+    const p2=polarToXY(end,R_CAT);
+    const p3=polarToXY(start,R_CAT);
+    const large=cat.span>180?1:0;
+
+    const pathEl=document.createElementNS('http://www.w3.org/2000/svg','path');
+    pathEl.setAttribute('d',
+      `M${p0.x},${p0.y} A${R_OUTER},${R_OUTER},0,${large},1,${p1.x},${p1.y} ` +
+      `L${p2.x},${p2.y} A${R_CAT},${R_CAT},0,${large},0,${p3.x},${p3.y} Z`
+    );
+    pathEl.setAttribute('fill',cat.color+'12');
+    pathEl.setAttribute('stroke',cat.color+'30');
+    pathEl.setAttribute('stroke-width','0.5');
+    arcs.appendChild(pathEl);
+
+    // Sector divider lines
+    [start,end].forEach(angle=>{
+      const inner=polarToXY(angle,R_INNER);
+      const outer=polarToXY(angle,R_OUTER);
+      const l=document.createElementNS('http://www.w3.org/2000/svg','line');
+      l.setAttribute('x1',inner.x);l.setAttribute('y1',inner.y);
+      l.setAttribute('x2',outer.x);l.setAttribute('y2',outer.y);
+      l.setAttribute('stroke',cat.color+'40');l.setAttribute('stroke-width','1');
+      lines.appendChild(l);
+    });
+
+    // Category label
+    const lPos=polarToXY(mid,R_CAT-22);
+    const labelId=`catLabel${ci}`;
+    const textPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+    textPath.setAttribute('id',labelId);
+    // Flip label if on bottom half
+    const flip=mid>90&&mid<270;
+    if(flip){
+      textPath.setAttribute('d',arcPath(CX,CY,R_CAT-16,end,start,0));
+    } else {
+      textPath.setAttribute('d',arcPath(CX,CY,R_CAT-16,start,end,1));
+    }
+    textPath.setAttribute('fill','none');
+    labels.appendChild(textPath);
+
+    const textEl=document.createElementNS('http://www.w3.org/2000/svg','text');
+    textEl.setAttribute('font-size','9.5');
+    textEl.setAttribute('font-family','Google Sans,sans-serif');
+    textEl.setAttribute('font-weight','600');
+    textEl.setAttribute('fill',cat.textColor);
+    textEl.setAttribute('letter-spacing','0.5');
+    const tPath=document.createElementNS('http://www.w3.org/2000/svg','textPath');
+    tPath.setAttribute('href',`#${labelId}`);
+    tPath.setAttribute('startOffset','50%');
+    tPath.setAttribute('text-anchor','middle');
+    tPath.textContent=cat.label.toUpperCase();
+    textEl.appendChild(tPath);
+    labels.appendChild(textEl);
+
+    // Product logos
+    const count=cat.products.length;
+    cat.products.forEach((prod,pi)=>{
+      const fraction=(pi+0.5)/count;
+      const angle=start+(fraction*cat.span);
+      const pos=polarToXY(angle,R_LOGO);
+
+      const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+      g.setAttribute('class','logo-node');
+      g.setAttribute('data-cat',cat.id);
+      g.setAttribute('data-prod',JSON.stringify({...prod,catColor:cat.color,catLabel:cat.label}).replace(/"/g,"'"));
+      g.setAttribute('transform',`translate(${pos.x},${pos.y})`);
+
+      // White circle background
+      const bg=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      bg.setAttribute('cx',0);bg.setAttribute('cy',0);bg.setAttribute('r',22);
+      bg.setAttribute('fill','white');bg.setAttribute('filter','url(#shadow)');
+      bg.setAttribute('class','node-ring');
+      bg.setAttribute('stroke',cat.color);bg.setAttribute('stroke-width','0');
+
+      // Logo image
+      const img=document.createElementNS('http://www.w3.org/2000/svg','image');
+      img.setAttribute('x',-14);img.setAttribute('y',-14);
+      img.setAttribute('width',28);img.setAttribute('height',28);
+      img.setAttribute('href',prod.icon);
+      img.setAttribute('preserveAspectRatio','xMidYMid meet');
+      img.setAttribute('clip-path','circle(12px at 14px 14px)');
+
+      g.appendChild(bg);
+      g.appendChild(img);
+
+      // Events
+      g.addEventListener('mouseenter',(e)=>showTooltip(e,prod.name));
+      g.addEventListener('mouseleave',hideTooltip);
+      g.addEventListener('click',()=>openPanel(prod,cat));
+
+      nodes.appendChild(g);
+    });
+  });
+}
+
+/* ══════════════════════════════════════════════════════
+   TOOLTIP
+══════════════════════════════════════════════════════ */
+const tip=document.getElementById('tooltip');
+function showTooltip(e,text){
+  tip.textContent=text;
+  tip.style.left=e.clientX+'px';
+  tip.style.top=e.clientY+'px';
+  tip.classList.add('show');
+}
+function hideTooltip(){tip.classList.remove('show')}
+document.addEventListener('mousemove',e=>{
+  tip.style.left=e.clientX+'px';
+  tip.style.top=(e.clientY-4)+'px';
+});
+
+/* ══════════════════════════════════════════════════════
+   DETAIL PANEL
+══════════════════════════════════════════════════════ */
+function openPanel(prod, cat){
+  const panel=document.getElementById('detail-panel');
+  const overlay=document.getElementById('overlay');
+
+  document.getElementById('panel-logo').src=prod.icon;
+  document.getElementById('panel-logo').style.background=cat.color+'15';
+  document.getElementById('panel-title').textContent=prod.name;
+  document.getElementById('panel-domain').textContent=prod.host;
+
+  const body=document.getElementById('panel-body');
+  const totalLinks=prod.links;
+  const allLinks=Object.values(prod.years).reduce((a,b)=>a+b,0);
+  const topYear=Object.entries(prod.years).sort((a,b)=>b[1]-a[1])[0];
+  const maxYearVal=Math.max(...Object.values(prod.years));
+
+  body.innerHTML=`
+    <span class="category-chip" style="background:${cat.color}18;color:${cat.textColor}">
+      <span style="width:8px;height:8px;border-radius:50%;background:${cat.color};display:inline-block"></span>
+      ${cat.label}
+    </span>
+
+    <div class="big-stats">
+      <div class="big-stat">
+        <div class="big-stat-n" style="color:${cat.color}">${totalLinks.toLocaleString()}</div>
+        <div class="big-stat-l">Total Links</div>
       </div>
-      <div class="card-bar">
-        <div class="card-bar-fill" style="--pct:${pct}%;background:${d.color}"></div>
+      <div class="big-stat">
+        <div class="big-stat-n" style="color:${cat.color}">${topYear[0]}</div>
+        <div class="big-stat-l">Peak Year · ${topYear[1]} links</div>
+      </div>
+    </div>
+
+    <div class="section-title">Top Topics</div>
+    <div style="margin-bottom:16px">
+      ${prod.topics.map((t,i)=>{
+        const pct=Math.round(100-i*18);
+        return `<div class="topic-row">
+          <div class="topic-name">${t}</div>
+          <div class="topic-bar-wrap">
+            <div class="topic-bar" style="width:${pct}%;background:${cat.color}" data-w="${pct}"></div>
+          </div>
+          <div class="topic-count">${Math.round(totalLinks*(pct/100*0.35)).toLocaleString()}</div>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div class="section-title">Activity by Year</div>
+    <div class="year-grid">
+      ${Object.entries(prod.years).map(([yr,cnt])=>`
+        <div class="year-card" onclick="filterYear('${yr}')">
+          <div class="year-n" style="color:${cat.color}">${cnt}</div>
+          <div class="year-l">${yr}</div>
+          <div class="year-bar-mini">
+            <div class="year-bar-mini-fill" style="width:${Math.round(cnt/maxYearVal*100)}%;background:${cat.color}" data-w="${Math.round(cnt/maxYearVal*100)}"></div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="section-title">Explore Links</div>
+    <div class="links-grid">
+      ${generateLinks(prod).map(link=>`
+        <a class="link-card" href="${link.url}" target="_blank" rel="noopener">
+          <img class="link-card-icon" src="${prod.icon}" alt="">
+          <span class="link-card-text">${link.label}</span>
+          <span class="link-card-arrow">↗</span>
+        </a>
+      `).join('')}
+    </div>
+  `;
+
+  overlay.classList.add('show');
+  panel.classList.add('show');
+
+  // Animate bars after render
+  setTimeout(()=>{
+    body.querySelectorAll('[data-w]').forEach(el=>{
+      el.style.width=el.dataset.w+'%';
+    });
+  },50);
+}
+
+function generateLinks(prod){
+  const base=`https://${prod.host}`;
+  const links=[
+    {label:`Open ${prod.name}`,url:base},
+    {label:`${prod.name} — Activity`,url:base+'/activity'},
+    {label:`${prod.name} — Settings`,url:base+'/settings'},
+    {label:`${prod.name} — History`,url:base+'/history'},
+  ];
+  // Topic-specific
+  prod.topics.slice(0,3).forEach(t=>{
+    links.push({label:`Search: "${t}"`,url:`https://www.google.com/search?q=${encodeURIComponent(t+' '+prod.name)}`});
+  });
+  return links.slice(0,6);
+}
+
+function closePanel(){
+  document.getElementById('detail-panel').classList.remove('show');
+  document.getElementById('overlay').classList.remove('show');
+}
+
+/* ══════════════════════════════════════════════════════
+   ALL CATEGORIES VIEW
+══════════════════════════════════════════════════════ */
+function buildAllCats(){
+  const grid=document.getElementById('all-cats-grid');
+  CATEGORIES.forEach(cat=>{
+    const card=document.createElement('div');
+    card.className='cat-card';
+    card.innerHTML=`
+      <div class="cat-card-header">
+        <div class="cat-card-dot" style="background:${cat.color}"></div>
+        <span class="cat-card-name">${cat.label}</span>
+        <span class="cat-card-count">${cat.products.reduce((a,p)=>a+p.links,0).toLocaleString()} links</span>
+      </div>
+      <div class="mini-logos">
+        ${cat.products.map(p=>`<img class="mini-logo" src="${p.icon}" alt="${p.name}" title="${p.name}">`).join('')}
       </div>
     `;
-    card.dataset.color = d.color;
-    container.appendChild(card);
+    card.addEventListener('click',()=>openPanel(cat.products[0],cat));
+    grid.appendChild(card);
   });
 }
 
-Object.keys(CATS).forEach(renderCards);
-
-/* ═══════════════════════════════════════════════════════════
-   PARTICLE SYSTEM
-═══════════════════════════════════════════════════════════ */
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-let W,H,particles;
-const COLORS = ['#4285F4','#EA4335','#FBBC04','#34A853'];
-
-function resize(){
-  W=canvas.width=window.innerWidth;
-  H=canvas.height=window.innerHeight;
+function showSection(id){
+  document.getElementById('hero-section').style.display = id==='hero'?'':'none';
+  document.getElementById('all-section').style.display = id==='all'?'':'none';
+  document.querySelectorAll('.nav-tab').forEach((t,i)=>{
+    t.classList.toggle('active',(i===0&&id==='hero')||(i===1&&id==='all'));
+  });
 }
 
-function createParticle(){
-  return{
-    x:Math.random()*W,y:Math.random()*H,
-    r:Math.random()*2+0.5,
-    vx:(Math.random()-.5)*0.4,
-    vy:(Math.random()-.5)*0.4,
-    color:COLORS[Math.floor(Math.random()*COLORS.length)],
-    alpha:Math.random()*0.5+0.1,
-    pulse:Math.random()*Math.PI*2,
-    pulseSpeed:Math.random()*0.02+0.005
-  };
+/* ══════════════════════════════════════════════════════
+   SCROLL REVEALS
+══════════════════════════════════════════════════════ */
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('revealed')});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ══════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════ */
+buildDiagram();
+buildAllCats();
+
+// Subtle rotation animation on the diagram
+let rot=0;
+function rotateDiagram(){
+  rot+=0.02;
+  // Very subtle — just the outer decorative elements would rotate
+  // For now keep static for readability
+  requestAnimationFrame(rotateDiagram);
 }
-
-resize();
-particles=Array.from({length:140},createParticle);
-window.addEventListener('resize',()=>{resize();particles=Array.from({length:140},createParticle)});
-
-let mouseX=W/2,mouseY=H/2;
-document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY});
-
-function animParticles(){
-  ctx.clearRect(0,0,W,H);
-  particles.forEach(p=>{
-    p.pulse+=p.pulseSpeed;
-    const a=p.alpha*(0.7+0.3*Math.sin(p.pulse));
-
-    // subtle mouse repulsion
-    const dx=p.x-mouseX,dy=p.y-mouseY;
-    const dist=Math.sqrt(dx*dx+dy*dy);
-    if(dist<120){
-      const force=(120-dist)/120*0.6;
-      p.vx+=dx/dist*force*0.02;
-      p.vy+=dy/dist*force*0.02;
-    }
-    p.vx*=0.98;p.vy*=0.98;
-    p.x+=p.vx;p.y+=p.vy;
-    if(p.x<0)p.x=W;if(p.x>W)p.x=0;
-    if(p.y<0)p.y=H;if(p.y>H)p.y=0;
-
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle=p.color;
-    ctx.globalAlpha=a;
-    ctx.fill();
-  });
-  ctx.globalAlpha=1;
-  requestAnimationFrame(animParticles);
-}
-animParticles();
-
-/* ═══════════════════════════════════════════════════════════
-   CURSOR
-═══════════════════════════════════════════════════════════ */
-const cursor=document.getElementById('cursor');
-const cursorRing=document.getElementById('cursor-ring');
-let cx=0,cy=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY});
-function animCursor(){
-  cursor.style.left=(cx-6)+'px';cursor.style.top=(cy-6)+'px';
-  rx+=(cx-rx)*0.12;ry+=(cy-ry)*0.12;
-  cursorRing.style.left=(rx-18)+'px';cursorRing.style.top=(ry-18)+'px';
-  requestAnimationFrame(animCursor);
-}
-animCursor();
-
-/* ═══════════════════════════════════════════════════════════
-   CARD 3D TILT
-═══════════════════════════════════════════════════════════ */
-document.addEventListener('mousemove',e=>{
-  document.querySelectorAll('.card').forEach(card=>{
-    const rect=card.getBoundingClientRect();
-    const cx2=rect.left+rect.width/2;
-    const cy2=rect.top+rect.height/2;
-    const dx=e.clientX-cx2;
-    const dy=e.clientY-cy2;
-    const dist=Math.sqrt(dx*dx+dy*dy);
-    if(dist<300){
-      const ry2=(dx/rect.width)*16;
-      const rx2=-(dy/rect.height)*12;
-      card.style.transform=`perspective(600px) rotateX(${rx2}deg) rotateY(${ry2}deg) translateZ(4px)`;
-      // update gradient origin for ::before
-      const mx=((e.clientX-rect.left)/rect.width*100).toFixed(1)+'%';
-      const my=((e.clientY-rect.top)/rect.height*100).toFixed(1)+'%';
-      card.style.setProperty('--mx',mx);
-      card.style.setProperty('--my',my);
-    }
-  });
-});
-document.addEventListener('mouseleave',()=>{
-  document.querySelectorAll('.card').forEach(c=>{
-    c.style.transform='perspective(600px) rotateX(0) rotateY(0) translateZ(0)';
-  });
-});
-
-/* ═══════════════════════════════════════════════════════════
-   HERO BLOB PARALLAX
-═══════════════════════════════════════════════════════════ */
-document.addEventListener('mousemove',e=>{
-  const hero=document.getElementById('hero');
-  const hRect=hero.getBoundingClientRect();
-  if(e.clientY>hRect.bottom)return;
-  const mx=(e.clientX/window.innerWidth-.5)*2;
-  const my=(e.clientY/window.innerHeight-.5)*2;
-  const blobs=document.querySelectorAll('.blob');
-  blobs[0].style.transform=`translate(${mx*-30}px,${my*-20}px)`;
-  blobs[1].style.transform=`translate(${mx*20}px,${my*15}px)`;
-  blobs[2].style.transform=`translate(${mx*10}px,${my*-10}px) translate(-50%,-50%)`;
-});
-
-/* ═══════════════════════════════════════════════════════════
-   SCROLL ANIMATIONS
-═══════════════════════════════════════════════════════════ */
-const progress=document.getElementById('progress');
-
-function onScroll(){
-  const scrolled=window.scrollY;
-  const total=document.body.scrollHeight-window.innerHeight;
-  progress.style.width=(scrolled/total*100)+'%';
-}
-window.addEventListener('scroll',onScroll,{passive:true});
-
-// Intersection observer for reveal + card bars
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.classList.add('revealed');
-      observer.unobserve(e.target);
-    }
-  });
-},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
-
-document.querySelectorAll('.reveal,.card').forEach(el=>observer.observe(el));
-
-/* ═══════════════════════════════════════════════════════════
-   HERO COUNTER ANIMATION
-═══════════════════════════════════════════════════════════ */
-function animateCounter(el,target,duration=2000){
-  const start=performance.now();
-  function update(now){
-    const elapsed=now-start;
-    const progress=Math.min(elapsed/duration,1);
-    const eased=1-(1-progress)**4;
-    el.textContent=Math.round(eased*target).toLocaleString();
-    if(progress<1)requestAnimationFrame(update);
-    else el.textContent=target.toLocaleString();
-  }
-  requestAnimationFrame(update);
-}
-
-const heroObserver=new IntersectionObserver(entries=>{
-  if(entries[0].isIntersecting){
-    animateCounter(document.getElementById('c1'),10735,2200);
-    animateCounter(document.getElementById('c2'),36441,2600);
-    animateCounter(document.getElementById('c3'),160,1400);
-    animateCounter(document.getElementById('c4'),6,800);
-    heroObserver.disconnect();
-  }
-},{threshold:0.5});
-heroObserver.observe(document.getElementById('hero'));
-
-/* ═══════════════════════════════════════════════════════════
-   SCROLL-SCRUB: Wing parallax numbers
-═══════════════════════════════════════════════════════════ */
-window.addEventListener('scroll',()=>{
-  document.querySelectorAll('.wing-number').forEach(num=>{
-    const rect=num.closest('.wing').getBoundingClientRect();
-    const pct=1-(rect.top/window.innerHeight);
-    num.style.transform=`translateY(${pct*-60}px)`;
-  });
-},{passive:true});
-
-/* ═══════════════════════════════════════════════════════════
-   ZOOM-IN ON WING ENTRY
-═══════════════════════════════════════════════════════════ */
-const wingObserver=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.style.transform='scale(1)';
-      e.target.style.opacity='1';
-    } else {
-      e.target.style.transform='scale(0.97)';
-      e.target.style.opacity='0.6';
-    }
-  });
-},{threshold:0.15});
-
-document.querySelectorAll('.wing').forEach(w=>{
-  w.style.transition='transform 0.7s cubic-bezier(.22,1,.36,1),opacity 0.7s ease';
-  w.style.transform='scale(0.97)';
-  w.style.opacity='0.6';
-  wingObserver.observe(w);
-});
-
-/* Load json dynamically if available — enhanced cards */
-fetch('./google-experience-data.json')
-  .then(r=>r.ok?r.json():null)
-  .catch(()=>null)
-  .then(data=>{if(data)console.log('JSON loaded:',Object.keys(data));});
 </script>
 </body>
 </html>
