@@ -4,18 +4,123 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zain Khan — My Google Universe</title>
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Google+Sans+Display:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
   background:#bcc9d8;
-  min-height:100vh;overflow:hidden;
   font-family:'Google Sans',ui-sans-serif,sans-serif;
+  overflow-x:hidden;
 }
 
-/* ── BACKGROUND ICON GRID ───────────────────────── */
+/* ══════════════════════════════════════════════
+   INTRO OVERLAY
+══════════════════════════════════════════════ */
+#intro{
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(8,12,22,0.97);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;
+  transition:opacity .7s ease;
+}
+#intro.fade-out{opacity:0;pointer-events:none}
+
+/* Nucleus burst */
+#intro-nucleus{
+  position:relative;
+  width:130px;height:130px;
+  border-radius:50%;
+  background:#fff;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 0 rgba(255,255,255,0.5);
+  animation:nuc-in .7s cubic-bezier(.34,1.56,.64,1) .4s both;
+  z-index:2;
+}
+#intro-nucleus img{width:86px;height:86px;object-fit:contain}
+@keyframes nuc-in{
+  0%{transform:scale(0);opacity:0;box-shadow:0 0 80px 40px rgba(255,255,255,0.6)}
+  60%{transform:scale(1.15)}
+  100%{transform:scale(1);opacity:1;box-shadow:0 0 0 0 rgba(255,255,255,0)}
+}
+
+/* Expanding pulse rings from nucleus */
+.intro-pulse{
+  position:absolute;border-radius:50%;
+  border:2px solid rgba(255,255,255,0.5);
+  animation:pulse-ring 1.4s ease-out both;
+  pointer-events:none;
+}
+.intro-pulse:nth-child(1){width:220px;height:220px;animation-delay:.9s}
+.intro-pulse:nth-child(2){width:340px;height:340px;animation-delay:1.15s}
+.intro-pulse:nth-child(3){width:480px;height:480px;animation-delay:1.4s}
+@keyframes pulse-ring{
+  0%{transform:scale(0.2);opacity:0}
+  30%{opacity:.7}
+  100%{transform:scale(1);opacity:0}
+}
+
+/* Orbital rings drawing in */
+#intro-svg{
+  position:absolute;width:560px;height:560px;
+  pointer-events:none;
+  animation:svg-in .2s ease .3s both;
+}
+@keyframes svg-in{0%{opacity:0}100%{opacity:1}}
+.intro-orbit{
+  fill:none;stroke:rgba(255,255,255,0.65);stroke-width:2;
+  stroke-dasharray:900;
+  stroke-dashoffset:900;
+}
+.intro-orbit.o1{animation:draw-orbit 1.1s ease-out 1.1s forwards}
+.intro-orbit.o2{animation:draw-orbit 1.1s ease-out 1.35s forwards}
+.intro-orbit.o3{animation:draw-orbit 1.1s ease-out 1.6s forwards}
+@keyframes draw-orbit{to{stroke-dashoffset:0}}
+
+/* Intro icons streaming outward */
+.intro-icon{
+  position:absolute;
+  width:48px;height:48px;
+  border-radius:12px;background:#fff;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(0,0,0,0.4);
+  opacity:0;
+  transform:translate(-50%,-50%) scale(0.2);
+  transition:transform .6s cubic-bezier(.34,1.2,.64,1), opacity .4s ease;
+}
+.intro-icon img{width:32px;height:32px;object-fit:contain}
+.intro-icon.visible{opacity:1;transform:translate(-50%,-50%) scale(1)}
+
+/* Intro title */
+#intro-title{
+  margin-top:52px;text-align:center;
+  opacity:0;transform:translateY(16px);
+  transition:opacity .8s ease, transform .8s ease;
+  z-index:2;
+}
+#intro-title.visible{opacity:1;transform:translateY(0)}
+#intro-title h1{
+  font-family:'Google Sans Display',sans-serif;
+  font-size:32px;font-weight:700;letter-spacing:-.5px;
+  background:linear-gradient(90deg,#4285F4,#34A853,#FBBC04,#EA4335);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+#intro-title p{
+  font-size:14px;color:rgba(255,255,255,0.45);
+  margin-top:8px;letter-spacing:.05em;text-transform:uppercase;
+}
+
+/* ══════════════════════════════════════════════
+   ATOM SECTION (hero, full viewport)
+══════════════════════════════════════════════ */
+#atom-section{
+  position:relative;
+  width:100%;height:100vh;
+  overflow:hidden;
+  background:#bcc9d8;
+}
 #bg-grid{
-  position:fixed;inset:0;
+  position:absolute;inset:0;
   display:grid;
   grid-template-columns:repeat(20,1fr);
   gap:0;
@@ -28,9 +133,8 @@ body{
 @keyframes bg-drift{0%{transform:scale(1.1) translateX(0)}100%{transform:scale(1.1) translateX(-72px)}}
 #bg-grid img{width:100%;aspect-ratio:1;object-fit:contain;padding:4px;opacity:0.8}
 
-/* ── ATOM SCENE ────────────────────────────────── */
 #atom-scene{
-  position:fixed;inset:0;
+  position:absolute;inset:0;
   display:flex;align-items:center;justify-content:center;
   z-index:1;pointer-events:none;
 }
@@ -38,17 +142,12 @@ body{
   position:relative;width:800px;height:800px;flex-shrink:0;
   pointer-events:none;
 }
-
-/* ── SVG ORBITS ────────────────────────────────── */
 #orbit-svg{
   position:absolute;inset:0;width:100%;height:100%;
-  pointer-events:none;
-  overflow:visible;
+  pointer-events:none;overflow:visible;
 }
 .orbit-ring{
-  fill:none;
-  stroke:rgba(255,255,255,0.75);
-  stroke-width:2.5;
+  fill:none;stroke:rgba(255,255,255,0.75);stroke-width:2.5;
 }
 .orbit-outer{
   fill:none;stroke:rgba(255,255,255,0.12);stroke-width:1.5;
@@ -57,8 +156,6 @@ body{
   fill:none;stroke-linecap:round;stroke-width:4;
   opacity:0;transition:opacity .3s;
 }
-
-/* ── NUCLEUS ───────────────────────────────────── */
 #nucleus{
   position:absolute;
   width:150px;height:150px;
@@ -66,19 +163,12 @@ body{
   transform:translate(-50%,-50%);
   border-radius:50%;
   background:#fff;
-  box-shadow:
-    0 0 0 6px rgba(255,255,255,0.25),
-    0 0 60px rgba(255,255,255,0.18),
-    0 0 120px rgba(100,150,255,0.1);
+  box-shadow:0 0 0 6px rgba(255,255,255,0.25),0 0 60px rgba(255,255,255,0.18);
   display:flex;align-items:center;justify-content:center;
   z-index:15;pointer-events:none;
 }
 #nucleus img{width:100px;height:100px;object-fit:contain}
-
-/* ── ORBIT NODES ───────────────────────────────── */
-#icon-container{
-  position:absolute;inset:0;pointer-events:none;
-}
+#icon-container{position:absolute;inset:0;pointer-events:none;}
 .orbit-node{
   position:absolute;
   width:56px;height:56px;
@@ -91,52 +181,181 @@ body{
   pointer-events:all;
   transition:box-shadow .2s;
 }
-.orbit-node:hover{
-  box-shadow:0 8px 32px rgba(0,0,0,0.35),0 0 0 2.5px rgba(255,255,255,0.8);
-}
-.orbit-node.active{
-  box-shadow:0 0 0 3px var(--nc),0 8px 32px rgba(0,0,0,0.4) !important;
-}
+.orbit-node:hover{box-shadow:0 8px 32px rgba(0,0,0,0.35),0 0 0 2.5px rgba(255,255,255,0.8)}
+.orbit-node.active{box-shadow:0 0 0 3px var(--nc),0 8px 32px rgba(0,0,0,0.4)!important}
 .orbit-node img{width:38px;height:38px;object-fit:contain;border-radius:8px}
 .orbit-node .node-label{
-  position:absolute;bottom:-24px;left:50%;transform:translateX(-50%);
-  background:rgba(0,0,0,.6);color:#fff;
-  font-size:10px;padding:2px 8px;border-radius:10px;
+  position:absolute;bottom:-26px;left:50%;transform:translateX(-50%);
+  background:rgba(0,0,0,.7);color:#fff;
+  font-size:10px;padding:3px 9px;border-radius:10px;
   white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none;
 }
 .orbit-node:hover .node-label{opacity:1}
 
-/* ── NAV ───────────────────────────────────────── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 32px;height:56px;
-  background:rgba(160,180,205,0.5);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid rgba(255,255,255,0.25);
+/* Scroll cue */
+#scroll-cue{
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+  z-index:10;display:flex;flex-direction:column;align-items:center;gap:6px;
+  pointer-events:none;
+  animation:cue-bob 2s ease-in-out infinite;
 }
-.nav-brand{
-  font-size:15px;font-weight:600;
-  color:rgba(255,255,255,0.95);letter-spacing:.01em;
-}
-.nav-stats{
-  display:flex;gap:24px;font-size:13px;
-  color:rgba(255,255,255,0.65);
-}
-.nav-stats strong{color:#fff;font-weight:600}
-.nav-hint{
-  font-size:12px;color:rgba(255,255,255,0.5);
-  letter-spacing:.03em;
+@keyframes cue-bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+#scroll-cue span{font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:.08em;text-transform:uppercase}
+#scroll-cue svg{opacity:0.45}
+
+/* ══════════════════════════════════════════════
+   DIAGRAM SECTION (below, scrollable)
+══════════════════════════════════════════════ */
+#diagram-section{
+  position:relative;
+  background:#F0F4F8;
+  min-height:100vh;
+  padding-top:0;
 }
 
-/* ── DETAIL PANEL ──────────────────────────────── */
+/* Dashboard layout */
+.dash-layout{
+  display:flex;height:100vh;position:sticky;top:0;overflow:hidden;
+}
+.dash-sidebar{
+  width:56px;background:rgba(255,255,255,0.9);
+  border-right:1px solid #E8EAED;
+  display:flex;flex-direction:column;align-items:center;
+  padding:72px 0 16px;gap:4px;
+  flex-shrink:0;
+}
+.dash-sidebar-icon{
+  width:40px;height:40px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:#5F6368;font-size:18px;
+  transition:.15s;
+}
+.dash-sidebar-icon:hover{background:#F1F3F4}
+.dash-sidebar-icon.active{background:#E8F0FE;color:#1A73E8}
+
+.dash-main{
+  flex:1;display:flex;flex-direction:column;overflow:hidden;
+}
+.dash-topbar{
+  height:56px;background:rgba(255,255,255,0.95);
+  border-bottom:1px solid #E8EAED;
+  display:flex;align-items:center;padding:0 20px;gap:0;
+  flex-shrink:0;
+}
+.dash-tab{
+  padding:0 18px;height:56px;display:flex;align-items:center;
+  font-size:13px;color:#5F6368;border-bottom:3px solid transparent;
+  cursor:pointer;transition:.15s;font-weight:500;
+}
+.dash-tab:hover{color:#202124}
+.dash-tab.active{color:#1A73E8;border-bottom-color:#1A73E8}
+.dash-stats-right{
+  margin-left:auto;display:flex;gap:16px;font-size:12px;color:#5F6368;
+}
+.dash-stats-right strong{color:#202124}
+
+.dash-content{
+  flex:1;display:flex;overflow:hidden;
+}
+.dash-center{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:12px;overflow:hidden;
+  position:relative;
+}
+.dash-right{
+  width:340px;background:#fff;border-left:1px solid #E8EAED;
+  display:flex;flex-direction:column;
+  transform:translateX(100%);transition:transform .3s cubic-bezier(.22,1,.36,1);
+  flex-shrink:0;overflow-y:auto;
+}
+.dash-right.show{transform:translateX(0)}
+
+/* Circular diagram */
+#eco-svg{
+  width:min(72vh,560px);height:min(72vh,560px);
+  cursor:default;
+}
+.logo-node{cursor:pointer;transition:filter .2s}
+.logo-node:hover{filter:drop-shadow(0 4px 14px rgba(0,0,0,.3))}
+.logo-node.active .node-ring{stroke-width:3}
+
+/* Diagram bottom stats */
+.diagram-stats{
+  display:flex;gap:28px;justify-content:center;
+  padding:10px 0 0;
+}
+.dstat-n{font-size:22px;font-weight:700;
+  background:linear-gradient(135deg,#4285F4,#34A853);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.dstat-l{font-size:10px;color:#5F6368;text-transform:uppercase;letter-spacing:.06em;margin-top:2px;text-align:center}
+
+/* Right panel inside dashboard */
+.right-header{
+  padding:16px 18px 12px;
+  border-bottom:1px solid #E8EAED;
+  display:flex;align-items:center;gap:12px;
+  flex-shrink:0;position:sticky;top:0;background:#fff;z-index:1;
+}
+.right-header-logo{width:44px;height:44px;border-radius:11px;object-fit:contain;padding:6px;flex-shrink:0}
+.right-header-title{font-size:17px;font-weight:700;color:#202124;margin-bottom:2px}
+.right-header-domain{font-size:12px;color:#5F6368}
+.right-close{margin-left:auto;border:none;background:none;font-size:18px;color:#5F6368;cursor:pointer;padding:6px;border-radius:50%}
+.right-close:hover{background:#F1F3F4}
+.right-body{padding:16px 18px 24px;flex:1}
+
+/* ══════════════════════════════════════════════
+   SHARED PANEL COMPONENTS
+══════════════════════════════════════════════ */
+.category-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;
+  margin-bottom:14px;
+}
+.big-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.big-stat{background:#F8F9FA;border-radius:12px;padding:14px}
+.big-stat-n{font-size:24px;font-weight:700;margin-bottom:3px}
+.big-stat-l{font-size:10px;color:#5F6368;text-transform:uppercase;letter-spacing:.05em}
+.section-title{
+  font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;color:#5F6368;margin:16px 0 8px;
+}
+.topic-row{display:flex;align-items:center;gap:8px;margin-bottom:9px;font-size:12px}
+.topic-name{width:140px;flex-shrink:0;color:#202124;font-weight:500}
+.topic-bar-wrap{flex:1;height:4px;background:#E8EAED;border-radius:2px;overflow:hidden}
+.topic-bar{height:100%;border-radius:2px;width:0;transition:width .9s cubic-bezier(.22,1,.36,1)}
+.topic-count{width:36px;text-align:right;color:#5F6368;font-size:11px}
+.year-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:18px}
+.year-card{
+  background:#F8F9FA;border-radius:8px;padding:8px 4px;
+  text-align:center;cursor:pointer;transition:.15s;border:1.5px solid #E8EAED;
+}
+.year-card:hover{border-color:#4285F4;background:#E8F0FE}
+.year-n{font-size:13px;font-weight:700;margin-bottom:1px}
+.year-l{font-size:10px;color:#5F6368;margin-bottom:5px}
+.year-bar-mini{height:3px;background:#E8EAED;border-radius:2px;overflow:hidden}
+.year-bar-mini-fill{height:100%;width:0;border-radius:2px;transition:width .9s cubic-bezier(.22,1,.36,1)}
+.links-grid{display:flex;flex-direction:column;gap:6px}
+.link-card{
+  display:flex;align-items:center;gap:10px;padding:9px 12px;
+  border-radius:9px;border:1.5px solid #E8EAED;
+  text-decoration:none;color:#202124;transition:.15s;background:#fff;font-size:12px;
+}
+.link-card:hover{border-color:#4285F4;box-shadow:0 2px 8px rgba(66,133,244,.12)}
+.link-card-icon{width:20px;height:20px;object-fit:contain;flex-shrink:0}
+.link-card-text{flex:1;font-weight:500}
+.link-card-arrow{color:#5F6368;font-size:13px}
+
+/* ══════════════════════════════════════════════
+   FIXED OVERLAY PANEL (for atom section clicks)
+══════════════════════════════════════════════ */
 .panel-overlay{
   position:fixed;inset:0;background:rgba(0,0,0,.35);
   z-index:500;opacity:0;pointer-events:none;transition:.25s;
 }
 .panel-overlay.show{opacity:1;pointer-events:all}
 .detail-panel{
-  position:fixed;top:0;right:0;bottom:0;width:min(520px,100vw);
+  position:fixed;top:0;right:0;bottom:0;width:min(500px,100vw);
   background:#fff;z-index:600;
   display:flex;flex-direction:column;
   transform:translateX(100%);
@@ -144,134 +363,87 @@ nav{
   box-shadow:-12px 0 60px rgba(0,0,0,.2);
 }
 .detail-panel.show{transform:translateX(0)}
-
-/* Panel Header */
 .panel-header{
-  padding:20px 24px 16px;
-  border-bottom:1px solid #E8EAED;
-  display:flex;align-items:center;gap:16px;
-  flex-shrink:0;
+  padding:20px 24px 16px;border-bottom:1px solid #E8EAED;
+  display:flex;align-items:center;gap:14px;flex-shrink:0;
 }
-.panel-logo{
-  width:56px;height:56px;border-radius:14px;
-  object-fit:contain;padding:8px;
-  flex-shrink:0;
-}
-.panel-title{font-size:20px;font-weight:700;color:#202124;margin-bottom:3px}
-.panel-domain{font-size:13px;color:#5F6368}
+.panel-logo{width:52px;height:52px;border-radius:13px;object-fit:contain;padding:8px;flex-shrink:0}
+.panel-title{font-size:19px;font-weight:700;color:#202124;margin-bottom:3px}
+.panel-domain{font-size:12px;color:#5F6368}
 .panel-close{
   margin-left:auto;border:none;background:none;
-  font-size:20px;color:#5F6368;cursor:pointer;
+  font-size:18px;color:#5F6368;cursor:pointer;
   padding:8px;border-radius:50%;line-height:1;flex-shrink:0;
 }
 .panel-close:hover{background:#F1F3F4}
+.panel-body{flex:1;overflow-y:auto;padding:18px 22px 28px}
 
-/* Panel Body */
-.panel-body{flex:1;overflow-y:auto;padding:20px 24px 32px}
-.category-chip{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:5px 14px;border-radius:20px;
-  font-size:12px;font-weight:600;margin-bottom:18px;
+/* ══════════════════════════════════════════════
+   NAV
+══════════════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;height:54px;
+  background:rgba(155,175,200,0.45);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,0.22);
+  transition:background .4s;
 }
-.big-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
-.big-stat{background:#F8F9FA;border-radius:14px;padding:16px}
-.big-stat-n{font-size:26px;font-weight:700;margin-bottom:4px}
-.big-stat-l{font-size:11px;color:#5F6368;text-transform:uppercase;letter-spacing:.05em}
-.section-title{
-  font-size:11px;font-weight:700;text-transform:uppercase;
-  letter-spacing:.1em;color:#5F6368;margin:20px 0 10px;
-}
-.topic-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13px}
-.topic-name{width:155px;flex-shrink:0;color:#202124;font-weight:500}
-.topic-bar-wrap{flex:1;height:5px;background:#E8EAED;border-radius:3px;overflow:hidden}
-.topic-bar{height:100%;border-radius:3px;width:0;transition:width .9s cubic-bezier(.22,1,.36,1)}
-.topic-count{width:48px;text-align:right;color:#5F6368;font-size:12px}
-.year-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:22px}
-.year-card{
-  background:#F8F9FA;border-radius:10px;padding:10px 6px;
-  text-align:center;cursor:pointer;transition:.15s;border:1.5px solid #E8EAED;
-}
-.year-card:hover{border-color:#4285F4;background:#E8F0FE}
-.year-n{font-size:15px;font-weight:700;margin-bottom:2px}
-.year-l{font-size:10px;color:#5F6368;margin-bottom:6px}
-.year-bar-mini{height:3px;background:#E8EAED;border-radius:2px;overflow:hidden}
-.year-bar-mini-fill{height:100%;width:0;border-radius:2px;transition:width .9s cubic-bezier(.22,1,.36,1)}
-.links-grid{display:flex;flex-direction:column;gap:8px}
-.link-card{
-  display:flex;align-items:center;gap:12px;padding:11px 14px;
-  border-radius:10px;border:1.5px solid #E8EAED;
-  text-decoration:none;color:#202124;transition:.15s;background:#fff;
-}
-.link-card:hover{border-color:#4285F4;box-shadow:0 2px 10px rgba(66,133,244,.15)}
-.link-card-icon{width:24px;height:24px;object-fit:contain;flex-shrink:0}
-.link-card-text{flex:1;font-size:13px;font-weight:500}
-.link-card-arrow{color:#5F6368;font-size:15px}
+nav.on-light{background:rgba(255,255,255,0.92);border-bottom-color:#E8EAED}
+.nav-brand{font-size:15px;font-weight:600;color:rgba(255,255,255,0.96);transition:color .4s}
+nav.on-light .nav-brand{color:#202124}
+.nav-hint{font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:.04em;transition:color .4s}
+nav.on-light .nav-hint{color:#5F6368}
+.nav-stats{display:flex;gap:20px;font-size:12px;color:rgba(255,255,255,0.6);transition:color .4s}
+nav.on-light .nav-stats{color:#5F6368}
+.nav-stats strong{color:#fff;transition:color .4s}
+nav.on-light .nav-stats strong{color:#202124}
 
-/* ── TOOLTIP ───────────────────────────────────── */
+/* ── TOOLTIP ─────────────────────────────────── */
 .tooltip{
   position:fixed;
-  background:rgba(30,40,50,.88);color:#fff;
-  font-size:12px;font-weight:500;padding:6px 12px;border-radius:8px;
+  background:rgba(20,30,45,.88);color:#fff;
+  font-size:11px;font-weight:500;padding:5px 11px;border-radius:8px;
   pointer-events:none;z-index:900;
   opacity:0;transition:opacity .15s;
   transform:translateX(-50%);
   white-space:nowrap;
-  backdrop-filter:blur(8px);
 }
 .tooltip.show{opacity:1}
 </style>
 </head>
 <body>
 
-<!-- BACKGROUND GRID -->
-<div id="bg-grid"></div>
+<!-- ══════════ INTRO OVERLAY ══════════ -->
+<div id="intro">
+  <!-- Expanding pulse rings (decorative) -->
+  <div id="intro-nucleus">
+    <div class="intro-pulse"></div>
+    <div class="intro-pulse"></div>
+    <div class="intro-pulse"></div>
+    <img src="https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_128dp.png" alt="G">
+  </div>
 
-<!-- ATOM SCENE -->
-<div id="atom-scene">
-  <div id="atom-wrap">
+  <!-- SVG orbital rings drawing in -->
+  <svg id="intro-svg" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="280" cy="280" rx="200" ry="52" class="intro-orbit o1"/>
+    <ellipse cx="280" cy="280" rx="200" ry="52" transform="rotate(60,280,280)" class="intro-orbit o2"/>
+    <ellipse cx="280" cy="280" rx="200" ry="52" transform="rotate(-60,280,280)" class="intro-orbit o3"/>
+  </svg>
 
-    <!-- SVG: orbit rings -->
-    <svg id="orbit-svg" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="glow-white" x="-40%" y="-40%" width="180%" height="180%">
-          <feGaussianBlur stdDeviation="3" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <filter id="glow-trail" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="5" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <!-- Nucleus clip: hide ring line inside nucleus area -->
-        <mask id="nucleus-mask">
-          <rect width="800" height="800" fill="white"/>
-          <circle cx="400" cy="400" r="73" fill="black"/>
-        </mask>
-      </defs>
+  <!-- Streaming icons (positioned by JS) -->
+  <div id="intro-icons"></div>
 
-      <!-- Outer decorative rings -->
-      <circle cx="400" cy="400" r="355" class="orbit-outer"/>
-      <circle cx="400" cy="400" r="375" class="orbit-outer" opacity="0.06"/>
-
-      <!-- Orbit rings (masked so they don't show inside nucleus) -->
-      <g id="orbit-rings" mask="url(#nucleus-mask)" filter="url(#glow-white)"></g>
-
-      <!-- Trail arcs (in front of rings, behind icons) -->
-      <g id="orbit-trails" filter="url(#glow-trail)"></g>
-    </svg>
-
-    <!-- Icon nodes -->
-    <div id="icon-container"></div>
-
-    <!-- Nucleus -->
-    <div id="nucleus">
-      <img src="https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_128dp.png" alt="Google G">
-    </div>
-
+  <!-- Title reveal -->
+  <div id="intro-title">
+    <h1>My Google Universe</h1>
+    <p>Zain Khan &nbsp;&middot;&nbsp; Google Web Experience Museum</p>
   </div>
 </div>
 
-<!-- NAV -->
-<nav>
+<!-- ══════════ NAV ══════════ -->
+<nav id="main-nav">
   <div class="nav-brand">Zain Khan &middot; Google Universe</div>
   <div class="nav-hint">Click any icon to explore</div>
   <div class="nav-stats">
@@ -281,7 +453,112 @@ nav{
   </div>
 </nav>
 
-<!-- PANEL -->
+<!-- ══════════ ATOM HERO ══════════ -->
+<section id="atom-section">
+  <div id="bg-grid"></div>
+
+  <div id="atom-scene">
+    <div id="atom-wrap">
+      <svg id="orbit-svg" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="glow-white" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="3" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <mask id="nucleus-mask">
+            <rect width="800" height="800" fill="white"/>
+            <circle cx="400" cy="400" r="73" fill="black"/>
+          </mask>
+        </defs>
+        <circle cx="400" cy="400" r="355" class="orbit-outer"/>
+        <circle cx="400" cy="400" r="372" class="orbit-outer" opacity="0.06"/>
+        <g id="orbit-rings" mask="url(#nucleus-mask)" filter="url(#glow-white)"></g>
+        <g id="orbit-trails"></g>
+      </svg>
+      <div id="icon-container"></div>
+      <div id="nucleus">
+        <img src="https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_128dp.png" alt="G">
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll cue -->
+  <div id="scroll-cue">
+    <span>Scroll to explore</span>
+    <svg width="20" height="12" viewBox="0 0 20 12" fill="none">
+      <path d="M1 1L10 10L19 1" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ══════════ DIAGRAM DASHBOARD SECTION ══════════ -->
+<section id="diagram-section">
+  <div class="dash-layout">
+    <!-- Sidebar -->
+    <div class="dash-sidebar">
+      <div class="dash-sidebar-icon active" title="Overview">&#9783;</div>
+      <div class="dash-sidebar-icon" title="Categories">&#9638;</div>
+      <div class="dash-sidebar-icon" title="Timeline">&#9664;</div>
+      <div class="dash-sidebar-icon" title="Search" style="margin-top:auto">&#9906;</div>
+    </div>
+
+    <!-- Main -->
+    <div class="dash-main">
+      <!-- Top bar -->
+      <div class="dash-topbar">
+        <div class="dash-tab active">Overview</div>
+        <div class="dash-tab">Categories</div>
+        <div class="dash-tab">Timeline</div>
+        <div class="dash-tab">Connections</div>
+        <div class="dash-stats-right">
+          <span><strong>10,735</strong> Total Links</span>
+          <span><strong>36,441</strong></span>
+          <span><strong>160</strong> Hosts</span>
+          <span><strong>160</strong> Products</span>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="dash-content">
+        <!-- Center: circular diagram -->
+        <div class="dash-center">
+          <svg id="eco-svg" viewBox="0 0 600 600">
+            <defs>
+              <filter id="shadow-sm">
+                <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity=".12"/>
+              </filter>
+            </defs>
+            <g id="sector-arcs"></g>
+            <g id="sector-lines"></g>
+            <g id="cat-labels"></g>
+            <g id="logo-nodes"></g>
+          </svg>
+          <div class="diagram-stats">
+            <div><div class="dstat-n">10,735</div><div class="dstat-l">Total Links</div></div>
+            <div><div class="dstat-n">36,441</div><div class="dstat-l">Segments</div></div>
+            <div><div class="dstat-n">160</div><div class="dstat-l">Hosts</div></div>
+            <div><div class="dstat-n">160</div><div class="dstat-l">Products</div></div>
+          </div>
+        </div>
+
+        <!-- Right panel -->
+        <div class="dash-right" id="dash-right-panel">
+          <div class="right-header" id="drp-header">
+            <img class="right-header-logo" id="drp-logo" src="" alt="">
+            <div>
+              <div class="right-header-title" id="drp-title"></div>
+              <div class="right-header-domain" id="drp-domain"></div>
+            </div>
+            <button class="right-close" onclick="closeDashPanel()">&#10005;</button>
+          </div>
+          <div class="right-body" id="drp-body"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Fixed overlay panel (for atom section clicks) -->
 <div class="panel-overlay" id="overlay" onclick="closePanel()"></div>
 <div class="detail-panel" id="detail-panel">
   <div class="panel-header">
@@ -295,7 +572,6 @@ nav{
   <div class="panel-body" id="panel-body"></div>
 </div>
 
-<!-- TOOLTIP -->
 <div class="tooltip" id="tooltip"></div>
 
 <script>
@@ -303,224 +579,228 @@ nav{
    DATA
 ════════════════════════════════════════════ */
 const CATEGORIES = [
-  {
-    id:'productivity', label:'Productivity', color:'#4285F4', textColor:'#1A73E8',
-    products:[
-      {name:'Gmail',domain:'gmail.com',links:1965,host:'mail.google.com',
-       topics:['Email Management','Newsletters','Work Correspondence','Receipts & Orders'],
-       years:{2020:180,2021:280,2022:420,2023:580,2024:505},
-       icon:'https://www.gstatic.com/images/branding/product/2x/gmail_48dp.png'},
-      {name:'Google Drive',domain:'drive.google.com',links:512,host:'drive.google.com',
-       topics:['File Storage','Shared Docs','Project Assets','Archives'],
-       years:{2020:60,2021:90,2022:120,2023:140,2024:102},
-       icon:'https://www.gstatic.com/images/branding/product/2x/drive_48dp.png'},
-      {name:'Google Docs',domain:'docs.google.com',links:308,host:'docs.google.com',
-       topics:['Writing & Editing','Proposals','Reports','Meeting Notes'],
-       years:{2020:30,2021:55,2022:80,2023:90,2024:53},
-       icon:'https://www.gstatic.com/images/branding/product/2x/docs_48dp.png'},
-      {name:'Google Sheets',domain:'sheets.google.com',links:194,host:'sheets.google.com',
-       topics:['Data Tracking','Budgets','Analytics Reports','Inventory'],
-       years:{2020:15,2021:30,2022:55,2023:60,2024:34},
-       icon:'https://www.gstatic.com/images/branding/product/2x/sheets_48dp.png'},
-      {name:'Google Calendar',domain:'calendar.google.com',links:176,host:'calendar.google.com',
-       topics:['Meeting Scheduling','Reminders','Events','Work Blocks'],
-       years:{2020:18,2021:28,2022:45,2023:52,2024:33},
-       icon:'https://www.gstatic.com/images/branding/product/2x/calendar_48dp.png'},
-      {name:'Google Meet',domain:'meet.google.com',links:142,host:'meet.google.com',
-       topics:['Video Calls','Team Standups','Client Meetings','Webinars'],
-       years:{2020:40,2021:52,2022:28,2023:14,2024:8},
-       icon:'https://www.gstatic.com/images/branding/product/2x/hangouts_meet_48dp.png'},
-    ]
-  },
-  {
-    id:'search', label:'Browser & Research', color:'#EA4335', textColor:'#D93025',
-    products:[
-      {name:'Google Search',domain:'google.com',links:2400,host:'www.google.com',
-       topics:['Technical Research','AI/ML Topics','Business Leads','Health & Wellness'],
-       years:{2020:310,2021:440,2022:560,2023:620,2024:470},
-       icon:'https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_48dp.png'},
-      {name:'Google Maps',domain:'maps.google.com',links:420,host:'maps.google.com',
-       topics:['Navigation','Restaurant Discovery','Business Locations','Travel Planning'],
-       years:{2020:50,2021:70,2022:95,2023:120,2024:85},
-       icon:'https://www.gstatic.com/images/branding/product/2x/maps_48dp.png'},
-      {name:'Google Scholar',domain:'scholar.google.com',links:184,host:'scholar.google.com',
-       topics:['Research Papers','ML/AI Publications','Computer Vision','NLP'],
-       years:{2020:18,2021:32,2022:50,2023:52,2024:32},
-       icon:'https://www.google.com/s2/favicons?domain=scholar.google.com&sz=64'},
-      {name:'Google Translate',domain:'translate.google.com',links:96,host:'translate.google.com',
-       topics:['Urdu Translation','Spanish Phrases','Technical Terms','Arabic'],
-       years:{2020:10,2021:16,2022:24,2023:28,2024:18},
-       icon:'https://www.gstatic.com/images/branding/product/2x/translate_48dp.png'},
-    ]
-  },
-  {
-    id:'ai', label:'AI & Machine Learning', color:'#9C27B0', textColor:'#7B1FA2',
-    products:[
-      {name:'Google Colab',domain:'colab.research.google.com',links:380,host:'colab.research.google.com',
-       topics:['Python Notebooks','ML Model Training','Data Analysis','Computer Vision'],
-       years:{2020:25,2021:55,2022:100,2023:120,2024:80},
-       icon:'https://www.google.com/s2/favicons?domain=colab.research.google.com&sz=64'},
-      {name:'AI Studio',domain:'aistudio.google.com',links:310,host:'aistudio.google.com',
-       topics:['Gemini API Testing','Prompt Engineering','Model Comparison','Multi-modal'],
-       years:{2020:0,2021:0,2022:10,2023:130,2024:170},
-       icon:'https://www.google.com/s2/favicons?domain=aistudio.google.com&sz=64'},
-      {name:'Gemini',domain:'gemini.google.com',links:280,host:'gemini.google.com',
-       topics:['Code Generation','Document Analysis','Research Summaries','Creative Writing'],
-       years:{2020:0,2021:0,2022:0,2023:80,2024:200},
-       icon:'https://www.google.com/s2/favicons?domain=gemini.google.com&sz=64'},
-      {name:'Vertex AI',domain:'cloud.google.com',links:120,host:'cloud.google.com/vertex-ai',
-       topics:['Model Deployment','AutoML','Pipelines','Vector Search'],
-       years:{2020:0,2021:8,2022:28,2023:48,2024:36},
-       icon:'https://www.google.com/s2/favicons?domain=cloud.google.com&sz=64'},
-      {name:'Kaggle',domain:'kaggle.com',links:75,host:'kaggle.com',
-       topics:['ML Competitions','Datasets','Notebooks','Community'],
-       years:{2020:10,2021:18,2022:20,2023:16,2024:11},
-       icon:'https://www.google.com/s2/favicons?domain=kaggle.com&sz=64'},
-    ]
-  },
-  {
-    id:'dev', label:'Cloud & Developers', color:'#FBBC04', textColor:'#E37400',
-    products:[
-      {name:'Firebase',domain:'firebase.google.com',links:344,host:'firebase.google.com',
-       topics:['App Hosting','Auth & Users','Firestore DB','Cloud Functions'],
-       years:{2020:28,2021:60,2022:90,2023:98,2024:68},
-       icon:'https://www.gstatic.com/images/branding/product/2x/firebase_48dp.png'},
-      {name:'Google Cloud',domain:'cloud.google.com',links:298,host:'cloud.google.com',
-       topics:['GKE','Cloud Run','BigQuery','Storage','IAM'],
-       years:{2020:20,2021:45,2022:80,2023:90,2024:63},
-       icon:'https://www.gstatic.com/images/branding/product/2x/google_cloud_48dp.png'},
-      {name:'GDG Community',domain:'gdg.community.dev',links:186,host:'gdg.community.dev',
-       topics:['Events','Speaker Resources','Tech Talks','Community Projects'],
-       years:{2020:10,2021:28,2022:55,2023:60,2024:33},
-       icon:'https://www.google.com/s2/favicons?domain=gdg.community.dev&sz=64'},
-      {name:'Google Developers',domain:'developers.google.com',links:220,host:'developers.google.com',
-       topics:['API Docs','Code Samples','Codelabs','Product Updates'],
-       years:{2020:18,2021:38,2022:62,2023:66,2024:36},
-       icon:'https://www.google.com/s2/favicons?domain=developers.google.com&sz=64'},
-    ]
-  },
-  {
-    id:'media', label:'Media & Creativity', color:'#EA4335', textColor:'#D93025',
-    products:[
-      {name:'YouTube',domain:'youtube.com',links:880,host:'youtube.com',
-       topics:['Tech Tutorials','AI Research Talks','Productivity','Entertainment'],
-       years:{2020:100,2021:160,2022:200,2023:240,2024:180},
-       icon:'https://www.gstatic.com/images/branding/product/2x/youtube_48dp.png'},
-      {name:'Google Photos',domain:'photos.google.com',links:210,host:'photos.google.com',
-       topics:['Photo Library','Shared Albums','Memories','Travel Photos'],
-       years:{2020:22,2021:38,2022:50,2023:58,2024:42},
-       icon:'https://www.gstatic.com/images/branding/product/2x/photos_48dp.png'},
-      {name:'YouTube Music',domain:'music.youtube.com',links:32,host:'music.youtube.com',
-       topics:['Playlists','Focus Music','Podcasts','Discover'],
-       years:{2020:2,2021:4,2022:8,2023:10,2024:8},
-       icon:'https://www.google.com/s2/favicons?domain=music.youtube.com&sz=64'},
-    ]
-  },
-  {
-    id:'other', label:'Tools & Analytics', color:'#34A853', textColor:'#188038',
-    products:[
-      {name:'Google Analytics',domain:'analytics.google.com',links:62,host:'analytics.google.com',
-       topics:['Site Traffic','Conversion Tracking','User Behavior','Reports'],
-       years:{2020:5,2021:10,2022:16,2023:18,2024:13},
-       icon:'https://www.google.com/s2/favicons?domain=analytics.google.com&sz=64'},
-      {name:'Google Account',domain:'myaccount.google.com',links:290,host:'myaccount.google.com',
-       topics:['Security Settings','Privacy Controls','Connected Apps','Activity'],
-       years:{2020:30,2021:52,2022:72,2023:82,2024:54},
-       icon:'https://www.google.com/s2/favicons?domain=myaccount.google.com&sz=64'},
-      {name:'Google One',domain:'one.google.com',links:96,host:'one.google.com',
-       topics:['Storage Management','VPN','Benefits','Family Sharing'],
-       years:{2020:8,2021:15,2022:25,2023:28,2024:20},
-       icon:'https://www.google.com/s2/favicons?domain=one.google.com&sz=64'},
-      {name:'Search Console',domain:'search.google.com',links:48,host:'search.google.com',
-       topics:['SEO Performance','Crawl Errors','Page Experience','Sitemaps'],
-       years:{2020:4,2021:8,2022:12,2023:14,2024:10},
-       icon:'https://www.google.com/s2/favicons?domain=search.google.com&sz=64'},
-    ]
-  }
+  {id:'productivity',label:'Productivity',color:'#4285F4',textColor:'#1A73E8',startAngle:-90,span:72,
+   products:[
+    {name:'Gmail',domain:'gmail.com',links:1965,host:'mail.google.com',
+     topics:['Email Management','Newsletters','Work Correspondence','Receipts & Orders'],
+     years:{2020:180,2021:280,2022:420,2023:580,2024:505},
+     icon:'https://www.gstatic.com/images/branding/product/2x/gmail_48dp.png'},
+    {name:'Google Drive',domain:'drive.google.com',links:512,host:'drive.google.com',
+     topics:['File Storage','Shared Docs','Project Assets','Archives'],
+     years:{2020:60,2021:90,2022:120,2023:140,2024:102},
+     icon:'https://www.gstatic.com/images/branding/product/2x/drive_48dp.png'},
+    {name:'Google Docs',domain:'docs.google.com',links:308,host:'docs.google.com',
+     topics:['Writing & Editing','Proposals','Reports','Meeting Notes'],
+     years:{2020:30,2021:55,2022:80,2023:90,2024:53},
+     icon:'https://www.gstatic.com/images/branding/product/2x/docs_48dp.png'},
+    {name:'Google Sheets',domain:'sheets.google.com',links:194,host:'sheets.google.com',
+     topics:['Data Tracking','Budgets','Analytics Reports','Inventory'],
+     years:{2020:15,2021:30,2022:55,2023:60,2024:34},
+     icon:'https://www.gstatic.com/images/branding/product/2x/sheets_48dp.png'},
+    {name:'Google Calendar',domain:'calendar.google.com',links:176,host:'calendar.google.com',
+     topics:['Meeting Scheduling','Reminders','Events','Work Blocks'],
+     years:{2020:18,2021:28,2022:45,2023:52,2024:33},
+     icon:'https://www.gstatic.com/images/branding/product/2x/calendar_48dp.png'},
+    {name:'Google Meet',domain:'meet.google.com',links:142,host:'meet.google.com',
+     topics:['Video Calls','Team Standups','Client Meetings','Webinars'],
+     years:{2020:40,2021:52,2022:28,2023:14,2024:8},
+     icon:'https://www.gstatic.com/images/branding/product/2x/hangouts_meet_48dp.png'},
+   ]},
+  {id:'search',label:'Browser & Research',color:'#EA4335',textColor:'#D93025',startAngle:-18,span:66,
+   products:[
+    {name:'Google Search',domain:'google.com',links:2400,host:'www.google.com',
+     topics:['Technical Research','AI/ML Topics','Business Leads','Health & Wellness'],
+     years:{2020:310,2021:440,2022:560,2023:620,2024:470},
+     icon:'https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_48dp.png'},
+    {name:'Google Maps',domain:'maps.google.com',links:420,host:'maps.google.com',
+     topics:['Navigation','Restaurant Discovery','Business Locations','Travel Planning'],
+     years:{2020:50,2021:70,2022:95,2023:120,2024:85},
+     icon:'https://www.gstatic.com/images/branding/product/2x/maps_48dp.png'},
+    {name:'Google Scholar',domain:'scholar.google.com',links:184,host:'scholar.google.com',
+     topics:['Research Papers','ML/AI Publications','Computer Vision','NLP'],
+     years:{2020:18,2021:32,2022:50,2023:52,2024:32},
+     icon:'https://www.google.com/s2/favicons?domain=scholar.google.com&sz=64'},
+    {name:'Google Translate',domain:'translate.google.com',links:96,host:'translate.google.com',
+     topics:['Urdu Translation','Spanish Phrases','Technical Terms','Arabic'],
+     years:{2020:10,2021:16,2022:24,2023:28,2024:18},
+     icon:'https://www.gstatic.com/images/branding/product/2x/translate_48dp.png'},
+   ]},
+  {id:'ai',label:'AI & Machine Learning',color:'#9C27B0',textColor:'#7B1FA2',startAngle:48,span:74,
+   products:[
+    {name:'Google Colab',domain:'colab.research.google.com',links:380,host:'colab.research.google.com',
+     topics:['Python Notebooks','ML Model Training','Data Analysis','Computer Vision'],
+     years:{2020:25,2021:55,2022:100,2023:120,2024:80},
+     icon:'https://www.google.com/s2/favicons?domain=colab.research.google.com&sz=64'},
+    {name:'AI Studio',domain:'aistudio.google.com',links:310,host:'aistudio.google.com',
+     topics:['Gemini API Testing','Prompt Engineering','Model Comparison','Multi-modal'],
+     years:{2020:0,2021:0,2022:10,2023:130,2024:170},
+     icon:'https://www.google.com/s2/favicons?domain=aistudio.google.com&sz=64'},
+    {name:'Gemini',domain:'gemini.google.com',links:280,host:'gemini.google.com',
+     topics:['Code Generation','Document Analysis','Research Summaries','Creative Writing'],
+     years:{2020:0,2021:0,2022:0,2023:80,2024:200},
+     icon:'https://www.google.com/s2/favicons?domain=gemini.google.com&sz=64'},
+    {name:'Vertex AI',domain:'cloud.google.com',links:120,host:'cloud.google.com/vertex-ai',
+     topics:['Model Deployment','AutoML','Pipelines','Vector Search'],
+     years:{2020:0,2021:8,2022:28,2023:48,2024:36},
+     icon:'https://www.google.com/s2/favicons?domain=cloud.google.com&sz=64'},
+    {name:'Kaggle',domain:'kaggle.com',links:75,host:'kaggle.com',
+     topics:['ML Competitions','Datasets','Notebooks','Community'],
+     years:{2020:10,2021:18,2022:20,2023:16,2024:11},
+     icon:'https://www.google.com/s2/favicons?domain=kaggle.com&sz=64'},
+   ]},
+  {id:'dev',label:'Cloud & Developers',color:'#FBBC04',textColor:'#E37400',startAngle:122,span:70,
+   products:[
+    {name:'Firebase',domain:'firebase.google.com',links:344,host:'firebase.google.com',
+     topics:['App Hosting','Auth & Users','Firestore DB','Cloud Functions'],
+     years:{2020:28,2021:60,2022:90,2023:98,2024:68},
+     icon:'https://www.gstatic.com/images/branding/product/2x/firebase_48dp.png'},
+    {name:'Google Cloud',domain:'cloud.google.com',links:298,host:'cloud.google.com',
+     topics:['GKE','Cloud Run','BigQuery','Storage','IAM'],
+     years:{2020:20,2021:45,2022:80,2023:90,2024:63},
+     icon:'https://www.gstatic.com/images/branding/product/2x/google_cloud_48dp.png'},
+    {name:'GDG Community',domain:'gdg.community.dev',links:186,host:'gdg.community.dev',
+     topics:['Events','Speaker Resources','Tech Talks','Community Projects'],
+     years:{2020:10,2021:28,2022:55,2023:60,2024:33},
+     icon:'https://www.google.com/s2/favicons?domain=gdg.community.dev&sz=64'},
+    {name:'Google Developers',domain:'developers.google.com',links:220,host:'developers.google.com',
+     topics:['API Docs','Code Samples','Codelabs','Product Updates'],
+     years:{2020:18,2021:38,2022:62,2023:66,2024:36},
+     icon:'https://www.google.com/s2/favicons?domain=developers.google.com&sz=64'},
+   ]},
+  {id:'media',label:'Media & Creativity',color:'#EA4335',textColor:'#D93025',startAngle:192,span:64,
+   products:[
+    {name:'YouTube',domain:'youtube.com',links:880,host:'youtube.com',
+     topics:['Tech Tutorials','AI Research Talks','Productivity','Entertainment'],
+     years:{2020:100,2021:160,2022:200,2023:240,2024:180},
+     icon:'https://www.gstatic.com/images/branding/product/2x/youtube_48dp.png'},
+    {name:'Google Photos',domain:'photos.google.com',links:210,host:'photos.google.com',
+     topics:['Photo Library','Shared Albums','Memories','Travel Photos'],
+     years:{2020:22,2021:38,2022:50,2023:58,2024:42},
+     icon:'https://www.gstatic.com/images/branding/product/2x/photos_48dp.png'},
+    {name:'YouTube Music',domain:'music.youtube.com',links:32,host:'music.youtube.com',
+     topics:['Playlists','Focus Music','Podcasts','Discover'],
+     years:{2020:2,2021:4,2022:8,2023:10,2024:8},
+     icon:'https://www.google.com/s2/favicons?domain=music.youtube.com&sz=64'},
+   ]},
+  {id:'other',label:'Tools & Analytics',color:'#34A853',textColor:'#188038',startAngle:256,span:64,
+   products:[
+    {name:'Google Analytics',domain:'analytics.google.com',links:62,host:'analytics.google.com',
+     topics:['Site Traffic','Conversion Tracking','User Behavior','Reports'],
+     years:{2020:5,2021:10,2022:16,2023:18,2024:13},
+     icon:'https://www.google.com/s2/favicons?domain=analytics.google.com&sz=64'},
+    {name:'Google Account',domain:'myaccount.google.com',links:290,host:'myaccount.google.com',
+     topics:['Security Settings','Privacy Controls','Connected Apps','Activity'],
+     years:{2020:30,2021:52,2022:72,2023:82,2024:54},
+     icon:'https://www.google.com/s2/favicons?domain=myaccount.google.com&sz=64'},
+    {name:'Google One',domain:'one.google.com',links:96,host:'one.google.com',
+     topics:['Storage Management','VPN','Benefits','Family Sharing'],
+     years:{2020:8,2021:15,2022:25,2023:28,2024:20},
+     icon:'https://www.google.com/s2/favicons?domain=one.google.com&sz=64'},
+    {name:'Search Console',domain:'search.google.com',links:48,host:'search.google.com',
+     topics:['SEO Performance','Crawl Errors','Page Experience','Sitemaps'],
+     years:{2020:4,2021:8,2022:12,2023:14,2024:10},
+     icon:'https://www.google.com/s2/favicons?domain=search.google.com&sz=64'},
+   ]},
 ];
 
 /* ════════════════════════════════════════════
    HELPERS
 ════════════════════════════════════════════ */
-function findProduct(name){
-  for(const c of CATEGORIES){
-    const p = c.products.find(p=>p.name===name);
-    if(p) return p;
-  }
-  return null;
-}
-function findCategoryForProduct(prod){
-  return CATEGORIES.find(c=>c.products.includes(prod));
-}
+function findProduct(name){for(const c of CATEGORIES){const p=c.products.find(p=>p.name===name);if(p)return p;}return null;}
+function findCat(prod){return CATEGORIES.find(c=>c.products.includes(prod));}
+function toRad(d){return d*Math.PI/180;}
 
 /* ════════════════════════════════════════════
-   ORBIT CONFIG
-   Each orbit: rx=semi-major, ry=semi-minor (b = a*sin(tilt))
-   angle = rotation of the ellipse major axis (degrees)
-   The 3 orbits at 0°, 60°, -60° give the atom model look
+   INTRO SEQUENCE
 ════════════════════════════════════════════ */
-const CX = 400, CY = 400;
+(function runIntro(){
+  const intro = document.getElementById('intro');
+  const introIcons = document.getElementById('intro-icons');
 
-const ORBIT_DEFS = [
-  { rx:285, ry:74, angle:0,    speed:0.42, color:'rgba(255,255,255,0.8)' },
-  { rx:285, ry:74, angle:60,   speed:0.32, color:'rgba(255,255,255,0.8)' },
-  { rx:285, ry:74, angle:-60,  speed:0.24, color:'rgba(255,255,255,0.8)' },
+  // Place streaming icons around orbits
+  const iconData = [
+    {name:'Gmail',angle:0,orbit:0},
+    {name:'YouTube',angle:Math.PI,orbit:0},
+    {name:'Google Drive',angle:0,orbit:1},
+    {name:'Gemini',angle:Math.PI,orbit:1},
+    {name:'Google Calendar',angle:Math.PI/2,orbit:2},
+    {name:'Firebase',angle:-Math.PI/2,orbit:2},
+  ];
+
+  const ORBIT_R = 200, ORBIT_RY = 52;
+  const orbitAngles = [0, 60, -60];
+  const W = 560, H = 560, CX = 280, CY = 280;
+
+  const introNodeEls = iconData.map(({name,angle,orbit}) => {
+    const prod = findProduct(name);
+    if(!prod) return null;
+    const α = orbitAngles[orbit] * Math.PI/180;
+    const lx = ORBIT_R * Math.cos(angle);
+    const ly = ORBIT_RY * Math.sin(angle);
+    const x = CX + lx*Math.cos(α) - ly*Math.sin(α);
+    const y = CY + lx*Math.sin(α) + ly*Math.cos(α);
+
+    const el = document.createElement('div');
+    el.className = 'intro-icon';
+    el.style.cssText = `left:calc(50% + ${x-CX}px);top:calc(50% + ${y-CY}px)`;
+    el.innerHTML = `<img src="${prod.icon}" alt="">`;
+    introIcons.appendChild(el);
+    return el;
+  });
+
+  // Timeline
+  setTimeout(()=>{
+    // Icons stream out at 2.2s
+    introNodeEls.forEach((el,i)=>{
+      if(!el)return;
+      setTimeout(()=>el.classList.add('visible'), i*120);
+    });
+  }, 2200);
+
+  setTimeout(()=>{
+    document.getElementById('intro-title').classList.add('visible');
+  }, 3000);
+
+  setTimeout(()=>{
+    intro.classList.add('fade-out');
+    setTimeout(()=>{intro.style.display='none';},800);
+  }, 4200);
+})();
+
+/* ════════════════════════════════════════════
+   ATOM ANIMATION
+════════════════════════════════════════════ */
+const CX=400, CY=400;
+const ORBIT_DEFS=[
+  {rx:285,ry:74,angle:0,   speed:0.42},
+  {rx:285,ry:74,angle:60,  speed:0.32},
+  {rx:285,ry:74,angle:-60, speed:0.24},
 ];
-
-/* Products assigned to orbits: 4 per orbit, evenly spaced */
-const ORBIT_PRODUCTS = [
+const ORBIT_PRODUCTS=[
   ['Gmail','YouTube','Google Search','Google Drive'],
   ['Google Calendar','Gemini','Firebase','Google Translate'],
   ['Google Docs','Google Maps','AI Studio','YouTube Music'],
 ];
 
-/* ════════════════════════════════════════════
-   ICON NODES STATE
-════════════════════════════════════════════ */
-const nodes = [];  // { el, orbit, theta, speed, prod, cat, trailEl }
-let activeNode = null;
-let rafId = null;
-let lastT = 0;
+const nodes=[];
+let activeNode=null, lastT=0;
 
-/* ════════════════════════════════════════════
-   POSITION MATH
-   Projects 3D circular orbit (tilted at angle from horizontal)
-   into 2D screen coordinates.
-
-   For orbit with:
-     a = semi-major (screen rx)
-     b = semi-minor = a * sin(tilt)
-   where tilt ≈ arcsin(ry/rx)
-
-   Position on orbit at angle θ, rotated by α:
-     lx = a * cos(θ)
-     ly = b * sin(θ)
-     x = cx + lx*cos(α) - ly*sin(α)
-     y = cy + lx*sin(α) + ly*cos(α)
-
-   Depth (z): positive = in front of nucleus
-     depth = sqrt(a²-b²) * sin(θ+α_component)
-     simplified: depth = sqrt(a²-b²) * sin(θ) * cos(α) + ...
-     We use: depth = a * sin(θ) * cos(α) + b * cos(θ) * sin(α) [approx]
-════════════════════════════════════════════ */
-function getPos(orbitIdx, theta){
-  const {rx, ry, angle} = ORBIT_DEFS[orbitIdx];
-  const α = angle * Math.PI / 180;
-  const lx = rx * Math.cos(theta);
-  const ly = ry * Math.sin(theta);
-  const x = CX + lx * Math.cos(α) - ly * Math.sin(α);
-  const y = CY + lx * Math.sin(α) + ly * Math.cos(α);
-  // Depth: sqrt(rx²-ry²) gives the 3D radius component in Z
-  // When sin(θ) is positive and we're on the "near" side
-  const dz = Math.sqrt(rx*rx - ry*ry);
-  const depth = dz * Math.sin(theta);
-  return {x, y, depth};
+function getPos(oIdx,theta){
+  const{rx,ry,angle}=ORBIT_DEFS[oIdx];
+  const α=angle*Math.PI/180;
+  const lx=rx*Math.cos(theta), ly=ry*Math.sin(theta);
+  const x=CX+lx*Math.cos(α)-ly*Math.sin(α);
+  const y=CY+lx*Math.sin(α)+ly*Math.cos(α);
+  const depth=Math.sqrt(rx*rx-ry*ry)*Math.sin(theta);
+  return{x,y,depth};
 }
 
-/* ════════════════════════════════════════════
-   BACKGROUND GRID BUILD
-════════════════════════════════════════════ */
-const BG_ICONS = [
+// Build BG grid
+const BG_ICONS=['gmail','drive','docs','sheets','calendar','youtube','maps','translate','photos','firebase','google_cloud','hangouts_meet','chrome','play_prism','slides','forms','earth'].map(n=>
+  n.startsWith('hangouts')?`https://www.gstatic.com/images/branding/product/2x/${n}_48dp.png`:
+  `https://www.gstatic.com/images/branding/product/2x/${n}_48dp.png`
+);
+const BG_SRCS=[
   'https://www.gstatic.com/images/branding/product/2x/gmail_48dp.png',
   'https://www.gstatic.com/images/branding/product/2x/drive_48dp.png',
   'https://www.gstatic.com/images/branding/product/2x/docs_48dp.png',
@@ -537,316 +817,299 @@ const BG_ICONS = [
   'https://www.gstatic.com/images/branding/product/2x/chrome_48dp.png',
   'https://www.gstatic.com/images/branding/product/2x/play_prism_48dp.png',
   'https://www.gstatic.com/images/branding/product/2x/slides_48dp.png',
-  'https://www.gstatic.com/images/branding/product/2x/forms_48dp.png',
-  'https://www.gstatic.com/images/branding/product/2x/earth_48dp.png',
 ];
-
-function buildBgGrid(){
-  const grid = document.getElementById('bg-grid');
-  const count = 260;
-  for(let i=0;i<count;i++){
-    const img = document.createElement('img');
-    img.src = BG_ICONS[i % BG_ICONS.length];
-    img.alt = '';
-    img.loading = 'lazy';
-    grid.appendChild(img);
+(function buildBG(){
+  const g=document.getElementById('bg-grid');
+  for(let i=0;i<280;i++){
+    const img=document.createElement('img');
+    img.src=BG_SRCS[i%BG_SRCS.length];img.alt='';img.loading='lazy';
+    g.appendChild(img);
   }
-}
+})();
 
-/* ════════════════════════════════════════════
-   BUILD ORBIT RINGS (SVG)
-════════════════════════════════════════════ */
-function buildOrbitRings(){
-  const ringsEl = document.getElementById('orbit-rings');
-  ORBIT_DEFS.forEach(({rx, ry, angle}) => {
-    const el = document.createElementNS('http://www.w3.org/2000/svg','ellipse');
-    el.setAttribute('cx', CX);
-    el.setAttribute('cy', CY);
-    el.setAttribute('rx', rx);
-    el.setAttribute('ry', ry);
-    el.setAttribute('transform', `rotate(${angle},${CX},${CY})`);
+// Build orbit rings SVG
+(function buildRings(){
+  const rg=document.getElementById('orbit-rings');
+  ORBIT_DEFS.forEach(({rx,ry,angle})=>{
+    const el=document.createElementNS('http://www.w3.org/2000/svg','ellipse');
+    el.setAttribute('cx',CX);el.setAttribute('cy',CY);
+    el.setAttribute('rx',rx);el.setAttribute('ry',ry);
+    el.setAttribute('transform',`rotate(${angle},${CX},${CY})`);
     el.classList.add('orbit-ring');
-    ringsEl.appendChild(el);
+    rg.appendChild(el);
   });
-}
+})();
 
-/* ════════════════════════════════════════════
-   BUILD ICON NODES
-════════════════════════════════════════════ */
-function buildIconNodes(){
-  const container = document.getElementById('icon-container');
-  const trailsEl = document.getElementById('orbit-trails');
-
-  ORBIT_PRODUCTS.forEach((prods, orbitIdx) => {
-    prods.forEach((name, i) => {
-      const prod = findProduct(name);
-      if(!prod) return;
-      const cat = findCategoryForProduct(prod);
-
-      // Initial angle: evenly spaced + small random offset
-      const theta = (2 * Math.PI / prods.length) * i + (orbitIdx * 0.8);
-
-      // DOM node
-      const node = document.createElement('div');
-      node.className = 'orbit-node';
-      node.style.setProperty('--nc', cat.color);
-      node.innerHTML = `
-        <img src="${prod.icon}" alt="${prod.name}">
-        <div class="node-label">${prod.name}</div>
-      `;
-      node.addEventListener('click', () => handleNodeClick(nodeObj));
+// Build icon nodes
+(function buildNodes(){
+  const container=document.getElementById('icon-container');
+  const trailsEl=document.getElementById('orbit-trails');
+  ORBIT_PRODUCTS.forEach((prods,oIdx)=>{
+    prods.forEach((name,i)=>{
+      const prod=findProduct(name);
+      if(!prod)return;
+      const cat=findCat(prod);
+      const theta=(2*Math.PI/prods.length)*i+(oIdx*0.8);
+      const node=document.createElement('div');
+      node.className='orbit-node';
+      node.style.setProperty('--nc',cat.color);
+      node.innerHTML=`<img src="${prod.icon}" alt="${prod.name}"><div class="node-label">${prod.name}</div>`;
+      node.addEventListener('click',()=>handleNodeClick(nodeObj));
       container.appendChild(node);
-
-      // SVG trail (arc that follows the icon)
-      const trail = document.createElementNS('http://www.w3.org/2000/svg','path');
+      const trail=document.createElementNS('http://www.w3.org/2000/svg','path');
       trail.classList.add('orbit-trail');
-      trail.style.stroke = cat.color;
-      trail.style.strokeWidth = '4';
-      trail.style.opacity = '0';
+      trail.style.stroke=cat.color;
       trailsEl.appendChild(trail);
-
-      const nodeObj = {
-        el: node,
-        trail,
-        orbit: orbitIdx,
-        theta,
-        speed: ORBIT_DEFS[orbitIdx].speed * (0.85 + Math.random()*0.3),
-        prod,
-        cat,
-        paused: false,
-        trailHistory: [],
-      };
+      const nodeObj={el:node,trail,orbit:oIdx,theta,speed:ORBIT_DEFS[oIdx].speed*(0.85+Math.random()*0.3),prod,cat,paused:false,trailHistory:[]};
       nodes.push(nodeObj);
     });
   });
-}
+})();
 
-/* ════════════════════════════════════════════
-   TRAIL ARC
-════════════════════════════════════════════ */
-function updateTrail(node){
-  const hist = node.trailHistory;
-  if(hist.length < 2) return;
-
-  // Draw a polyline through recent positions
-  const pts = hist.slice(-18);
-  let d = `M${pts[0].x},${pts[0].y}`;
-  for(let i=1;i<pts.length;i++) d += ` L${pts[i].x},${pts[i].y}`;
-
-  node.trail.setAttribute('d', d);
-  node.trail.style.opacity = node.paused ? '0' : '0.6';
-  node.trail.style.strokeWidth = '4';
-}
-
-/* ════════════════════════════════════════════
-   ANIMATION LOOP
-════════════════════════════════════════════ */
 function animate(ts){
-  const dt = lastT ? Math.min((ts - lastT) / 1000, 0.05) : 0;
-  lastT = ts;
-
-  // Advance non-paused nodes
-  nodes.forEach(node => {
-    if(!node.paused){
-      node.theta += node.speed * dt;
-
-      const pos = getPos(node.orbit, node.theta);
-      node.trailHistory.push({x: pos.x, y: pos.y});
-      if(node.trailHistory.length > 28) node.trailHistory.shift();
+  const dt=lastT?Math.min((ts-lastT)/1000,.05):0;
+  lastT=ts;
+  nodes.forEach(n=>{
+    if(!n.paused){
+      n.theta+=n.speed*dt;
+      const p=getPos(n.orbit,n.theta);
+      n.trailHistory.push({x:p.x,y:p.y});
+      if(n.trailHistory.length>22)n.trailHistory.shift();
     }
   });
-
-  // Sort all nodes by depth (back to front for correct rendering order)
-  const sorted = [...nodes].sort((a,b) => {
-    const da = getPos(a.orbit, a.theta).depth;
-    const db = getPos(b.orbit, b.theta).depth;
-    return da - db;
-  });
-
-  // Update DOM positions
-  sorted.forEach((node, renderIdx) => {
-    const pos = getPos(node.orbit, node.theta);
-    node.el.style.left = pos.x + 'px';
-    node.el.style.top  = pos.y + 'px';
-
-    // Z-index: nodes behind nucleus (depth<0) get zIndex 5, in front get 20
-    const zBase = pos.depth > 0 ? 20 : 5;
-    node.el.style.zIndex = node.paused ? 25 : zBase;
-
-    // Slight scale by depth for parallax feel
-    if(!node.paused){
-      const s = 1 + (pos.depth / 350) * 0.12;
-      node.el.style.transform = `translate(-50%,-50%) scale(${s.toFixed(3)})`;
+  nodes.forEach(n=>{
+    const pos=getPos(n.orbit,n.theta);
+    n.el.style.left=pos.x+'px';
+    n.el.style.top=pos.y+'px';
+    n.el.style.zIndex=n.paused?25:pos.depth>0?20:5;
+    if(!n.paused){const s=1+(pos.depth/350)*0.12;n.el.style.transform=`translate(-50%,-50%) scale(${s.toFixed(3)})`;}
+    // trail
+    const h=n.trailHistory;
+    if(h.length>=2){
+      let d=`M${h[0].x},${h[0].y}`;
+      for(let i=1;i<h.length;i++)d+=` L${h[i].x},${h[i].y}`;
+      n.trail.setAttribute('d',d);
+      n.trail.style.opacity=n.paused?'0':'0.55';
     }
-
-    // Update trail
-    updateTrail(node);
   });
-
-  rafId = requestAnimationFrame(animate);
+  requestAnimationFrame(animate);
 }
+requestAnimationFrame(animate);
 
-/* ════════════════════════════════════════════
-   INTERACTION
-════════════════════════════════════════════ */
+// Tooltip
+const tipEl=document.getElementById('tooltip');
+document.addEventListener('mousemove',e=>{tipEl.style.left=e.clientX+'px';tipEl.style.top=(e.clientY-44)+'px';});
+nodes.forEach(n=>{
+  n.el.addEventListener('mouseenter',()=>{tipEl.textContent=n.prod.name;tipEl.classList.add('show');});
+  n.el.addEventListener('mouseleave',()=>tipEl.classList.remove('show'));
+});
+
+// Atom click
 function handleNodeClick(node){
-  if(activeNode && activeNode !== node){
-    // Deactivate previous
-    activeNode.paused = false;
-    activeNode.el.classList.remove('active');
-    activeNode.trailHistory = [];
-  }
-
-  if(activeNode === node){
-    // Clicking active node → close panel
-    closePanel();
-    return;
-  }
-
-  // Activate node
-  node.paused = true;
-  node.el.classList.add('active');
-  activeNode = node;
-
-  openPanel(node.prod, node.cat);
+  if(activeNode&&activeNode!==node){activeNode.paused=false;activeNode.el.classList.remove('active');activeNode.trailHistory=[];}
+  if(activeNode===node){closePanel();return;}
+  node.paused=true;node.el.classList.add('active');activeNode=node;
+  openPanel(node.prod,node.cat,'fixed');
 }
 
 function closePanel(){
   document.getElementById('detail-panel').classList.remove('show');
   document.getElementById('overlay').classList.remove('show');
-
-  if(activeNode){
-    activeNode.paused = false;
-    activeNode.el.classList.remove('active');
-    activeNode.trailHistory = [];
-    activeNode = null;
-  }
+  if(activeNode){activeNode.paused=false;activeNode.el.classList.remove('active');activeNode.trailHistory=[];activeNode=null;}
 }
 
 /* ════════════════════════════════════════════
-   PANEL
+   PANEL CONTENT
 ════════════════════════════════════════════ */
-function openPanel(prod, cat){
-  document.getElementById('panel-logo').src = prod.icon;
-  document.getElementById('panel-logo').style.background = cat.color + '18';
-  document.getElementById('panel-title').textContent = prod.name;
-  document.getElementById('panel-domain').textContent = prod.host;
-
-  const totalLinks = prod.links;
-  const topYear = Object.entries(prod.years).sort((a,b)=>b[1]-a[1])[0];
-  const maxYearVal = Math.max(...Object.values(prod.years));
-
-  document.getElementById('panel-body').innerHTML = `
+function panelHTML(prod,cat){
+  const total=prod.links;
+  const topYear=Object.entries(prod.years).sort((a,b)=>b[1]-a[1])[0];
+  const maxYV=Math.max(...Object.values(prod.years));
+  return`
     <span class="category-chip" style="background:${cat.color}18;color:${cat.textColor}">
-      <span style="width:8px;height:8px;border-radius:50%;background:${cat.color};display:inline-block"></span>
+      <span style="width:7px;height:7px;border-radius:50%;background:${cat.color};display:inline-block"></span>
       ${cat.label}
     </span>
-
     <div class="big-stats">
-      <div class="big-stat">
-        <div class="big-stat-n" style="color:${cat.color}">${totalLinks.toLocaleString()}</div>
-        <div class="big-stat-l">Total Links</div>
-      </div>
-      <div class="big-stat">
-        <div class="big-stat-n" style="color:${cat.color}">${topYear[0]}</div>
-        <div class="big-stat-l">Peak Year &middot; ${topYear[1]} links</div>
-      </div>
+      <div class="big-stat"><div class="big-stat-n" style="color:${cat.color}">${total.toLocaleString()}</div><div class="big-stat-l">Total Links</div></div>
+      <div class="big-stat"><div class="big-stat-n" style="color:${cat.color}">${topYear[0]}</div><div class="big-stat-l">Peak Year &middot; ${topYear[1]} links</div></div>
     </div>
-
     <div class="section-title">Top Topics</div>
-    <div style="margin-bottom:4px">
-      ${prod.topics.map((t,i)=>{
-        const pct = Math.round(100 - i*18);
-        const cnt = Math.round(totalLinks*(pct/100*0.35));
-        return `<div class="topic-row">
-          <div class="topic-name">${t}</div>
-          <div class="topic-bar-wrap">
-            <div class="topic-bar" style="background:${cat.color}" data-w="${pct}"></div>
-          </div>
-          <div class="topic-count">${cnt.toLocaleString()}</div>
-        </div>`;
-      }).join('')}
-    </div>
-
+    ${prod.topics.map((t,i)=>{const pct=Math.round(100-i*18);const cnt=Math.round(total*(pct/100*0.35));return`
+      <div class="topic-row">
+        <div class="topic-name">${t}</div>
+        <div class="topic-bar-wrap"><div class="topic-bar" style="background:${cat.color}" data-w="${pct}"></div></div>
+        <div class="topic-count">${cnt.toLocaleString()}</div>
+      </div>`;}).join('')}
     <div class="section-title">Activity by Year</div>
     <div class="year-grid">
       ${Object.entries(prod.years).map(([yr,cnt])=>`
         <div class="year-card">
           <div class="year-n" style="color:${cat.color}">${cnt}</div>
           <div class="year-l">${yr}</div>
-          <div class="year-bar-mini">
-            <div class="year-bar-mini-fill" style="background:${cat.color}" data-w="${Math.round(cnt/maxYearVal*100)}"></div>
-          </div>
+          <div class="year-bar-mini"><div class="year-bar-mini-fill" style="background:${cat.color}" data-w="${Math.round(cnt/maxYV*100)}"></div></div>
         </div>`).join('')}
     </div>
-
     <div class="section-title">Explore Links</div>
     <div class="links-grid">
-      ${generateLinks(prod).map(l=>`
-        <a class="link-card" href="${l.url}" target="_blank" rel="noopener">
-          <img class="link-card-icon" src="${prod.icon}" alt="">
-          <span class="link-card-text">${l.label}</span>
-          <span class="link-card-arrow">&#8599;</span>
-        </a>`).join('')}
-    </div>
-  `;
+      <a class="link-card" href="https://${prod.host}" target="_blank" rel="noopener">
+        <img class="link-card-icon" src="${prod.icon}" alt=""><span class="link-card-text">Open ${prod.name}</span><span class="link-card-arrow">&#8599;</span>
+      </a>
+      <a class="link-card" href="https://myactivity.google.com/" target="_blank" rel="noopener">
+        <img class="link-card-icon" src="${prod.icon}" alt=""><span class="link-card-text">View activity on ${prod.domain}</span><span class="link-card-arrow">&#8599;</span>
+      </a>
+      <a class="link-card" href="https://support.google.com/" target="_blank" rel="noopener">
+        <img class="link-card-icon" src="${prod.icon}" alt=""><span class="link-card-text">Help & Support</span><span class="link-card-arrow">&#8599;</span>
+      </a>
+    </div>`;
+}
 
-  document.getElementById('detail-panel').classList.add('show');
-  document.getElementById('overlay').classList.add('show');
+function openPanel(prod,cat,mode){
+  if(mode==='fixed'){
+    document.getElementById('panel-logo').src=prod.icon;
+    document.getElementById('panel-logo').style.background=cat.color+'18';
+    document.getElementById('panel-title').textContent=prod.name;
+    document.getElementById('panel-domain').textContent=prod.host;
+    document.getElementById('panel-body').innerHTML=panelHTML(prod,cat);
+    document.getElementById('detail-panel').classList.add('show');
+    document.getElementById('overlay').classList.add('show');
+  } else {
+    document.getElementById('drp-logo').src=prod.icon;
+    document.getElementById('drp-logo').style.background=cat.color+'18';
+    document.getElementById('drp-title').textContent=prod.name;
+    document.getElementById('drp-domain').textContent=prod.host;
+    document.getElementById('drp-body').innerHTML=panelHTML(prod,cat);
+    document.getElementById('dash-right-panel').classList.add('show');
+  }
+  setTimeout(()=>{document.querySelectorAll('[data-w]').forEach(el=>el.style.width=el.dataset.w+'%');},60);
+}
 
-  // Animate bars after paint
-  setTimeout(()=>{
-    document.querySelectorAll('[data-w]').forEach(el=>{
-      el.style.width = el.dataset.w + '%';
+function closeDashPanel(){document.getElementById('dash-right-panel').classList.remove('show');}
+
+/* ════════════════════════════════════════════
+   CIRCULAR DIAGRAM (SVG)
+════════════════════════════════════════════ */
+const DCX=300,DCY=300,R_OUTER=250,R_LOGO=215,R_CAT=166,R_INNER=124;
+
+function dPolarXY(deg,r){const a=toRad(deg);return{x:DCX+r*Math.cos(a),y:DCY+r*Math.sin(a)};}
+function arcPath(r,s,e,sweep=1){
+  const p1=dPolarXY(s,r),p2=dPolarXY(e,r);
+  const lg=Math.abs(e-s)>180?1:0;
+  return`M${p1.x},${p1.y} A${r},${r},0,${lg},${sweep},${p2.x},${p2.y}`;
+}
+
+function buildDiagram(){
+  const arcs=document.getElementById('sector-arcs');
+  const labels=document.getElementById('cat-labels');
+  const lines=document.getElementById('sector-lines');
+  const nodesg=document.getElementById('logo-nodes');
+
+  CATEGORIES.forEach(cat=>{
+    const s=cat.startAngle, e=s+cat.span;
+    // Filled sector
+    const arc1=arcPath(R_OUTER,s,e);
+    const arc2=arcPath(R_INNER,e,s,0);
+    const p1=dPolarXY(s,R_OUTER),p2=dPolarXY(e,R_OUTER),p3=dPolarXY(e,R_INNER),p4=dPolarXY(s,R_INNER);
+    const sector=document.createElementNS('http://www.w3.org/2000/svg','path');
+    sector.setAttribute('d',`${arcPath(R_OUTER,s,e)} L${p3.x},${p3.y} ${arcPath(R_INNER,e,s,0)} Z`);
+    sector.setAttribute('fill',cat.color+'22');
+    sector.setAttribute('stroke',cat.color+'44');
+    sector.setAttribute('stroke-width','1');
+    arcs.appendChild(sector);
+
+    // Inner arc
+    const innerArc=document.createElementNS('http://www.w3.org/2000/svg','path');
+    innerArc.setAttribute('d',arcPath(R_CAT,s+2,e-2));
+    innerArc.setAttribute('fill','none');
+    innerArc.setAttribute('stroke',cat.color);
+    innerArc.setAttribute('stroke-width','3');
+    innerArc.setAttribute('stroke-linecap','round');
+    arcs.appendChild(innerArc);
+
+    // Category label
+    const mid=s+cat.span/2;
+    const lp=dPolarXY(mid,R_OUTER-18);
+    const txt=document.createElementNS('http://www.w3.org/2000/svg','text');
+    txt.setAttribute('x',lp.x);txt.setAttribute('y',lp.y);
+    txt.setAttribute('text-anchor','middle');txt.setAttribute('dominant-baseline','middle');
+    txt.setAttribute('font-size','8.5');txt.setAttribute('font-weight','600');
+    txt.setAttribute('fill',cat.textColor);txt.setAttribute('font-family','Google Sans,sans-serif');
+    txt.setAttribute('letter-spacing','0.04em');
+    // Rotate label to follow arc
+    txt.setAttribute('transform',`rotate(${mid>90&&mid<270?mid+180:mid},${lp.x},${lp.y})`);
+    txt.textContent=cat.label.toUpperCase();
+    labels.appendChild(txt);
+
+    // Spoke lines
+    [s,e].forEach(ang=>{
+      const p1=dPolarXY(ang,R_OUTER+4);
+      const p2=dPolarXY(ang,R_INNER-4);
+      const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+      line.setAttribute('x1',p1.x);line.setAttribute('y1',p1.y);
+      line.setAttribute('x2',p2.x);line.setAttribute('y2',p2.y);
+      line.setAttribute('stroke',cat.color+'55');line.setAttribute('stroke-width','1');
+      lines.appendChild(line);
     });
-  }, 60);
-}
 
-function generateLinks(prod){
-  const base = `https://${prod.host}`;
-  return [
-    {label:`Open ${prod.name}`, url: base},
-    {label:`Recent activity on ${prod.domain}`, url:`https://myactivity.google.com/?product=${encodeURIComponent(prod.name)}`},
-    {label:`Search history for ${prod.domain}`, url:`https://myactivity.google.com/`},
-    {label:`Help & Support`, url:`https://support.google.com/`},
-  ];
+    // Logo nodes
+    const numP=cat.products.length;
+    cat.products.forEach((prod,i)=>{
+      const ang=s+(cat.span/(numP+1))*(i+1);
+      const pos=dPolarXY(ang,R_LOGO);
+      const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+      g.classList.add('logo-node');
+      g.setAttribute('transform',`translate(${pos.x},${pos.y})`);
+
+      const ring=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      ring.classList.add('node-ring');
+      ring.setAttribute('r','18');
+      ring.setAttribute('fill','white');
+      ring.setAttribute('stroke',cat.color);
+      ring.setAttribute('stroke-width','1.5');
+      ring.setAttribute('filter','url(#shadow-sm)');
+      g.appendChild(ring);
+
+      const img=document.createElementNS('http://www.w3.org/2000/svg','image');
+      img.setAttribute('href',prod.icon);
+      img.setAttribute('x','-12');img.setAttribute('y','-12');
+      img.setAttribute('width','24');img.setAttribute('height','24');
+      img.setAttribute('clip-path','circle(12px)');
+      g.appendChild(img);
+
+      g.addEventListener('click',()=>openPanel(prod,cat,'dash'));
+      nodesg.appendChild(g);
+    });
+  });
+
+  // Center circle
+  const center=document.createElementNS('http://www.w3.org/2000/svg','circle');
+  center.setAttribute('cx',DCX);center.setAttribute('cy',DCY);
+  center.setAttribute('r',R_INNER-6);
+  center.setAttribute('fill','white');
+  center.setAttribute('stroke','#E8EAED');center.setAttribute('stroke-width','1.5');
+  nodesg.appendChild(center);
+  const cimg=document.createElementNS('http://www.w3.org/2000/svg','image');
+  cimg.setAttribute('href','https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_48dp.png');
+  cimg.setAttribute('x',DCX-22);cimg.setAttribute('y',DCY-30);
+  cimg.setAttribute('width','44');cimg.setAttribute('height','44');
+  nodesg.appendChild(cimg);
+  const ctxt=document.createElementNS('http://www.w3.org/2000/svg','text');
+  ctxt.setAttribute('x',DCX);ctxt.setAttribute('y',DCY+24);
+  ctxt.setAttribute('text-anchor','middle');ctxt.setAttribute('font-size','9');
+  ctxt.setAttribute('fill','#5F6368');ctxt.setAttribute('font-family','Google Sans,sans-serif');
+  ctxt.textContent='My Google Universe';
+  nodesg.appendChild(ctxt);
 }
+buildDiagram();
 
 /* ════════════════════════════════════════════
-   TOOLTIP
+   NAV: switch style on scroll
 ════════════════════════════════════════════ */
-const tipEl = document.getElementById('tooltip');
-document.addEventListener('mousemove', e=>{
-  tipEl.style.left = e.clientX+'px';
-  tipEl.style.top  = (e.clientY - 42)+'px';
-});
-nodes.forEach(n=>{
-  n.el.addEventListener('mouseenter',()=>{
-    tipEl.textContent = n.prod.name;
-    tipEl.classList.add('show');
-  });
-  n.el.addEventListener('mouseleave',()=>{
-    tipEl.classList.remove('show');
-  });
-});
-
-/* ════════════════════════════════════════════
-   INIT
-════════════════════════════════════════════ */
-buildBgGrid();
-buildOrbitRings();
-buildIconNodes();
-
-// Re-attach tooltip listeners (nodes built after initial definition)
-nodes.forEach(n=>{
-  n.el.addEventListener('mouseenter',()=>{
-    tipEl.textContent = n.prod.name;
-    tipEl.classList.add('show');
-  });
-  n.el.addEventListener('mouseleave',()=>tipEl.classList.remove('show'));
-});
-
-requestAnimationFrame(animate);
+const mainNav=document.getElementById('main-nav');
+window.addEventListener('scroll',()=>{
+  const inDiagram=window.scrollY>window.innerHeight*0.6;
+  mainNav.classList.toggle('on-light',inDiagram);
+},{passive:true});
 </script>
 </body>
 </html>
