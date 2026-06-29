@@ -4,309 +4,285 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zain Khan — My Google Universe</title>
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Display:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-:root{
-  --blue:#4285F4;--red:#EA4335;--yellow:#FBBC04;--green:#34A853;
-  --teal:#00ACC1;--purple:#7C4DFF;--orange:#FF6D00;
-  --bg:#F8F9FA;--bg2:#FFFFFF;--border:#E8EAED;
-  --text:#202124;--muted:#5F6368;--card:#fff;
-  --shadow:0 2px 10px rgba(0,0,0,.08),0 0 1px rgba(0,0,0,.12);
-  --shadow-hover:0 8px 30px rgba(0,0,0,.14),0 0 1px rgba(0,0,0,.12);
-}
 body{
-  background:var(--bg);color:var(--text);
-  font-family:'Google Sans',ui-sans-serif,-apple-system,sans-serif;
-  min-height:100vh;overflow-x:hidden;
+  background:#bcc9d8;
+  min-height:100vh;overflow:hidden;
+  font-family:'Google Sans',ui-sans-serif,sans-serif;
 }
 
-/* ── NAV ─────────────────────────────────────────── */
+/* ── BACKGROUND ICON GRID ───────────────────────── */
+#bg-grid{
+  position:fixed;inset:0;
+  display:grid;
+  grid-template-columns:repeat(20,1fr);
+  gap:0;
+  opacity:0.18;
+  filter:blur(2px) saturate(0.6);
+  animation:bg-drift 60s linear infinite;
+  pointer-events:none;z-index:0;
+  transform:scale(1.1);
+}
+@keyframes bg-drift{0%{transform:scale(1.1) translateX(0)}100%{transform:scale(1.1) translateX(-72px)}}
+#bg-grid img{width:100%;aspect-ratio:1;object-fit:contain;padding:4px;opacity:0.8}
+
+/* ── ATOM SCENE ────────────────────────────────── */
+#atom-scene{
+  position:fixed;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  z-index:1;pointer-events:none;
+}
+#atom-wrap{
+  position:relative;width:800px;height:800px;flex-shrink:0;
+  pointer-events:none;
+}
+
+/* ── SVG ORBITS ────────────────────────────────── */
+#orbit-svg{
+  position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;
+  overflow:visible;
+}
+.orbit-ring{
+  fill:none;
+  stroke:rgba(255,255,255,0.75);
+  stroke-width:2.5;
+}
+.orbit-outer{
+  fill:none;stroke:rgba(255,255,255,0.12);stroke-width:1.5;
+}
+.orbit-trail{
+  fill:none;stroke-linecap:round;stroke-width:4;
+  opacity:0;transition:opacity .3s;
+}
+
+/* ── NUCLEUS ───────────────────────────────────── */
+#nucleus{
+  position:absolute;
+  width:150px;height:150px;
+  left:400px;top:400px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:#fff;
+  box-shadow:
+    0 0 0 6px rgba(255,255,255,0.25),
+    0 0 60px rgba(255,255,255,0.18),
+    0 0 120px rgba(100,150,255,0.1);
+  display:flex;align-items:center;justify-content:center;
+  z-index:15;pointer-events:none;
+}
+#nucleus img{width:100px;height:100px;object-fit:contain}
+
+/* ── ORBIT NODES ───────────────────────────────── */
+#icon-container{
+  position:absolute;inset:0;pointer-events:none;
+}
+.orbit-node{
+  position:absolute;
+  width:56px;height:56px;
+  border-radius:14px;
+  background:#fff;
+  box-shadow:0 4px 20px rgba(0,0,0,0.22),0 1px 4px rgba(0,0,0,0.1);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  transform:translate(-50%,-50%);
+  pointer-events:all;
+  transition:box-shadow .2s;
+}
+.orbit-node:hover{
+  box-shadow:0 8px 32px rgba(0,0,0,0.35),0 0 0 2.5px rgba(255,255,255,0.8);
+}
+.orbit-node.active{
+  box-shadow:0 0 0 3px var(--nc),0 8px 32px rgba(0,0,0,0.4) !important;
+}
+.orbit-node img{width:38px;height:38px;object-fit:contain;border-radius:8px}
+.orbit-node .node-label{
+  position:absolute;bottom:-24px;left:50%;transform:translateX(-50%);
+  background:rgba(0,0,0,.6);color:#fff;
+  font-size:10px;padding:2px 8px;border-radius:10px;
+  white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none;
+}
+.orbit-node:hover .node-label{opacity:1}
+
+/* ── NAV ───────────────────────────────────────── */
 nav{
-  position:fixed;top:0;left:0;right:0;z-index:1000;
-  background:rgba(255,255,255,.92);
-  border-bottom:1px solid var(--border);
-  backdrop-filter:blur(12px);
+  position:fixed;top:0;left:0;right:0;z-index:100;
   display:flex;align-items:center;justify-content:space-between;
-  padding:0 32px;height:64px;
+  padding:0 32px;height:56px;
+  background:rgba(160,180,205,0.5);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,0.25);
 }
-.nav-brand{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:500;color:var(--text)}
-.nav-brand svg{width:22px;height:22px}
-.nav-tabs{display:flex;gap:4px}
-.nav-tab{
-  padding:6px 14px;border-radius:20px;font-size:13px;
-  color:var(--muted);cursor:pointer;transition:.2s;border:none;background:none;
+.nav-brand{
+  font-size:15px;font-weight:600;
+  color:rgba(255,255,255,0.95);letter-spacing:.01em;
 }
-.nav-tab:hover{background:var(--bg);color:var(--text)}
-.nav-tab.active{background:var(--blue);color:#fff}
-.nav-stat{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
-.nav-stat strong{color:var(--text);font-weight:600}
+.nav-stats{
+  display:flex;gap:24px;font-size:13px;
+  color:rgba(255,255,255,0.65);
+}
+.nav-stats strong{color:#fff;font-weight:600}
+.nav-hint{
+  font-size:12px;color:rgba(255,255,255,0.5);
+  letter-spacing:.03em;
+}
 
-/* ── HERO ─────────────────────────────────────────── */
-.hero{
-  min-height:100vh;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;padding-top:64px;
-  background:radial-gradient(ellipse at 50% 0%, rgba(66,133,244,.06) 0%, transparent 60%);
-}
-.hero-label{
-  font-size:12px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:12px;text-align:center;
-}
-.hero-title{
-  font-family:'Google Sans Display',sans-serif;
-  font-size:clamp(28px,4vw,44px);font-weight:700;
-  text-align:center;margin-bottom:8px;
-  background:linear-gradient(135deg,#4285F4,#34A853,#FBBC04,#EA4335);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  background-size:200%;animation:grad 6s linear infinite;
-}
-@keyframes grad{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.hero-sub{font-size:15px;color:var(--muted);text-align:center;margin-bottom:40px}
-
-/* ── DIAGRAM CONTAINER ────────────────────────────── */
-.diagram-wrap{
-  position:relative;width:min(90vw,640px);height:min(90vw,640px);
-  margin:0 auto;
-}
-#eco-svg{width:100%;height:100%;cursor:default}
-
-/* Logo circles */
-.logo-node{cursor:pointer;transition:filter .2s,transform .2s}
-.logo-node:hover{filter:drop-shadow(0 4px 12px rgba(0,0,0,.25))}
-.logo-node.active .node-ring{stroke-width:3}
-
-/* ── BOTTOM STATS BAR ─────────────────────────────── */
-.stats-bar{
-  display:flex;gap:32px;justify-content:center;flex-wrap:wrap;
-  padding:20px 0 0;
-}
-.stat-item{text-align:center}
-.stat-n{font-size:28px;font-weight:700;background:linear-gradient(135deg,#4285F4,#34A853);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.stat-l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
-
-/* ── DETAIL PANEL ─────────────────────────────────── */
+/* ── DETAIL PANEL ──────────────────────────────── */
 .panel-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:500;
-  opacity:0;pointer-events:none;transition:.25s;
+  position:fixed;inset:0;background:rgba(0,0,0,.35);
+  z-index:500;opacity:0;pointer-events:none;transition:.25s;
 }
 .panel-overlay.show{opacity:1;pointer-events:all}
 .detail-panel{
   position:fixed;top:0;right:0;bottom:0;width:min(520px,100vw);
   background:#fff;z-index:600;
   display:flex;flex-direction:column;
-  transform:translateX(100%);transition:transform .3s cubic-bezier(.22,1,.36,1);
-  box-shadow:-8px 0 40px rgba(0,0,0,.15);
+  transform:translateX(100%);
+  transition:transform .35s cubic-bezier(.22,1,.36,1);
+  box-shadow:-12px 0 60px rgba(0,0,0,.2);
 }
 .detail-panel.show{transform:translateX(0)}
 
+/* Panel Header */
 .panel-header{
-  padding:24px 28px 20px;
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:16px;position:relative;
+  padding:20px 24px 16px;
+  border-bottom:1px solid #E8EAED;
+  display:flex;align-items:center;gap:16px;
+  flex-shrink:0;
 }
-.panel-logo{width:52px;height:52px;border-radius:14px;padding:8px;box-shadow:var(--shadow)}
-.panel-title{font-size:20px;font-weight:700}
-.panel-domain{font-size:12px;color:var(--muted);margin-top:2px}
+.panel-logo{
+  width:56px;height:56px;border-radius:14px;
+  object-fit:contain;padding:8px;
+  flex-shrink:0;
+}
+.panel-title{font-size:20px;font-weight:700;color:#202124;margin-bottom:3px}
+.panel-domain{font-size:13px;color:#5F6368}
 .panel-close{
-  position:absolute;top:20px;right:20px;width:32px;height:32px;border-radius:50%;
-  border:none;background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;
-  font-size:18px;color:var(--muted);transition:.2s;
+  margin-left:auto;border:none;background:none;
+  font-size:20px;color:#5F6368;cursor:pointer;
+  padding:8px;border-radius:50%;line-height:1;flex-shrink:0;
 }
-.panel-close:hover{background:var(--border);color:var(--text)}
+.panel-close:hover{background:#F1F3F4}
 
-.panel-body{flex:1;overflow-y:auto;padding:20px 28px}
-
-/* Category chip */
+/* Panel Body */
+.panel-body{flex:1;overflow-y:auto;padding:20px 24px 32px}
 .category-chip{
   display:inline-flex;align-items:center;gap:6px;
-  padding:4px 12px;border-radius:20px;font-size:12px;font-weight:500;
-  margin-bottom:20px;
+  padding:5px 14px;border-radius:20px;
+  font-size:12px;font-weight:600;margin-bottom:18px;
 }
-
-/* Big stat cards */
-.big-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
-.big-stat{
-  background:var(--bg);border-radius:14px;padding:16px;
+.big-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
+.big-stat{background:#F8F9FA;border-radius:14px;padding:16px}
+.big-stat-n{font-size:26px;font-weight:700;margin-bottom:4px}
+.big-stat-l{font-size:11px;color:#5F6368;text-transform:uppercase;letter-spacing:.05em}
+.section-title{
+  font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;color:#5F6368;margin:20px 0 10px;
 }
-.big-stat-n{font-size:30px;font-weight:700;line-height:1}
-.big-stat-l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
-
-/* Topics section */
-.section-title{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;
-  letter-spacing:.06em;margin:20px 0 10px}
-
-/* Topic bars */
-.topic-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.topic-name{font-size:13px;min-width:120px;flex-shrink:0}
-.topic-bar-wrap{flex:1;background:var(--bg);border-radius:4px;height:8px;overflow:hidden}
-.topic-bar{height:100%;border-radius:4px;transition:width 1s .3s ease}
-.topic-count{font-size:12px;color:var(--muted);min-width:40px;text-align:right}
-
-/* Year timeline */
-.year-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px}
+.topic-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13px}
+.topic-name{width:155px;flex-shrink:0;color:#202124;font-weight:500}
+.topic-bar-wrap{flex:1;height:5px;background:#E8EAED;border-radius:3px;overflow:hidden}
+.topic-bar{height:100%;border-radius:3px;width:0;transition:width .9s cubic-bezier(.22,1,.36,1)}
+.topic-count{width:48px;text-align:right;color:#5F6368;font-size:12px}
+.year-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:22px}
 .year-card{
-  background:var(--bg);border-radius:10px;padding:10px;text-align:center;cursor:pointer;
-  transition:.2s;border:1.5px solid transparent;
+  background:#F8F9FA;border-radius:10px;padding:10px 6px;
+  text-align:center;cursor:pointer;transition:.15s;border:1.5px solid #E8EAED;
 }
-.year-card:hover{border-color:var(--blue);background:#EAF0FB}
-.year-card.active{border-color:var(--blue);background:#EAF0FB}
-.year-n{font-size:18px;font-weight:700}
-.year-l{font-size:10px;color:var(--muted)}
-.year-bar-mini{height:3px;border-radius:2px;margin-top:6px;background:var(--bg2)}
-.year-bar-mini-fill{height:100%;border-radius:2px;transition:width .6s ease}
-
-/* Link cards */
-.links-grid{display:flex;flex-direction:column;gap:6px}
+.year-card:hover{border-color:#4285F4;background:#E8F0FE}
+.year-n{font-size:15px;font-weight:700;margin-bottom:2px}
+.year-l{font-size:10px;color:#5F6368;margin-bottom:6px}
+.year-bar-mini{height:3px;background:#E8EAED;border-radius:2px;overflow:hidden}
+.year-bar-mini-fill{height:100%;width:0;border-radius:2px;transition:width .9s cubic-bezier(.22,1,.36,1)}
+.links-grid{display:flex;flex-direction:column;gap:8px}
 .link-card{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 12px;background:var(--bg);border-radius:10px;
-  text-decoration:none;color:var(--text);transition:.15s;
-  font-size:13px;
+  display:flex;align-items:center;gap:12px;padding:11px 14px;
+  border-radius:10px;border:1.5px solid #E8EAED;
+  text-decoration:none;color:#202124;transition:.15s;background:#fff;
 }
-.link-card:hover{background:#EAF0FB;color:var(--blue)}
-.link-card-icon{width:18px;height:18px;flex-shrink:0}
-.link-card-text{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.link-card-arrow{font-size:10px;color:var(--muted);flex-shrink:0}
+.link-card:hover{border-color:#4285F4;box-shadow:0 2px 10px rgba(66,133,244,.15)}
+.link-card-icon{width:24px;height:24px;object-fit:contain;flex-shrink:0}
+.link-card-text{flex:1;font-size:13px;font-weight:500}
+.link-card-arrow{color:#5F6368;font-size:15px}
 
-/* All-categories section */
-#all-section{padding:60px 40px;max-width:1100px;margin:0 auto}
-.cat-heading{font-size:24px;font-weight:700;margin-bottom:6px}
-.cat-sub{font-size:14px;color:var(--muted);margin-bottom:32px}
-.all-cats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.cat-card{
-  background:var(--bg2);border:1px solid var(--border);border-radius:16px;
-  padding:20px;cursor:pointer;transition:.2s;
-}
-.cat-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}
-.cat-card-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-.cat-card-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
-.cat-card-name{font-size:16px;font-weight:600}
-.cat-card-count{font-size:12px;color:var(--muted);margin-left:auto}
-.mini-logos{display:flex;gap:6px;flex-wrap:wrap}
-.mini-logo{
-  width:32px;height:32px;border-radius:8px;padding:4px;
-  background:var(--bg);border:1px solid var(--border);
-  object-fit:contain;
-}
-
-/* Footer */
-footer{text-align:center;padding:40px;font-size:12px;color:var(--muted);border-top:1px solid var(--border)}
-
-/* Scroll reveal */
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
-.revealed{opacity:1;transform:none}
-
-/* Tooltip */
+/* ── TOOLTIP ───────────────────────────────────── */
 .tooltip{
-  position:fixed;background:var(--text);color:#fff;
-  font-size:12px;padding:6px 10px;border-radius:8px;
-  pointer-events:none;z-index:900;opacity:0;transition:.15s;white-space:nowrap;
-  transform:translate(-50%,-100%) translateY(-8px);
+  position:fixed;
+  background:rgba(30,40,50,.88);color:#fff;
+  font-size:12px;font-weight:500;padding:6px 12px;border-radius:8px;
+  pointer-events:none;z-index:900;
+  opacity:0;transition:opacity .15s;
+  transform:translateX(-50%);
+  white-space:nowrap;
+  backdrop-filter:blur(8px);
 }
 .tooltip.show{opacity:1}
 </style>
 </head>
 <body>
 
+<!-- BACKGROUND GRID -->
+<div id="bg-grid"></div>
+
+<!-- ATOM SCENE -->
+<div id="atom-scene">
+  <div id="atom-wrap">
+
+    <!-- SVG: orbit rings -->
+    <svg id="orbit-svg" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="glow-white" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="3" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow-trail" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <!-- Nucleus clip: hide ring line inside nucleus area -->
+        <mask id="nucleus-mask">
+          <rect width="800" height="800" fill="white"/>
+          <circle cx="400" cy="400" r="73" fill="black"/>
+        </mask>
+      </defs>
+
+      <!-- Outer decorative rings -->
+      <circle cx="400" cy="400" r="355" class="orbit-outer"/>
+      <circle cx="400" cy="400" r="375" class="orbit-outer" opacity="0.06"/>
+
+      <!-- Orbit rings (masked so they don't show inside nucleus) -->
+      <g id="orbit-rings" mask="url(#nucleus-mask)" filter="url(#glow-white)"></g>
+
+      <!-- Trail arcs (in front of rings, behind icons) -->
+      <g id="orbit-trails" filter="url(#glow-trail)"></g>
+    </svg>
+
+    <!-- Icon nodes -->
+    <div id="icon-container"></div>
+
+    <!-- Nucleus -->
+    <div id="nucleus">
+      <img src="https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_128dp.png" alt="Google G">
+    </div>
+
+  </div>
+</div>
+
 <!-- NAV -->
 <nav>
-  <div class="nav-brand">
-    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#4285F4"/><path d="M12 6v6l4 2" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
-    Zain Khan · Google Universe
-  </div>
-  <div class="nav-tabs">
-    <button class="nav-tab active" onclick="showSection('hero')">Overview</button>
-    <button class="nav-tab" onclick="showSection('all')">All Categories</button>
-  </div>
-  <div class="nav-stat">
-    <strong>10,735</strong> links &nbsp;·&nbsp; <strong>160</strong> hosts &nbsp;·&nbsp; <strong>6</strong> categories
+  <div class="nav-brand">Zain Khan &middot; Google Universe</div>
+  <div class="nav-hint">Click any icon to explore</div>
+  <div class="nav-stats">
+    <span><strong>10,735</strong> links</span>
+    <span><strong>160</strong> hosts</span>
+    <span><strong>6</strong> categories</span>
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero" id="hero-section">
-  <div class="hero-label">Google Web Experience Museum</div>
-  <h1 class="hero-title">My Google Universe</h1>
-  <p class="hero-sub">Click any logo to explore how I use it — topics, links, and year-by-year growth</p>
-
-  <div class="diagram-wrap">
-    <svg id="eco-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
-          <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,.15)"/>
-        </filter>
-        <filter id="shadow-lg" x="-40%" y="-40%" width="180%" height="180%">
-          <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="rgba(0,0,0,.2)"/>
-        </filter>
-        <clipPath id="clip-center"><circle cx="300" cy="300" r="96"/></clipPath>
-      </defs>
-
-      <!-- Outer decorative ring -->
-      <circle cx="300" cy="300" r="282" fill="none" stroke="#E8EAED" stroke-width="1"/>
-      <circle cx="300" cy="300" r="268" fill="none" stroke="#F1F3F4" stroke-width="1"/>
-
-      <!-- Category sector arcs (drawn via JS) -->
-      <g id="sector-arcs"></g>
-
-      <!-- Middle ring (category label arc) -->
-      <circle cx="300" cy="300" r="168" fill="none" stroke="#E8EAED" stroke-width="1"/>
-      <circle cx="300" cy="300" r="148" fill="none" stroke="#F1F3F4" stroke-width="1.5"/>
-
-      <!-- Category labels (drawn via JS) -->
-      <g id="cat-labels"></g>
-
-      <!-- Sector divider lines (drawn via JS) -->
-      <g id="sector-lines"></g>
-
-      <!-- Logo nodes (drawn via JS) -->
-      <g id="logo-nodes"></g>
-
-      <!-- Inner circle background -->
-      <circle cx="300" cy="300" r="108" fill="white" filter="url(#shadow)"/>
-      <circle cx="300" cy="300" r="96" fill="white"/>
-
-      <!-- Center gradient ring -->
-      <circle cx="300" cy="300" r="96" fill="none" stroke="url(#centerGrad)" stroke-width="2"/>
-      <defs>
-        <linearGradient id="centerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#4285F4"/>
-          <stop offset="33%" stop-color="#34A853"/>
-          <stop offset="66%" stop-color="#FBBC04"/>
-          <stop offset="100%" stop-color="#EA4335"/>
-        </linearGradient>
-      </defs>
-
-      <!-- Center icon -->
-      <text x="300" y="282" text-anchor="middle" font-size="28" font-family="Google Sans,sans-serif" font-weight="700" fill="#202124">My</text>
-      <text x="300" y="308" text-anchor="middle" font-size="14" font-family="Google Sans,sans-serif" font-weight="500" fill="#4285F4">Google</text>
-      <text x="300" y="326" text-anchor="middle" font-size="14" font-family="Google Sans,sans-serif" font-weight="500" fill="#34A853">Universe</text>
-
-      <!-- Center stats -->
-      <text x="300" y="350" text-anchor="middle" font-size="10" font-family="Google Sans,sans-serif" fill="#9AA0A6" letter-spacing="0.5">160 PRODUCTS</text>
-    </svg>
-  </div>
-
-  <div class="stats-bar reveal">
-    <div class="stat-item"><div class="stat-n">10,735</div><div class="stat-l">Total Links</div></div>
-    <div class="stat-item"><div class="stat-n">36,441</div><div class="stat-l">Segments</div></div>
-    <div class="stat-item"><div class="stat-n">160</div><div class="stat-l">Hosts</div></div>
-    <div class="stat-item"><div class="stat-n">6</div><div class="stat-l">Categories</div></div>
-  </div>
-</section>
-
-<!-- ALL CATEGORIES SECTION -->
-<section id="all-section" style="display:none;padding-top:100px">
-  <h2 class="cat-heading">All Categories</h2>
-  <p class="cat-sub">Every Google product organized by how I use it</p>
-  <div class="all-cats-grid" id="all-cats-grid"></div>
-</section>
-
-<!-- PANEL OVERLAY -->
+<!-- PANEL -->
 <div class="panel-overlay" id="overlay" onclick="closePanel()"></div>
-
-<!-- DETAIL PANEL -->
 <div class="detail-panel" id="detail-panel">
   <div class="panel-header">
     <img class="panel-logo" id="panel-logo" src="" alt="">
@@ -314,7 +290,7 @@ footer{text-align:center;padding:40px;font-size:12px;color:var(--muted);border-t
       <div class="panel-title" id="panel-title"></div>
       <div class="panel-domain" id="panel-domain"></div>
     </div>
-    <button class="panel-close" onclick="closePanel()">✕</button>
+    <button class="panel-close" onclick="closePanel()">&#10005;</button>
   </div>
   <div class="panel-body" id="panel-body"></div>
 </div>
@@ -322,18 +298,13 @@ footer{text-align:center;padding:40px;font-size:12px;color:var(--muted);border-t
 <!-- TOOLTIP -->
 <div class="tooltip" id="tooltip"></div>
 
-<footer>
-  © Zain Khan · Google Web Experience Museum · Built with Claude
-</footer>
-
 <script>
-/* ══════════════════════════════════════════════════════
+/* ════════════════════════════════════════════
    DATA
-══════════════════════════════════════════════════════ */
+════════════════════════════════════════════ */
 const CATEGORIES = [
   {
     id:'productivity', label:'Productivity', color:'#4285F4', textColor:'#1A73E8',
-    startAngle:-90, span:70,
     products:[
       {name:'Gmail',domain:'gmail.com',links:1965,host:'mail.google.com',
        topics:['Email Management','Newsletters','Work Correspondence','Receipts & Orders'],
@@ -363,10 +334,9 @@ const CATEGORIES = [
   },
   {
     id:'search', label:'Browser & Research', color:'#EA4335', textColor:'#D93025',
-    startAngle:-20, span:65,
     products:[
       {name:'Google Search',domain:'google.com',links:2400,host:'www.google.com',
-       topics:['Technical Research','AI/ML Topics','Business Leads','Health & Wellness','Places & Maps'],
+       topics:['Technical Research','AI/ML Topics','Business Leads','Health & Wellness'],
        years:{2020:310,2021:440,2022:560,2023:620,2024:470},
        icon:'https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_48dp.png'},
       {name:'Google Maps',domain:'maps.google.com',links:420,host:'maps.google.com',
@@ -385,13 +355,12 @@ const CATEGORIES = [
   },
   {
     id:'ai', label:'AI & Machine Learning', color:'#9C27B0', textColor:'#7B1FA2',
-    startAngle:45, span:75,
     products:[
       {name:'Google Colab',domain:'colab.research.google.com',links:380,host:'colab.research.google.com',
        topics:['Python Notebooks','ML Model Training','Data Analysis','Computer Vision'],
        years:{2020:25,2021:55,2022:100,2023:120,2024:80},
        icon:'https://www.google.com/s2/favicons?domain=colab.research.google.com&sz=64'},
-      {name:'Google AI Studio',domain:'aistudio.google.com',links:310,host:'aistudio.google.com',
+      {name:'AI Studio',domain:'aistudio.google.com',links:310,host:'aistudio.google.com',
        topics:['Gemini API Testing','Prompt Engineering','Model Comparison','Multi-modal'],
        years:{2020:0,2021:0,2022:10,2023:130,2024:170},
        icon:'https://www.google.com/s2/favicons?domain=aistudio.google.com&sz=64'},
@@ -410,11 +379,10 @@ const CATEGORIES = [
     ]
   },
   {
-    id:'dev', label:'Cloud & Developers', color:'#FBBC04', textColor:'#F29900',
-    startAngle:120, span:70,
+    id:'dev', label:'Cloud & Developers', color:'#FBBC04', textColor:'#E37400',
     products:[
       {name:'Firebase',domain:'firebase.google.com',links:344,host:'firebase.google.com',
-       topics:['App Hosting','Auth & Users','Firestore DB','Cloud Functions','Analytics'],
+       topics:['App Hosting','Auth & Users','Firestore DB','Cloud Functions'],
        years:{2020:28,2021:60,2022:90,2023:98,2024:68},
        icon:'https://www.gstatic.com/images/branding/product/2x/firebase_48dp.png'},
       {name:'Google Cloud',domain:'cloud.google.com',links:298,host:'cloud.google.com',
@@ -433,10 +401,9 @@ const CATEGORIES = [
   },
   {
     id:'media', label:'Media & Creativity', color:'#EA4335', textColor:'#D93025',
-    startAngle:190, span:65,
     products:[
       {name:'YouTube',domain:'youtube.com',links:880,host:'youtube.com',
-       topics:['Tech Tutorials','AI Research Talks','Productivity','Entertainment','Music'],
+       topics:['Tech Tutorials','AI Research Talks','Productivity','Entertainment'],
        years:{2020:100,2021:160,2022:200,2023:240,2024:180},
        icon:'https://www.gstatic.com/images/branding/product/2x/youtube_48dp.png'},
       {name:'Google Photos',domain:'photos.google.com',links:210,host:'photos.google.com',
@@ -451,7 +418,6 @@ const CATEGORIES = [
   },
   {
     id:'other', label:'Tools & Analytics', color:'#34A853', textColor:'#188038',
-    startAngle:255, span:65,
     products:[
       {name:'Google Analytics',domain:'analytics.google.com',links:62,host:'analytics.google.com',
        topics:['Site Traffic','Conversion Tracking','User Behavior','Reports'],
@@ -465,7 +431,7 @@ const CATEGORIES = [
        topics:['Storage Management','VPN','Benefits','Family Sharing'],
        years:{2020:8,2021:15,2022:25,2023:28,2024:20},
        icon:'https://www.google.com/s2/favicons?domain=one.google.com&sz=64'},
-      {name:'Search Console',domain:'search.google.com',links:48,host:'search.google.com/search-console',
+      {name:'Search Console',domain:'search.google.com',links:48,host:'search.google.com',
        topics:['SEO Performance','Crawl Errors','Page Experience','Sitemaps'],
        years:{2020:4,2021:8,2022:12,2023:14,2024:10},
        icon:'https://www.google.com/s2/favicons?domain=search.google.com&sz=64'},
@@ -473,168 +439,304 @@ const CATEGORIES = [
   }
 ];
 
-/* ══════════════════════════════════════════════════════
-   SVG DIAGRAM
-══════════════════════════════════════════════════════ */
-const CX=300,CY=300,R_OUTER=260,R_LOGO=220,R_CAT=172,R_INNER=130;
-
-function toRad(deg){return deg*Math.PI/180}
-function polarToXY(angleDeg, r){
-  const a=toRad(angleDeg);
-  return{x:CX+r*Math.cos(a), y:CY+r*Math.sin(a)};
+/* ════════════════════════════════════════════
+   HELPERS
+════════════════════════════════════════════ */
+function findProduct(name){
+  for(const c of CATEGORIES){
+    const p = c.products.find(p=>p.name===name);
+    if(p) return p;
+  }
+  return null;
+}
+function findCategoryForProduct(prod){
+  return CATEGORIES.find(c=>c.products.includes(prod));
 }
 
-function arcPath(cx,cy,r,startDeg,endDeg,sweep=1){
-  const s=polarToXY(startDeg,r);
-  const e=polarToXY(endDeg,r);
-  const large=Math.abs(endDeg-startDeg)>180?1:0;
-  return `M${s.x},${s.y} A${r},${r},0,${large},${sweep},${e.x},${e.y}`;
+/* ════════════════════════════════════════════
+   ORBIT CONFIG
+   Each orbit: rx=semi-major, ry=semi-minor (b = a*sin(tilt))
+   angle = rotation of the ellipse major axis (degrees)
+   The 3 orbits at 0°, 60°, -60° give the atom model look
+════════════════════════════════════════════ */
+const CX = 400, CY = 400;
+
+const ORBIT_DEFS = [
+  { rx:285, ry:74, angle:0,    speed:0.42, color:'rgba(255,255,255,0.8)' },
+  { rx:285, ry:74, angle:60,   speed:0.32, color:'rgba(255,255,255,0.8)' },
+  { rx:285, ry:74, angle:-60,  speed:0.24, color:'rgba(255,255,255,0.8)' },
+];
+
+/* Products assigned to orbits: 4 per orbit, evenly spaced */
+const ORBIT_PRODUCTS = [
+  ['Gmail','YouTube','Google Search','Google Drive'],
+  ['Google Calendar','Gemini','Firebase','Google Translate'],
+  ['Google Docs','Google Maps','AI Studio','YouTube Music'],
+];
+
+/* ════════════════════════════════════════════
+   ICON NODES STATE
+════════════════════════════════════════════ */
+const nodes = [];  // { el, orbit, theta, speed, prod, cat, trailEl }
+let activeNode = null;
+let rafId = null;
+let lastT = 0;
+
+/* ════════════════════════════════════════════
+   POSITION MATH
+   Projects 3D circular orbit (tilted at angle from horizontal)
+   into 2D screen coordinates.
+
+   For orbit with:
+     a = semi-major (screen rx)
+     b = semi-minor = a * sin(tilt)
+   where tilt ≈ arcsin(ry/rx)
+
+   Position on orbit at angle θ, rotated by α:
+     lx = a * cos(θ)
+     ly = b * sin(θ)
+     x = cx + lx*cos(α) - ly*sin(α)
+     y = cy + lx*sin(α) + ly*cos(α)
+
+   Depth (z): positive = in front of nucleus
+     depth = sqrt(a²-b²) * sin(θ+α_component)
+     simplified: depth = sqrt(a²-b²) * sin(θ) * cos(α) + ...
+     We use: depth = a * sin(θ) * cos(α) + b * cos(θ) * sin(α) [approx]
+════════════════════════════════════════════ */
+function getPos(orbitIdx, theta){
+  const {rx, ry, angle} = ORBIT_DEFS[orbitIdx];
+  const α = angle * Math.PI / 180;
+  const lx = rx * Math.cos(theta);
+  const ly = ry * Math.sin(theta);
+  const x = CX + lx * Math.cos(α) - ly * Math.sin(α);
+  const y = CY + lx * Math.sin(α) + ly * Math.cos(α);
+  // Depth: sqrt(rx²-ry²) gives the 3D radius component in Z
+  // When sin(θ) is positive and we're on the "near" side
+  const dz = Math.sqrt(rx*rx - ry*ry);
+  const depth = dz * Math.sin(theta);
+  return {x, y, depth};
 }
 
-function buildDiagram(){
-  const arcs=document.getElementById('sector-arcs');
-  const labels=document.getElementById('cat-labels');
-  const lines=document.getElementById('sector-lines');
-  const nodes=document.getElementById('logo-nodes');
+/* ════════════════════════════════════════════
+   BACKGROUND GRID BUILD
+════════════════════════════════════════════ */
+const BG_ICONS = [
+  'https://www.gstatic.com/images/branding/product/2x/gmail_48dp.png',
+  'https://www.gstatic.com/images/branding/product/2x/drive_48dp.png',
+  'https://www.gstatic.com/images/branding/product/2x/docs_48dp.png',
+  'https://www.gstatic.com/images/branding/product/2x/sheets_48dp.png',
+  'https://www.gstatic.com/images/branding/product/2x/calendar_48dp.png',
+  'https://www.gstatic.com/images/branding/product/2x/youtube_48dp.png',
+  'https://www.gstatic.com/images/branding/product/2x/maps_48dp.png',
+  'https://www.gstatic.com/images/branding/product/2x/translate_48dp.png',
+  'https://www.gstatic.com/images/branding/product/2x/photos_48dp.png',
+  'https://www.gstatic.com/images/branding/product/2x/firebase_48dp.png',
+  'https://www.gstatic.com/images/branding/product/2x/google_cloud_48dp.png',
+  'https://www.gstatic.com/images/branding/product/2x/hangouts_meet_48dp.png',
+  'https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_48dp.png',
+  'https://www.gstatic.com/images/branding/product/2x/chrome_48dp.png',
+  'https://www.gstatic.com/images/branding/product/2x/play_prism_48dp.png',
+  'https://www.gstatic.com/images/branding/product/2x/slides_48dp.png',
+  'https://www.gstatic.com/images/branding/product/2x/forms_48dp.png',
+  'https://www.gstatic.com/images/branding/product/2x/earth_48dp.png',
+];
 
-  CATEGORIES.forEach((cat,ci)=>{
-    const start=cat.startAngle;
-    const end=start+cat.span;
-    const mid=(start+end)/2;
+function buildBgGrid(){
+  const grid = document.getElementById('bg-grid');
+  const count = 260;
+  for(let i=0;i<count;i++){
+    const img = document.createElement('img');
+    img.src = BG_ICONS[i % BG_ICONS.length];
+    img.alt = '';
+    img.loading = 'lazy';
+    grid.appendChild(img);
+  }
+}
 
-    // Sector background arc
-    const p0=polarToXY(start,R_OUTER);
-    const p1=polarToXY(end,R_OUTER);
-    const p2=polarToXY(end,R_CAT);
-    const p3=polarToXY(start,R_CAT);
-    const large=cat.span>180?1:0;
+/* ════════════════════════════════════════════
+   BUILD ORBIT RINGS (SVG)
+════════════════════════════════════════════ */
+function buildOrbitRings(){
+  const ringsEl = document.getElementById('orbit-rings');
+  ORBIT_DEFS.forEach(({rx, ry, angle}) => {
+    const el = document.createElementNS('http://www.w3.org/2000/svg','ellipse');
+    el.setAttribute('cx', CX);
+    el.setAttribute('cy', CY);
+    el.setAttribute('rx', rx);
+    el.setAttribute('ry', ry);
+    el.setAttribute('transform', `rotate(${angle},${CX},${CY})`);
+    el.classList.add('orbit-ring');
+    ringsEl.appendChild(el);
+  });
+}
 
-    const pathEl=document.createElementNS('http://www.w3.org/2000/svg','path');
-    pathEl.setAttribute('d',
-      `M${p0.x},${p0.y} A${R_OUTER},${R_OUTER},0,${large},1,${p1.x},${p1.y} ` +
-      `L${p2.x},${p2.y} A${R_CAT},${R_CAT},0,${large},0,${p3.x},${p3.y} Z`
-    );
-    pathEl.setAttribute('fill',cat.color+'12');
-    pathEl.setAttribute('stroke',cat.color+'30');
-    pathEl.setAttribute('stroke-width','0.5');
-    arcs.appendChild(pathEl);
+/* ════════════════════════════════════════════
+   BUILD ICON NODES
+════════════════════════════════════════════ */
+function buildIconNodes(){
+  const container = document.getElementById('icon-container');
+  const trailsEl = document.getElementById('orbit-trails');
 
-    // Sector divider lines
-    [start,end].forEach(angle=>{
-      const inner=polarToXY(angle,R_INNER);
-      const outer=polarToXY(angle,R_OUTER);
-      const l=document.createElementNS('http://www.w3.org/2000/svg','line');
-      l.setAttribute('x1',inner.x);l.setAttribute('y1',inner.y);
-      l.setAttribute('x2',outer.x);l.setAttribute('y2',outer.y);
-      l.setAttribute('stroke',cat.color+'40');l.setAttribute('stroke-width','1');
-      lines.appendChild(l);
-    });
+  ORBIT_PRODUCTS.forEach((prods, orbitIdx) => {
+    prods.forEach((name, i) => {
+      const prod = findProduct(name);
+      if(!prod) return;
+      const cat = findCategoryForProduct(prod);
 
-    // Category label
-    const lPos=polarToXY(mid,R_CAT-22);
-    const labelId=`catLabel${ci}`;
-    const textPath=document.createElementNS('http://www.w3.org/2000/svg','path');
-    textPath.setAttribute('id',labelId);
-    // Flip label if on bottom half
-    const flip=mid>90&&mid<270;
-    if(flip){
-      textPath.setAttribute('d',arcPath(CX,CY,R_CAT-16,end,start,0));
-    } else {
-      textPath.setAttribute('d',arcPath(CX,CY,R_CAT-16,start,end,1));
-    }
-    textPath.setAttribute('fill','none');
-    labels.appendChild(textPath);
+      // Initial angle: evenly spaced + small random offset
+      const theta = (2 * Math.PI / prods.length) * i + (orbitIdx * 0.8);
 
-    const textEl=document.createElementNS('http://www.w3.org/2000/svg','text');
-    textEl.setAttribute('font-size','9.5');
-    textEl.setAttribute('font-family','Google Sans,sans-serif');
-    textEl.setAttribute('font-weight','600');
-    textEl.setAttribute('fill',cat.textColor);
-    textEl.setAttribute('letter-spacing','0.5');
-    const tPath=document.createElementNS('http://www.w3.org/2000/svg','textPath');
-    tPath.setAttribute('href',`#${labelId}`);
-    tPath.setAttribute('startOffset','50%');
-    tPath.setAttribute('text-anchor','middle');
-    tPath.textContent=cat.label.toUpperCase();
-    textEl.appendChild(tPath);
-    labels.appendChild(textEl);
+      // DOM node
+      const node = document.createElement('div');
+      node.className = 'orbit-node';
+      node.style.setProperty('--nc', cat.color);
+      node.innerHTML = `
+        <img src="${prod.icon}" alt="${prod.name}">
+        <div class="node-label">${prod.name}</div>
+      `;
+      node.addEventListener('click', () => handleNodeClick(nodeObj));
+      container.appendChild(node);
 
-    // Product logos
-    const count=cat.products.length;
-    cat.products.forEach((prod,pi)=>{
-      const fraction=(pi+0.5)/count;
-      const angle=start+(fraction*cat.span);
-      const pos=polarToXY(angle,R_LOGO);
+      // SVG trail (arc that follows the icon)
+      const trail = document.createElementNS('http://www.w3.org/2000/svg','path');
+      trail.classList.add('orbit-trail');
+      trail.style.stroke = cat.color;
+      trail.style.strokeWidth = '4';
+      trail.style.opacity = '0';
+      trailsEl.appendChild(trail);
 
-      const g=document.createElementNS('http://www.w3.org/2000/svg','g');
-      g.setAttribute('class','logo-node');
-      g.setAttribute('data-cat',cat.id);
-      g.setAttribute('data-prod',JSON.stringify({...prod,catColor:cat.color,catLabel:cat.label}).replace(/"/g,"'"));
-      g.setAttribute('transform',`translate(${pos.x},${pos.y})`);
-
-      // White circle background
-      const bg=document.createElementNS('http://www.w3.org/2000/svg','circle');
-      bg.setAttribute('cx',0);bg.setAttribute('cy',0);bg.setAttribute('r',22);
-      bg.setAttribute('fill','white');bg.setAttribute('filter','url(#shadow)');
-      bg.setAttribute('class','node-ring');
-      bg.setAttribute('stroke',cat.color);bg.setAttribute('stroke-width','0');
-
-      // Logo image
-      const img=document.createElementNS('http://www.w3.org/2000/svg','image');
-      img.setAttribute('x',-14);img.setAttribute('y',-14);
-      img.setAttribute('width',28);img.setAttribute('height',28);
-      img.setAttribute('href',prod.icon);
-      img.setAttribute('preserveAspectRatio','xMidYMid meet');
-      img.setAttribute('clip-path','circle(12px at 14px 14px)');
-
-      g.appendChild(bg);
-      g.appendChild(img);
-
-      // Events
-      g.addEventListener('mouseenter',(e)=>showTooltip(e,prod.name));
-      g.addEventListener('mouseleave',hideTooltip);
-      g.addEventListener('click',()=>openPanel(prod,cat));
-
-      nodes.appendChild(g);
+      const nodeObj = {
+        el: node,
+        trail,
+        orbit: orbitIdx,
+        theta,
+        speed: ORBIT_DEFS[orbitIdx].speed * (0.85 + Math.random()*0.3),
+        prod,
+        cat,
+        paused: false,
+        trailHistory: [],
+      };
+      nodes.push(nodeObj);
     });
   });
 }
 
-/* ══════════════════════════════════════════════════════
-   TOOLTIP
-══════════════════════════════════════════════════════ */
-const tip=document.getElementById('tooltip');
-function showTooltip(e,text){
-  tip.textContent=text;
-  tip.style.left=e.clientX+'px';
-  tip.style.top=e.clientY+'px';
-  tip.classList.add('show');
+/* ════════════════════════════════════════════
+   TRAIL ARC
+════════════════════════════════════════════ */
+function updateTrail(node){
+  const hist = node.trailHistory;
+  if(hist.length < 2) return;
+
+  // Draw a polyline through recent positions
+  const pts = hist.slice(-18);
+  let d = `M${pts[0].x},${pts[0].y}`;
+  for(let i=1;i<pts.length;i++) d += ` L${pts[i].x},${pts[i].y}`;
+
+  node.trail.setAttribute('d', d);
+  node.trail.style.opacity = node.paused ? '0' : '0.6';
+  node.trail.style.strokeWidth = '4';
 }
-function hideTooltip(){tip.classList.remove('show')}
-document.addEventListener('mousemove',e=>{
-  tip.style.left=e.clientX+'px';
-  tip.style.top=(e.clientY-4)+'px';
-});
 
-/* ══════════════════════════════════════════════════════
-   DETAIL PANEL
-══════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════
+   ANIMATION LOOP
+════════════════════════════════════════════ */
+function animate(ts){
+  const dt = lastT ? Math.min((ts - lastT) / 1000, 0.05) : 0;
+  lastT = ts;
+
+  // Advance non-paused nodes
+  nodes.forEach(node => {
+    if(!node.paused){
+      node.theta += node.speed * dt;
+
+      const pos = getPos(node.orbit, node.theta);
+      node.trailHistory.push({x: pos.x, y: pos.y});
+      if(node.trailHistory.length > 28) node.trailHistory.shift();
+    }
+  });
+
+  // Sort all nodes by depth (back to front for correct rendering order)
+  const sorted = [...nodes].sort((a,b) => {
+    const da = getPos(a.orbit, a.theta).depth;
+    const db = getPos(b.orbit, b.theta).depth;
+    return da - db;
+  });
+
+  // Update DOM positions
+  sorted.forEach((node, renderIdx) => {
+    const pos = getPos(node.orbit, node.theta);
+    node.el.style.left = pos.x + 'px';
+    node.el.style.top  = pos.y + 'px';
+
+    // Z-index: nodes behind nucleus (depth<0) get zIndex 5, in front get 20
+    const zBase = pos.depth > 0 ? 20 : 5;
+    node.el.style.zIndex = node.paused ? 25 : zBase;
+
+    // Slight scale by depth for parallax feel
+    if(!node.paused){
+      const s = 1 + (pos.depth / 350) * 0.12;
+      node.el.style.transform = `translate(-50%,-50%) scale(${s.toFixed(3)})`;
+    }
+
+    // Update trail
+    updateTrail(node);
+  });
+
+  rafId = requestAnimationFrame(animate);
+}
+
+/* ════════════════════════════════════════════
+   INTERACTION
+════════════════════════════════════════════ */
+function handleNodeClick(node){
+  if(activeNode && activeNode !== node){
+    // Deactivate previous
+    activeNode.paused = false;
+    activeNode.el.classList.remove('active');
+    activeNode.trailHistory = [];
+  }
+
+  if(activeNode === node){
+    // Clicking active node → close panel
+    closePanel();
+    return;
+  }
+
+  // Activate node
+  node.paused = true;
+  node.el.classList.add('active');
+  activeNode = node;
+
+  openPanel(node.prod, node.cat);
+}
+
+function closePanel(){
+  document.getElementById('detail-panel').classList.remove('show');
+  document.getElementById('overlay').classList.remove('show');
+
+  if(activeNode){
+    activeNode.paused = false;
+    activeNode.el.classList.remove('active');
+    activeNode.trailHistory = [];
+    activeNode = null;
+  }
+}
+
+/* ════════════════════════════════════════════
+   PANEL
+════════════════════════════════════════════ */
 function openPanel(prod, cat){
-  const panel=document.getElementById('detail-panel');
-  const overlay=document.getElementById('overlay');
+  document.getElementById('panel-logo').src = prod.icon;
+  document.getElementById('panel-logo').style.background = cat.color + '18';
+  document.getElementById('panel-title').textContent = prod.name;
+  document.getElementById('panel-domain').textContent = prod.host;
 
-  document.getElementById('panel-logo').src=prod.icon;
-  document.getElementById('panel-logo').style.background=cat.color+'15';
-  document.getElementById('panel-title').textContent=prod.name;
-  document.getElementById('panel-domain').textContent=prod.host;
+  const totalLinks = prod.links;
+  const topYear = Object.entries(prod.years).sort((a,b)=>b[1]-a[1])[0];
+  const maxYearVal = Math.max(...Object.values(prod.years));
 
-  const body=document.getElementById('panel-body');
-  const totalLinks=prod.links;
-  const allLinks=Object.values(prod.years).reduce((a,b)=>a+b,0);
-  const topYear=Object.entries(prod.years).sort((a,b)=>b[1]-a[1])[0];
-  const maxYearVal=Math.max(...Object.values(prod.years));
-
-  body.innerHTML=`
+  document.getElementById('panel-body').innerHTML = `
     <span class="category-chip" style="background:${cat.color}18;color:${cat.textColor}">
       <span style="width:8px;height:8px;border-radius:50%;background:${cat.color};display:inline-block"></span>
       ${cat.label}
@@ -647,20 +749,21 @@ function openPanel(prod, cat){
       </div>
       <div class="big-stat">
         <div class="big-stat-n" style="color:${cat.color}">${topYear[0]}</div>
-        <div class="big-stat-l">Peak Year · ${topYear[1]} links</div>
+        <div class="big-stat-l">Peak Year &middot; ${topYear[1]} links</div>
       </div>
     </div>
 
     <div class="section-title">Top Topics</div>
-    <div style="margin-bottom:16px">
+    <div style="margin-bottom:4px">
       ${prod.topics.map((t,i)=>{
-        const pct=Math.round(100-i*18);
+        const pct = Math.round(100 - i*18);
+        const cnt = Math.round(totalLinks*(pct/100*0.35));
         return `<div class="topic-row">
           <div class="topic-name">${t}</div>
           <div class="topic-bar-wrap">
-            <div class="topic-bar" style="width:${pct}%;background:${cat.color}" data-w="${pct}"></div>
+            <div class="topic-bar" style="background:${cat.color}" data-w="${pct}"></div>
           </div>
-          <div class="topic-count">${Math.round(totalLinks*(pct/100*0.35)).toLocaleString()}</div>
+          <div class="topic-count">${cnt.toLocaleString()}</div>
         </div>`;
       }).join('')}
     </div>
@@ -668,112 +771,82 @@ function openPanel(prod, cat){
     <div class="section-title">Activity by Year</div>
     <div class="year-grid">
       ${Object.entries(prod.years).map(([yr,cnt])=>`
-        <div class="year-card" onclick="filterYear('${yr}')">
+        <div class="year-card">
           <div class="year-n" style="color:${cat.color}">${cnt}</div>
           <div class="year-l">${yr}</div>
           <div class="year-bar-mini">
-            <div class="year-bar-mini-fill" style="width:${Math.round(cnt/maxYearVal*100)}%;background:${cat.color}" data-w="${Math.round(cnt/maxYearVal*100)}"></div>
+            <div class="year-bar-mini-fill" style="background:${cat.color}" data-w="${Math.round(cnt/maxYearVal*100)}"></div>
           </div>
-        </div>
-      `).join('')}
+        </div>`).join('')}
     </div>
 
     <div class="section-title">Explore Links</div>
     <div class="links-grid">
-      ${generateLinks(prod).map(link=>`
-        <a class="link-card" href="${link.url}" target="_blank" rel="noopener">
+      ${generateLinks(prod).map(l=>`
+        <a class="link-card" href="${l.url}" target="_blank" rel="noopener">
           <img class="link-card-icon" src="${prod.icon}" alt="">
-          <span class="link-card-text">${link.label}</span>
-          <span class="link-card-arrow">↗</span>
-        </a>
-      `).join('')}
+          <span class="link-card-text">${l.label}</span>
+          <span class="link-card-arrow">&#8599;</span>
+        </a>`).join('')}
     </div>
   `;
 
-  overlay.classList.add('show');
-  panel.classList.add('show');
+  document.getElementById('detail-panel').classList.add('show');
+  document.getElementById('overlay').classList.add('show');
 
-  // Animate bars after render
+  // Animate bars after paint
   setTimeout(()=>{
-    body.querySelectorAll('[data-w]').forEach(el=>{
-      el.style.width=el.dataset.w+'%';
+    document.querySelectorAll('[data-w]').forEach(el=>{
+      el.style.width = el.dataset.w + '%';
     });
-  },50);
+  }, 60);
 }
 
 function generateLinks(prod){
-  const base=`https://${prod.host}`;
-  const links=[
-    {label:`Open ${prod.name}`,url:base},
-    {label:`${prod.name} — Activity`,url:base+'/activity'},
-    {label:`${prod.name} — Settings`,url:base+'/settings'},
-    {label:`${prod.name} — History`,url:base+'/history'},
+  const base = `https://${prod.host}`;
+  return [
+    {label:`Open ${prod.name}`, url: base},
+    {label:`Recent activity on ${prod.domain}`, url:`https://myactivity.google.com/?product=${encodeURIComponent(prod.name)}`},
+    {label:`Search history for ${prod.domain}`, url:`https://myactivity.google.com/`},
+    {label:`Help & Support`, url:`https://support.google.com/`},
   ];
-  // Topic-specific
-  prod.topics.slice(0,3).forEach(t=>{
-    links.push({label:`Search: "${t}"`,url:`https://www.google.com/search?q=${encodeURIComponent(t+' '+prod.name)}`});
+}
+
+/* ════════════════════════════════════════════
+   TOOLTIP
+════════════════════════════════════════════ */
+const tipEl = document.getElementById('tooltip');
+document.addEventListener('mousemove', e=>{
+  tipEl.style.left = e.clientX+'px';
+  tipEl.style.top  = (e.clientY - 42)+'px';
+});
+nodes.forEach(n=>{
+  n.el.addEventListener('mouseenter',()=>{
+    tipEl.textContent = n.prod.name;
+    tipEl.classList.add('show');
   });
-  return links.slice(0,6);
-}
-
-function closePanel(){
-  document.getElementById('detail-panel').classList.remove('show');
-  document.getElementById('overlay').classList.remove('show');
-}
-
-/* ══════════════════════════════════════════════════════
-   ALL CATEGORIES VIEW
-══════════════════════════════════════════════════════ */
-function buildAllCats(){
-  const grid=document.getElementById('all-cats-grid');
-  CATEGORIES.forEach(cat=>{
-    const card=document.createElement('div');
-    card.className='cat-card';
-    card.innerHTML=`
-      <div class="cat-card-header">
-        <div class="cat-card-dot" style="background:${cat.color}"></div>
-        <span class="cat-card-name">${cat.label}</span>
-        <span class="cat-card-count">${cat.products.reduce((a,p)=>a+p.links,0).toLocaleString()} links</span>
-      </div>
-      <div class="mini-logos">
-        ${cat.products.map(p=>`<img class="mini-logo" src="${p.icon}" alt="${p.name}" title="${p.name}">`).join('')}
-      </div>
-    `;
-    card.addEventListener('click',()=>openPanel(cat.products[0],cat));
-    grid.appendChild(card);
+  n.el.addEventListener('mouseleave',()=>{
+    tipEl.classList.remove('show');
   });
-}
+});
 
-function showSection(id){
-  document.getElementById('hero-section').style.display = id==='hero'?'':'none';
-  document.getElementById('all-section').style.display = id==='all'?'':'none';
-  document.querySelectorAll('.nav-tab').forEach((t,i)=>{
-    t.classList.toggle('active',(i===0&&id==='hero')||(i===1&&id==='all'));
-  });
-}
-
-/* ══════════════════════════════════════════════════════
-   SCROLL REVEALS
-══════════════════════════════════════════════════════ */
-const io=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('revealed')});
-},{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-
-/* ══════════════════════════════════════════════════════
+/* ════════════════════════════════════════════
    INIT
-══════════════════════════════════════════════════════ */
-buildDiagram();
-buildAllCats();
+════════════════════════════════════════════ */
+buildBgGrid();
+buildOrbitRings();
+buildIconNodes();
 
-// Subtle rotation animation on the diagram
-let rot=0;
-function rotateDiagram(){
-  rot+=0.02;
-  // Very subtle — just the outer decorative elements would rotate
-  // For now keep static for readability
-  requestAnimationFrame(rotateDiagram);
-}
+// Re-attach tooltip listeners (nodes built after initial definition)
+nodes.forEach(n=>{
+  n.el.addEventListener('mouseenter',()=>{
+    tipEl.textContent = n.prod.name;
+    tipEl.classList.add('show');
+  });
+  n.el.addEventListener('mouseleave',()=>tipEl.classList.remove('show'));
+});
+
+requestAnimationFrame(animate);
 </script>
 </body>
 </html>
