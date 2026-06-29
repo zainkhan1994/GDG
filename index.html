@@ -255,40 +255,37 @@ body{
 .dash-stats-right strong{color:#202124}
 
 .dash-content{
-  flex:1;display:flex;overflow:hidden;
+  flex:1;display:flex;overflow:auto;
 }
 .dash-center{
   flex:1;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;padding:12px;overflow:hidden;
+  justify-content:center;padding:16px 24px;
   position:relative;
 }
-.dash-right{
-  width:340px;background:#fff;border-left:1px solid #E8EAED;
-  display:flex;flex-direction:column;
-  transform:translateX(100%);transition:transform .3s cubic-bezier(.22,1,.36,1);
-  flex-shrink:0;overflow-y:auto;
-}
-.dash-right.show{transform:translateX(0)}
+.dash-right{display:none}
 
 /* Circular diagram */
 #eco-svg{
-  width:min(72vh,560px);height:min(72vh,560px);
+  width:min(calc(100vh - 118px), 860px);
+  height:min(calc(100vh - 118px), 860px);
   cursor:default;
+  flex-shrink:0;
 }
-.logo-node{cursor:pointer;transition:filter .2s}
-.logo-node:hover{filter:drop-shadow(0 4px 14px rgba(0,0,0,.3))}
-.logo-node.active .node-ring{stroke-width:3}
+.logo-node{cursor:pointer;transition:filter .2s,transform .15s}
+.logo-node:hover{filter:drop-shadow(0 4px 18px rgba(0,0,0,.28))}
+.logo-node:hover .node-bg{transform:scale(1.12);transform-origin:center;transform-box:fill-box}
+.logo-node.active .node-ring{stroke-width:4}
 
 /* Diagram bottom stats */
 .diagram-stats{
-  display:flex;gap:28px;justify-content:center;
-  padding:10px 0 0;
+  display:flex;gap:40px;justify-content:center;
+  padding:14px 0 0;
 }
-.dstat-n{font-size:22px;font-weight:700;
+.dstat-n{font-size:26px;font-weight:700;
   background:linear-gradient(135deg,#4285F4,#34A853);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
-.dstat-l{font-size:10px;color:#5F6368;text-transform:uppercase;letter-spacing:.06em;margin-top:2px;text-align:center}
+.dstat-l{font-size:11px;color:#5F6368;text-transform:uppercase;letter-spacing:.08em;margin-top:3px;text-align:center}
 
 /* Right panel inside dashboard */
 .right-header{
@@ -522,10 +519,13 @@ nav.on-light .nav-stats strong{color:#202124}
       <div class="dash-content">
         <!-- Center: circular diagram -->
         <div class="dash-center">
-          <svg id="eco-svg" viewBox="0 0 600 600">
+          <svg id="eco-svg" viewBox="0 0 900 900">
             <defs>
               <filter id="shadow-sm">
-                <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity=".12"/>
+                <feDropShadow dx="0" dy="3" stdDeviation="6" flood-opacity=".15"/>
+              </filter>
+              <filter id="shadow-lg">
+                <feDropShadow dx="0" dy="4" stdDeviation="10" flood-opacity=".2"/>
               </filter>
             </defs>
             <g id="sector-arcs"></g>
@@ -989,7 +989,7 @@ function closeDashPanel(){document.getElementById('dash-right-panel').classList.
 /* ════════════════════════════════════════════
    CIRCULAR DIAGRAM (SVG)
 ════════════════════════════════════════════ */
-const DCX=300,DCY=300,R_OUTER=250,R_LOGO=215,R_CAT=166,R_INNER=124;
+const DCX=450,DCY=450,R_OUTER=390,R_LOGO=322,R_CAT=248,R_INNER=178;
 
 function dPolarXY(deg,r){const a=toRad(deg);return{x:DCX+r*Math.cos(a),y:DCY+r*Math.sin(a)};}
 function arcPath(r,s,e,sweep=1){
@@ -1032,9 +1032,9 @@ function buildDiagram(){
     const txt=document.createElementNS('http://www.w3.org/2000/svg','text');
     txt.setAttribute('x',lp.x);txt.setAttribute('y',lp.y);
     txt.setAttribute('text-anchor','middle');txt.setAttribute('dominant-baseline','middle');
-    txt.setAttribute('font-size','8.5');txt.setAttribute('font-weight','600');
+    txt.setAttribute('font-size','11');txt.setAttribute('font-weight','600');
     txt.setAttribute('fill',cat.textColor);txt.setAttribute('font-family','Google Sans,sans-serif');
-    txt.setAttribute('letter-spacing','0.04em');
+    txt.setAttribute('letter-spacing','0.05em');
     // Rotate label to follow arc
     txt.setAttribute('transform',`rotate(${mid>90&&mid<270?mid+180:mid},${lp.x},${lp.y})`);
     txt.textContent=cat.label.toUpperCase();
@@ -1061,22 +1061,30 @@ function buildDiagram(){
       g.setAttribute('transform',`translate(${pos.x},${pos.y})`);
 
       const ring=document.createElementNS('http://www.w3.org/2000/svg','circle');
-      ring.classList.add('node-ring');
-      ring.setAttribute('r','18');
+      ring.classList.add('node-ring','node-bg');
+      ring.setAttribute('r','28');
       ring.setAttribute('fill','white');
       ring.setAttribute('stroke',cat.color);
-      ring.setAttribute('stroke-width','1.5');
+      ring.setAttribute('stroke-width','2');
       ring.setAttribute('filter','url(#shadow-sm)');
       g.appendChild(ring);
 
       const img=document.createElementNS('http://www.w3.org/2000/svg','image');
       img.setAttribute('href',prod.icon);
-      img.setAttribute('x','-12');img.setAttribute('y','-12');
-      img.setAttribute('width','24');img.setAttribute('height','24');
-      img.setAttribute('clip-path','circle(12px)');
+      img.setAttribute('x','-20');img.setAttribute('y','-20');
+      img.setAttribute('width','40');img.setAttribute('height','40');
       g.appendChild(img);
 
-      g.addEventListener('click',()=>openPanel(prod,cat,'dash'));
+      // Invisible larger hit area for easier clicking
+      const hit=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      hit.setAttribute('r','34');hit.setAttribute('fill','transparent');
+      g.appendChild(hit);
+
+      g.addEventListener('click',()=>openPanel(prod,cat,'fixed'));
+      g.addEventListener('mouseenter',()=>{
+        tipEl.textContent=prod.name;tipEl.classList.add('show');
+      });
+      g.addEventListener('mouseleave',()=>tipEl.classList.remove('show'));
       nodesg.appendChild(g);
     });
   });
@@ -1084,19 +1092,21 @@ function buildDiagram(){
   // Center circle
   const center=document.createElementNS('http://www.w3.org/2000/svg','circle');
   center.setAttribute('cx',DCX);center.setAttribute('cy',DCY);
-  center.setAttribute('r',R_INNER-6);
+  center.setAttribute('r',R_INNER-8);
   center.setAttribute('fill','white');
-  center.setAttribute('stroke','#E8EAED');center.setAttribute('stroke-width','1.5');
+  center.setAttribute('stroke','#E8EAED');center.setAttribute('stroke-width','2');
+  center.setAttribute('filter','url(#shadow-lg)');
   nodesg.appendChild(center);
   const cimg=document.createElementNS('http://www.w3.org/2000/svg','image');
-  cimg.setAttribute('href','https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_48dp.png');
-  cimg.setAttribute('x',DCX-22);cimg.setAttribute('y',DCY-30);
-  cimg.setAttribute('width','44');cimg.setAttribute('height','44');
+  cimg.setAttribute('href','https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_128dp.png');
+  cimg.setAttribute('x',DCX-50);cimg.setAttribute('y',DCY-64);
+  cimg.setAttribute('width','100');cimg.setAttribute('height','100');
   nodesg.appendChild(cimg);
   const ctxt=document.createElementNS('http://www.w3.org/2000/svg','text');
-  ctxt.setAttribute('x',DCX);ctxt.setAttribute('y',DCY+24);
-  ctxt.setAttribute('text-anchor','middle');ctxt.setAttribute('font-size','9');
+  ctxt.setAttribute('x',DCX);ctxt.setAttribute('y',DCY+46);
+  ctxt.setAttribute('text-anchor','middle');ctxt.setAttribute('font-size','14');
   ctxt.setAttribute('fill','#5F6368');ctxt.setAttribute('font-family','Google Sans,sans-serif');
+  ctxt.setAttribute('font-weight','500');
   ctxt.textContent='My Google Universe';
   nodesg.appendChild(ctxt);
 }
